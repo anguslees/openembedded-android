@@ -24,6 +24,7 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2 \
 	file://gcc-ppc_add_d_constraint.patch;patch=1 \
 	file://gcc-pr41175.patch;patch=1 \
 	file://gcc-armv4-pass-fix-v4bx-to-ld.patch;patch=1 \
+	file://gcc-android.patch;patch=1 \
 	"
 # Language Overrides
 FORTRAN = ""
@@ -37,3 +38,4 @@ EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibcspe = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibc = " ${@base_contains('TARGET_ARCH', 'powerpc', '--without-long-double-128', '',d)}"
+

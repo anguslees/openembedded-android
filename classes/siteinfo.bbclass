@@ -19,6 +19,7 @@ def get_siteinfo_list(d):
        target = bb.data.getVar('HOST_ARCH', d, 1) + "-" + bb.data.getVar('HOST_OS', d, 1)
 
        targetinfo = {\
+               "arm-android-eabi":        "endian-little bit-32 common-android", \
                "armeb-linux":             "endian-big bit-32 common-linux common-glibc arm-common",\
                "armeb-linux-gnueabi":     "endian-big bit-32 common-linux common-glibc arm-common armeb-linux",\
                "armeb-linux-uclibc":      "endian-big bit-32 common-linux common-uclibc arm-common",\

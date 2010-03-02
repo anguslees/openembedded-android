@@ -13,10 +13,13 @@ FILES_${PN} = "\
     ${libexecdir}/gcc/${TARGET_SYS}/${BINV}/collect2${EXEEXT} \
     ${libexecdir}/gcc/${TARGET_SYS}/${BINV}/f771${EXEEXT} \
     ${libexecdir}/gcc/${TARGET_SYS}/${BINV}/cc1plus${EXEEXT} \
+    ${libexecdir}/gcc/${TARGET_SYS}/${BINV}/cc1obj${EXEEXT} \
     ${gcclibdir}/${TARGET_SYS}/${BINV}/*.o \
     ${gcclibdir}/${TARGET_SYS}/${BINV}/specs \
     ${gcclibdir}/${TARGET_SYS}/${BINV}/lib* \
     ${gcclibdir}/${TARGET_SYS}/${BINV}/include* \
+    ${gcclibdir}/${TARGET_SYS}/${BINV}/*/*.o \
+    ${gcclibdir}/${TARGET_SYS}/${BINV}/*/lib* \
     ${includedir}/c++/${BINV} \
     ${prefix}/${TARGET_SYS}/bin/* \
     ${prefix}/${TARGET_SYS}/lib/* \
@@ -55,8 +58,8 @@ do_install () {
 	# Manually run the target stripper since we won't get it run by
 	# the packaging.
 	if [ "x${OLD_INHIBIT_PACKAGE_STRIP}" != "x1" ]; then
-		${TARGET_PREFIX}strip ${D}${prefix}/${TARGET_SYS}/lib/libstdc++.so.*
+		${TARGET_PREFIX}strip ${D}${prefix}/${TARGET_SYS}/lib/libstdc++.so.* || true
 		${TARGET_PREFIX}strip ${D}${prefix}/${TARGET_SYS}/lib/libg2c.so.* || true
-		${TARGET_PREFIX}strip ${D}${prefix}/${TARGET_SYS}/lib/libgcc_s.so.*
+		${TARGET_PREFIX}strip ${D}${prefix}/${TARGET_SYS}/lib/libgcc_s.so.* || true
 	fi
 }

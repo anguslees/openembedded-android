@@ -1,0 +1,161 @@
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/configure.ac\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/configure.ac
+*** gcc-4.4.2/configure.ac	Sat Feb 20 00:16:30 2010
+--- gcc-4.4.2/configure.ac	Tue Feb 23 08:44:05 2010
+***************
+*** 454,459 ****
+--- 454,464 ----
+      noconfigdirs="$noconfigdirs ld gas gprof"
+      noconfigdirs="$noconfigdirs sim target-rda"
+      ;;
++   *-android-*)
++   # The Android C++ environment does not support exceptions or rtti,
++   # and so building libstdc++-v3 tends not to always work.
++     noconfigdirs="$noconfigdirs target-newlib target-libstdc++-v3 ${libgcj}"
++     ;;
+    *-*-darwin*)
+      noconfigdirs="$noconfigdirs ld gas gdb gprof"
+      noconfigdirs="$noconfigdirs sim target-rda"
+***************
+*** 1873,1878 ****
+--- 1878,1885 ----
+  fi
+  AC_SUBST(CXXFLAGS_FOR_TARGET)
+  
++ AC_SUBST(CPPFLAGS_FOR_TARGET)
++ 
+  # Handle --with-headers=XXX.  If the value is not "yes", the contents of
+  # the named directory are copied to $(tooldir)/sys-include.
+  if test x"${with_headers}" != x && test x"${with_headers}" != xno ; then
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/configure\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/configure
+*** gcc-4.4.2/configure	Sat Feb 20 00:16:30 2010
+--- gcc-4.4.2/configure	Tue Feb 23 08:42:37 2010
+***************
+*** 2219,2224 ****
+--- 2219,2229 ----
+      noconfigdirs="$noconfigdirs ld gas gprof"
+      noconfigdirs="$noconfigdirs sim target-rda"
+      ;;
++   *-android-*)
++   # The Android C++ environment does not support exceptions or rtti,
++   # and so building libstdc++-v3 tends not to always work.
++     noconfigdirs="$noconfigdirs target-newlib target-libstdc++-v3 ${libgcj}"
++     ;;
+    *-*-darwin*)
+      noconfigdirs="$noconfigdirs ld gas gdb gprof"
+      noconfigdirs="$noconfigdirs sim target-rda"
+***************
+*** 13263,13268 ****
+--- 13268,13274 ----
+  s,@stage1_languages@,$stage1_languages,;t t
+  s,@SYSROOT_CFLAGS_FOR_TARGET@,$SYSROOT_CFLAGS_FOR_TARGET,;t t
+  s,@DEBUG_PREFIX_CFLAGS_FOR_TARGET@,$DEBUG_PREFIX_CFLAGS_FOR_TARGET,;t t
++ s,@CPPFLAGS_FOR_TARGET@,$CPPFLAGS_FOR_TARGET,;t t
+  s,@CFLAGS_FOR_TARGET@,$CFLAGS_FOR_TARGET,;t t
+  s,@CXXFLAGS_FOR_TARGET@,$CXXFLAGS_FOR_TARGET,;t t
+  s,@RPATH_ENVVAR@,$RPATH_ENVVAR,;t t
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/libiberty/configure.ac\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/libiberty/configure.ac
+*** gcc-4.4.2/libiberty/configure.ac	Thu Apr  9 00:18:33 2009
+--- gcc-4.4.2/libiberty/configure.ac	Sun Feb 21 22:41:26 2010
+***************
+*** 4,9 ****
+--- 4,15 ----
+  AC_INIT
+  AC_CONFIG_SRCDIR([xmalloc.c])
+  
++ # Android's getpagesize is a static __inline__ which confuses
++ # the autoconf test.
++ case ${host} in
++ *-android-*) ac_cv_func_getpagesize=yes ;;
++ esac
++ 
+  # This works around the fact that libtool configuration may change LD
+  # for this particular configuration, but some shells, instead of
+  # keeping the changes in LD private, export them just because LD is
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/libiberty/configure\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/libiberty/configure
+--- gcc-4.4.2/libiberty/configure	Thu Apr  9 00:18:33 2009
++++ gcc-4.4.2/libiberty/configure	Sun Feb 21 22:37:51 2010
+@@ -1318,7 +1318,11 @@
+ 
+ 
+ 
+-
++# Android's getpagesize is a static __inline__ which confuses
++# the autoconf test.
++case ${host} in
++*-android-*) ac_cv_func_getpagesize=yes ;;
++esac
+ 
+ 
+ 
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/Makefile.in\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/Makefile.in
+*** gcc-4.4.2/Makefile.in	Sat Feb 20 00:16:30 2010
+--- gcc-4.4.2/Makefile.in	Mon Feb 22 22:30:09 2010
+***************
+*** 412,417 ****
+--- 412,418 ----
+  COMPILER_LD_FOR_TARGET=@COMPILER_LD_FOR_TARGET@
+  COMPILER_NM_FOR_TARGET=@COMPILER_NM_FOR_TARGET@
+  
++ CPPFLAGS_FOR_TARGET = @CPPFLAGS_FOR_TARGET@
+  CFLAGS_FOR_TARGET = @CFLAGS_FOR_TARGET@
+  CXXFLAGS_FOR_TARGET = @CXXFLAGS_FOR_TARGET@
+  SYSROOT_CFLAGS_FOR_TARGET = @SYSROOT_CFLAGS_FOR_TARGET@
+***************
+*** 642,647 ****
+--- 643,650 ----
+  	'AS=$(COMPILER_AS_FOR_TARGET)' \
+  	'CC=$$(CC_FOR_TARGET)' \
+  	'CFLAGS=$$(CFLAGS_FOR_TARGET) $(SYSROOT_CFLAGS_FOR_TARGET) $(DEBUG_PREFIX_CFLAGS_FOR_TARGET)' \
++ 	'CPP=$$(CPP_FOR_TARGET)' \
++ 	'CPPFLAGS=$$(CPPFLAGS_FOR_TARGET) $(SYSROOT_CFLAGS_FOR_TARGET) $(DEBUG_PREFIX_CFLAGS_FOR_TARGET)' \
+  	'CXX=$$(CXX_FOR_TARGET)' \
+  	'CXXFLAGS=$$(CXXFLAGS_FOR_TARGET) $(SYSROOT_CFLAGS_FOR_TARGET) $(DEBUG_PREFIX_CFLAGS_FOR_TARGET)' \
+  	'DLLTOOL=$$(DLLTOOL_FOR_TARGET)' \
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/gcc/gcc.c\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/gcc/gcc.c
+*** gcc-4.4.2/gcc/gcc.c	Wed Mar 18 08:25:59 2009
+--- gcc-4.4.2/gcc/gcc.c	Sun Feb 21 14:37:48 2010
+***************
+*** 6226,6231 ****
+--- 6226,6246 ----
+    struct user_specs *uptr;
+    char **old_argv = argv;
+  
++   /* Force -mandroid on Android platforms.  This is brutal, but works. */
++   if (strstr (DEFAULT_TARGET_MACHINE, "-android-"))
++     {
++       char **new_argv = (char**) xmalloc ((argc + 1) * sizeof (char *));
++       int i;
++ 
++       new_argv[0] = argv[0];
++       new_argv[1] = xstrdup ("-mandroid");
++       for (i = 1; i < argc; i++)
++ 	new_argv[i+1] = argv[i];
++       argv = new_argv;
++       old_argv = argv;
++       argc++;
++     }
++ 
+    /* Initialize here, not in definition.  The IRIX 6 O32 cc sometimes chokes
+       on ?: in file-scope variable initializations.  */
+    asm_debug = ASM_DEBUG_SPEC;
+
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/Makefile.tpl\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/gcc-cross-android-sdk-4.4.2-r2.1/gcc-4.4.2/Makefile.tpl
+*** gcc-4.4.2/Makefile.tpl	Sat Feb 20 00:16:30 2010
+--- gcc-4.4.2/Makefile.tpl	Sun Feb 21 18:06:23 2010
+***************
+*** 529,534 ****
+--- 529,536 ----
+  	'AS=$(COMPILER_AS_FOR_TARGET)' \
+  	'CC=$$(CC_FOR_TARGET)' \
+  	'CFLAGS=$$(CFLAGS_FOR_TARGET) $(SYSROOT_CFLAGS_FOR_TARGET) $(DEBUG_PREFIX_CFLAGS_FOR_TARGET)' \
++ 	'CPP=$$(CPP_FOR_TARGET)' \
++ 	'CPPFLAGS=$$(CPPFLAGS_FOR_TARGET)' \
+  	'CXX=$$(CXX_FOR_TARGET)' \
+  	'CXXFLAGS=$$(CXXFLAGS_FOR_TARGET) $(SYSROOT_CFLAGS_FOR_TARGET) $(DEBUG_PREFIX_CFLAGS_FOR_TARGET)' \
+  	'DLLTOOL=$$(DLLTOOL_FOR_TARGET)' \
+
