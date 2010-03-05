@@ -1,0 +1,133 @@
+Required to survive -fshort-enums (as well as just being good code hygiene)
+
+--- gnutls-2.4.2/lib/opencdk/stream.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/stream.c	2010-03-05 09:17:10.000000000 +1100
+@@ -43,8 +43,8 @@
+ /* This is the maximal amount of bytes we map. */
+ #define MAX_MAP_SIZE 16777216
+ 
+-static int stream_flush (cdk_stream_t s);
+-static int stream_filter_write (cdk_stream_t s);
++static cdk_error_t stream_flush (cdk_stream_t s);
++static cdk_error_t stream_filter_write (cdk_stream_t s);
+ static int stream_cache_flush (cdk_stream_t s, FILE *fp);
+ struct stream_filter_s* filter_add (cdk_stream_t s, filter_fnct_t fnc, int type);
+ 
+--- gnutls-2.4.2/lib/opencdk/verify.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/verify.c	2010-03-05 09:15:16.000000000 +1100
+@@ -50,7 +50,7 @@
+ };
+ 
+ 
+-static int file_verify_clearsign (cdk_ctx_t, const char *, const char *);
++static cdk_error_t file_verify_clearsign (cdk_ctx_t, const char *, const char *);
+ 
+ 
+ /**
+--- gnutls-2.4.2/lib/opencdk/stream.h~	2008-06-19 20:00:10.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/stream.h	2010-03-05 09:37:48.000000000 +1100
+@@ -38,7 +38,7 @@
+ };
+ 
+ /* Type definition for the filter function. */
+-typedef int (*filter_fnct_t) (void * opaque, int ctl, FILE * in, FILE * out);
++typedef cdk_error_t (*filter_fnct_t) (void * opaque, int ctl, FILE * in, FILE * out);
+ 
+ /* The stream filter context structure. */
+ struct stream_filter_s 
+--- gnutls-2.4.2/lib/opencdk/keydb.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/keydb.c	2010-03-05 09:15:47.000000000 +1100
+@@ -42,7 +42,7 @@
+ #define KEYDB_CACHE_ENTRIES 8
+ 
+ static void keydb_cache_free (key_table_t cache);
+-static int keydb_search_copy (cdk_keydb_search_t *r_dst, cdk_keydb_search_t src);
++static cdk_error_t keydb_search_copy (cdk_keydb_search_t *r_dst, cdk_keydb_search_t src);
+ static int classify_data (const byte * buf, size_t len);
+ static cdk_kbnode_t find_selfsig_node (cdk_kbnode_t key, cdk_pkt_pubkey_t pk);
+      
+--- gnutls-2.4.2/lib/opencdk/pubkey.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/pubkey.c	2010-03-05 09:16:27.000000000 +1100
+@@ -1252,7 +1252,7 @@
+ 
+ 
+ /* Get the fingerprint of the packet if possible. */
+-int
++cdk_error_t
+ _cdk_pkt_get_fingerprint (cdk_packet_t pkt, byte *fpr)
+ {
+   if (!pkt || !fpr)
+--- gnutls-2.4.2/lib/opencdk/literal.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/literal.c	2010-03-05 09:42:56.000000000 +1100
+@@ -219,7 +219,7 @@
+ }
+ 
+ 
+-int
++cdk_error_t
+ _cdk_filter_literal (void * opaque, int ctl, FILE * in, FILE * out)
+ {
+   if (ctl == STREAMCTL_READ)
+@@ -290,7 +290,7 @@
+ }
+ 
+ 
+-int
++cdk_error_t
+ _cdk_filter_text (void *opaque, int ctl, FILE *in, FILE *out)
+ {
+   if (ctl == STREAMCTL_READ)
+--- gnutls-2.4.2/lib/opencdk/armor.c~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/armor.c	2010-03-05 09:40:45.000000000 +1100
+@@ -625,7 +625,7 @@
+ }
+ 
+ 
+-int
++cdk_error_t
+ _cdk_filter_armor (void *opaque, int ctl, FILE * in, FILE *out)
+ {
+   if (ctl == STREAMCTL_READ)
+--- gnutls-2.4.2/lib/opencdk/filters.h~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/filters.h	2010-03-05 09:41:51.000000000 +1100
+@@ -83,7 +83,7 @@
+ 
+ 
+ /*-- armor.c -*/
+-int _cdk_filter_armor( void * opaque, int ctl, FILE * in, FILE * out );
++cdk_error_t _cdk_filter_armor( void * opaque, int ctl, FILE * in, FILE * out );
+ 
+ /*-- cipher.c --*/
+ cdk_error_t _cdk_filter_hash( void * opaque, int ctl, FILE * in, FILE * out );
+@@ -91,8 +91,8 @@
+                                 FILE * in, FILE * out );
+ 
+ /*-- literal.c --*/
+-int _cdk_filter_literal( void * opaque, int ctl, FILE * in, FILE * out );
+-int _cdk_filter_text( void * opaque, int ctl, FILE * in, FILE * out );
++cdk_error_t _cdk_filter_literal( void * opaque, int ctl, FILE * in, FILE * out );
++cdk_error_t _cdk_filter_text( void * opaque, int ctl, FILE * in, FILE * out );
+ 
+ /*-- compress.c --*/
+ cdk_error_t _cdk_filter_compress( void * opaque, int ctl,
+--- gnutls-2.4.2/lib/opencdk/packet.h~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lib/opencdk/packet.h	2010-03-05 09:43:52.000000000 +1100
+@@ -37,12 +37,12 @@
+ void _cdk_free_userid (cdk_pkt_userid_t uid);
+ void _cdk_free_signature( cdk_pkt_signature_t sig );
+ cdk_prefitem_t _cdk_copy_prefs( const cdk_prefitem_t prefs );
+-int _cdk_copy_userid( cdk_pkt_userid_t *dst, cdk_pkt_userid_t src );
+-int _cdk_copy_pubkey( cdk_pkt_pubkey_t* dst, cdk_pkt_pubkey_t src );
+-int _cdk_copy_seckey( cdk_pkt_seckey_t* dst, cdk_pkt_seckey_t src );
+-int _cdk_copy_pk_to_sk( cdk_pkt_pubkey_t pk, cdk_pkt_seckey_t sk );
+-int _cdk_copy_signature( cdk_pkt_signature_t* dst, cdk_pkt_signature_t src );
+-int _cdk_pubkey_compare( cdk_pkt_pubkey_t a, cdk_pkt_pubkey_t b );
++cdk_error_t _cdk_copy_userid( cdk_pkt_userid_t *dst, cdk_pkt_userid_t src );
++cdk_error_t _cdk_copy_pubkey( cdk_pkt_pubkey_t* dst, cdk_pkt_pubkey_t src );
++cdk_error_t _cdk_copy_seckey( cdk_pkt_seckey_t* dst, cdk_pkt_seckey_t src );
++cdk_error_t _cdk_copy_pk_to_sk( cdk_pkt_pubkey_t pk, cdk_pkt_seckey_t sk );
++cdk_error_t _cdk_copy_signature( cdk_pkt_signature_t* dst, cdk_pkt_signature_t src );
++cdk_error_t _cdk_pubkey_compare( cdk_pkt_pubkey_t a, cdk_pkt_pubkey_t b );
+ 
+ #endif /* CDK_PACKET_H */
+ 

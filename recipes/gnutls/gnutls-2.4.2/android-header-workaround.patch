@@ -1,0 +1,46 @@
+Android headers (at least 1.6) have circular include problems that
+break common headers unless sys/types.h is explicitly included first.
+
+--- gnutls-2.4.2/lgl/vasnprintf.h~	2008-06-19 20:00:10.000000000 +1000
++++ gnutls-2.4.2/lgl/vasnprintf.h	2010-03-05 09:09:03.000000000 +1100
+@@ -18,6 +18,8 @@
+ #ifndef _VASNPRINTF_H
+ #define _VASNPRINTF_H
+ 
++#include <sys/types.h>
++
+ /* Get va_list.  */
+ #include <stdarg.h>
+ 
+--- gnutls-2.4.2/lgl/md2.h~	2008-09-16 06:04:19.000000000 +1000
++++ gnutls-2.4.2/lgl/md2.h	2010-03-05 08:59:23.000000000 +1100
+@@ -19,6 +19,7 @@
+ #ifndef MD2_H
+ # define MD2_H 1
+ 
++# include <sys/types.h>
+ # include <stdio.h>
+ # include <stddef.h>
+ 
+--- gnutls-2.4.2/lgl/read-file.h~	2008-06-19 20:00:10.000000000 +1000
++++ gnutls-2.4.2/lgl/read-file.h	2010-03-05 09:07:27.000000000 +1100
+@@ -19,6 +19,8 @@
+ #ifndef READ_FILE_H
+ #define READ_FILE_H
+ 
++#include <sys/types.h>
++
+ /* Get size_t.  */
+ #include <stddef.h>
+ 
+--- gnutls-2.4.2/lgl/stdio.in.h~	2010-03-05 10:54:37.000000000 +1100
++++ gnutls-2.4.2/lgl/stdio.in.h	2010-03-05 10:54:51.000000000 +1100
+@@ -16,6 +16,8 @@
+    along with this program; if not, write to the Free Software Foundation,
+    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+ 
++#include <sys/types.h>
++
+ #if defined __need_FILE || defined __need___FILE
+ /* Special invocation convention inside glibc header files.  */
+ 

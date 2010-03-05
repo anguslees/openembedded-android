@@ -9,10 +9,13 @@ inherit autotools binconfig pkgconfig
 
 EXTRA_OECONF = "--with-included-opencdk --with-included-libtasn1"
 
+# gnutlsxx requires exceptions, etc - which Android does not support.
+EXTRA_OECONF_append_android = " --disable-cxx"
+
 do_stage() {
-    oe_libinstall -C lib/.libs -so -a libgnutls ${STAGING_LIBDIR}
-    oe_libinstall -C libextra/.libs -so -a libgnutls-extra ${STAGING_LIBDIR}
-    oe_libinstall -C libextra/.libs -so -a libgnutls-openssl ${STAGING_LIBDIR}
+    oe_libinstall -C lib/.libs -a libgnutls ${STAGING_LIBDIR}
+    oe_libinstall -C libextra/.libs -a libgnutls-extra ${STAGING_LIBDIR}
+    oe_libinstall -C libextra/.libs -a libgnutls-openssl ${STAGING_LIBDIR}
     autotools_stage_includes
 
     install -d ${STAGING_DATADIR}/aclocal
