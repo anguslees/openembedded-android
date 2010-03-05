@@ -14,7 +14,7 @@ SRC_URI += "file://header-fixups.patch;patch=1"
 INHIBIT_DEFAULT_DEPS = "1"
 LEAD_SONAME = "libc.so"
 
-PROVIDES += "linux-libc-headers virtual/libc virtual/arm-android-eabi-libc-for-gcc virtual/arm-android-eabi-libc-initial"
+PROVIDES += "linux-libc-headers virtual/libc virtual/${TARGET_PREFIX}libc-for-gcc virtual/${TARGET_PREFIX}libc-initial"
 RPROVIDES_${PN} += "bionic"
 RPROVIDES_${PN}-dev += "bionic-dev"
 RPROVIDES_${PN}-thread-db += "bionic-thread-db"
