@@ -7,7 +7,7 @@ diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/
       noconfigdirs="$noconfigdirs ld gas gprof"
       noconfigdirs="$noconfigdirs sim target-rda"
       ;;
-+   *-android-*)
++   *-android*)
 +   # The Android C++ environment does not support exceptions or rtti,
 +   # and so building libstdc++-v3 tends not to always work.
 +     noconfigdirs="$noconfigdirs target-newlib target-libstdc++-v3 ${libgcj}"
@@ -36,7 +36,7 @@ diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/
       noconfigdirs="$noconfigdirs ld gas gprof"
       noconfigdirs="$noconfigdirs sim target-rda"
       ;;
-+   *-android-*)
++   *-android*)
 +   # The Android C++ environment does not support exceptions or rtti,
 +   # and so building libstdc++-v3 tends not to always work.
 +     noconfigdirs="$noconfigdirs target-newlib target-libstdc++-v3 ${libgcj}"
@@ -67,7 +67,7 @@ diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/
 + # Android's getpagesize is a static __inline__ which confuses
 + # the autoconf test.
 + case ${host} in
-+ *-android-*) ac_cv_func_getpagesize=yes ;;
++ *-android*) ac_cv_func_getpagesize=yes ;;
 + esac
 + 
   # This works around the fact that libtool configuration may change LD
@@ -85,7 +85,7 @@ diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/
 +# Android's getpagesize is a static __inline__ which confuses
 +# the autoconf test.
 +case ${host} in
-+*-android-*) ac_cv_func_getpagesize=yes ;;
++*-android*) ac_cv_func_getpagesize=yes ;;
 +esac
  
  
@@ -126,7 +126,7 @@ diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-android-eabi/
     char **old_argv = argv;
   
 +   /* Force -mandroid on Android platforms.  This is brutal, but works. */
-+   if (strstr (DEFAULT_TARGET_MACHINE, "-android-"))
++   if (strstr (DEFAULT_TARGET_MACHINE, "-android"))
 +     {
 +       char **new_argv = (char**) xmalloc ((argc + 1) * sizeof (char *));
 +       int i;
