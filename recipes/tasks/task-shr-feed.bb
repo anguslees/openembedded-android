@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r35"
+PR = "r44"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -16,6 +16,7 @@ RDEPENDS_${PN} += "\
 		dosbox \
 		enotes \
 		epdfview \
+		estardict \
 		fbreader \
 		ffalarms \
 		gpe-calendar \
@@ -28,10 +29,13 @@ RDEPENDS_${PN} += "\
 		gpe-contacts \
 		gtkmm \
 		guitartune \
+		jefliks \
 		mc \
+		mpd \
 		mplayer \
 		navit \
-		omview \
+# omview depends on deprecated (now broken) epsilon
+#		omview \
 		orrery \
 		python-elementary \
 		pythm \
@@ -132,7 +136,6 @@ RDEPENDS_${PN} += "\
 #		gpsdrive \
 		wxwidgets \
 		x11vnc \
-		xf86-video-glamo \
 #		libswt3.4-gtk-java \
 		cacao \
 #		jamvm \
@@ -205,6 +208,8 @@ RDEPENDS_${PN} += "\
 		fsousaged \
 		fsodeviced \
 		fsonetworkd \
+		mdbus \
+		mickeyterm \
 		opimd-utils \
 		omgps \
 		shr-launcher \
@@ -222,6 +227,7 @@ RDEPENDS_${PN} += "\
 		illume-keyboard-german \
 		illume-keyboard-hebrew \
 		illume-keyboard-numeric-alt \
+		illume-keyboard-default-numeric \
 		illume-keyboard-russian \
 		illume-keyboard-russian-terminal \
 		python-xlib \
@@ -232,14 +238,13 @@ RDEPENDS_${PN} += "\
 		om-neon \
 		ipython \
 #		phoneme-advanced-foundation \
-		eve \
+#		eve was killed in svnr45979
 		python-pybluez \
 		x11perf \
 		pyring \
 		bt-configure \
 		bt-gps \
 		advancedcaching \
-		glamo-dri-tests \
 		bonnie++ \
 		reiserfsprogs \
 		blipomoko \
@@ -274,4 +279,8 @@ RDEPENDS_${PN} += "\
 		ventura \
 		emtooth \
 		podboy \
+		mcnavi \
 "
+
+# this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)
+RDEPENDS_${PN}_append_om-gta02 = "glamo-dri-tests"

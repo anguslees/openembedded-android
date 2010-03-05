@@ -11,10 +11,9 @@ LICENSE = "GPL"
 SECTION = "base"
 PRIORITY = "required"
 
-INC_PR = "r24"
+INC_PR = "r25"
 
 SRC_URI = "\
-  http://www.busybox.net/downloads/busybox-${PV}.tar.gz \
   file://busybox-cron \
   file://busybox-httpd \
   file://busybox-udhcpd \
@@ -55,7 +54,7 @@ FILES_${PN} += "${datadir}/udhcpc"
 INITSCRIPT_PACKAGES = "${PN}-httpd ${PN}-syslog ${PN}-udhcpd"
 INITSCRIPT_NAME_${PN}-httpd = "busybox-httpd"
 INITSCRIPT_NAME_${PN}-syslog = "syslog"
-INITSCRIPT_NAME_${PN}-udhcpd = "busybox-udhcpd" 
+INITSCRIPT_NAME_${PN}-udhcpd = "busybox-udhcpd"
 CONFFILES_${PN}-syslog = "${sysconfdir}/syslog.conf"
 
 # This disables the syslog startup links in slugos (see slugos-init)
@@ -97,7 +96,11 @@ do_install () {
 	# Install /bin/busybox, and the /bin/sh link so the postinst script
 	# can run. Let update-alternatives handle the rest.
 	install -d ${D}${base_bindir}
-	install -m 0755 ${S}/busybox ${D}${base_bindir}
+	if grep -q "CONFIG_FEATURE_SUID=y" ${WORKDIR}/defconfig; then
+		install -m 4755 ${S}/busybox ${D}${base_bindir}
+	else
+		install -m 0755 ${S}/busybox ${D}${base_bindir}
+	fi
 	ln -sf busybox ${D}${base_bindir}/sh
 
 	if grep -q "CONFIG_SYSLOGD=y" ${WORKDIR}/defconfig; then
@@ -137,7 +140,7 @@ pkg_postinst_${PN} () {
 	# (update-alternatives have no problem replacing links later anyway)
 	test -n 2> /dev/null || alias test='busybox test'
 	if test "x$D" = "x"; then while read link; do if test ! -h "$link"; then case "$link" in /*/*/*) to="../../bin/busybox";; /bin/*) to="busybox";; /*/*) to="../bin/busybox";; /*) to="/bin/busybox";; esac; busybox ln -s $to $link; fi; done </etc/busybox.links; fi
-	
+
 	# This adds the links, remember that this has to work when building an image too, hence the $D
 	while read link; do case "$link" in /*/*/*) to="../../bin/busybox";; /bin/*) to="busybox";; /*/*) to="../bin/busybox";; /*) to="/bin/busybox";; esac; bn=`basename $link`; update-alternatives --install $link $bn $to 50; done <$D/etc/busybox.links
 }
@@ -167,7 +170,7 @@ pkg_prerm_${PN} () {
 			/*/*/*) to="../../bin/busybox";;
 			/bin/*) to="busybox";;
 			/*/*) to="../bin/busybox";;
-			/*) to="/bin/busybox";;		
+			/*) to="/bin/busybox";;
 		esac
 		bn=`basename $link`
 		sh /usr/bin/update-alternatives --remove $bn $to

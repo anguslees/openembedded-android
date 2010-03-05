@@ -1,17 +1,20 @@
 require gtk+.inc
 
-PR = "${INC_PR}.1"
+SRC_URI_append_virtclass-native = " file://no-demos.patch;patch=1 \
+"
+
+PR = "${INC_PR}.3"
 
 BBCLASSEXTEND = "native"
 
-DEPENDS_virtclass-native = "atk-native pango-native cairo-native"
+DEPENDS_virtclass-native = "libpng-native atk-native pango-native cairo-native libxrender-native"
 
 # Enable xkb selectively
 XKBTOGGLE = " --disable-xkb"
 XKBTOGGLE_angstrom = ""
 
 EXTRA_OECONF = "--with-libtiff ${XKBTOGGLE} --disable-glibtest gio_can_sniff=yes"
-EXTRA_OECONF_append_virtclass-native = " --without-libtiff --disable-modules"
+EXTRA_OECONF_append_virtclass-native = " --without-libtiff --without-libjpeg --disable-modules"
 
 do_install_virtclass-native () {
 	autotools_do_install
