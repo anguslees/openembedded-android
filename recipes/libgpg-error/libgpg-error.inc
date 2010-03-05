@@ -17,7 +17,7 @@ FILES_${PN}-dev += "${bindir}/*"
 inherit autotools binconfig pkgconfig gettext
 
 do_stage() {
-	oe_libinstall -a -C src libgpg-error ${STAGING_LIBDIR}
+	oe_libinstall -a -so -C src libgpg-error ${STAGING_LIBDIR}
 	install -d ${STAGING_BINDIR_CROSS}/
 	install -m 0755 src/gpg-error-config ${STAGING_BINDIR_CROSS}/
 
