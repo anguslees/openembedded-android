@@ -1,0 +1,32 @@
+Android uses gcc -shared, etc as usual - but it is alarming how many
+places in autoconf/libtool work on matching specific arch triples,
+rather than actually probing for functionality...
+
+--- libtool-2.2.6b/libltdl/m4/libtool.m4~	2010-03-02 09:03:47.000000000 +1100
++++ libtool-2.2.6b/libltdl/m4/libtool.m4	2010-03-04 09:02:58.000000000 +1100
+@@ -2671,7 +2671,23 @@
+   ;;
+ 
+ *)
+-  dynamic_linker=no
++  case $host_vendor in
++  android*)
++    version_type=linux
++    need_lib_prefix=no
++    need_version=no
++    # These might need to be adjusted - afaics bionic doesn't support sonames:
++    library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
++    soname_spec='${libname}${release}${shared_ext}$major'
++    shlibpath_var=LD_LIBRARY_PATH
++    shlibpath_overrides_runpath=no  # ?
++    sys_lib_dlsearch_path_spec="/system/lib /lib $lt_ld_extra"
++    dynamic_linker='Bionic linker'
++    ;;
++  *)
++    dynamic_linker=no
++    ;;
++  esac
+   ;;
+ esac
+ AC_MSG_RESULT([$dynamic_linker])
+
