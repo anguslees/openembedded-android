@@ -6,6 +6,6 @@ DESCRIPTION = "Host packages for Android SDK"
 #RDEPENDS_${PN} += "ant-native virtual/javac-native virtual/java-native"
 
 RDEPENDS_${PN} += "\
-    android-tools-native \
-    android-sdk-native \
+    android-tools-sdk \
+    androidsdk-sdk \
     "

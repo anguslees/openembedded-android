@@ -24,3 +24,23 @@ diff -ru arch-arm/usr/include/sys/types.h sysroot-1.5/usr/include/sys/types.h
 +#endif
  
  #endif
+--- android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/wchar.h	2009-07-29 10:26:01.000000000 +1000
++++ android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/wchar.h	2010-03-09 19:00:53.000000000 +1100
+@@ -36,7 +36,6 @@
+ #include <stddef.h>
+ 
+ #include <stdarg.h>
+-#include <time.h>
+ #include <malloc.h>
+ 
+ #include <stddef.h>
+@@ -50,6 +49,8 @@
+ 
+ __BEGIN_DECLS
+ 
++struct tm;
++
+ typedef int                     wint_t;
+ typedef struct { int  dummy; }  mbstate_t;
+ 
+
