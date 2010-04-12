@@ -1,10 +1,13 @@
 DESCRIPTION = "ESmart is a collection of smart Evas objects"
 LICENSE = "MIT BSD"
-DEPENDS = "evas ecore edje imlib2 epsilon libtool"
+DEPENDS = "evas ecore edje imlib2 libtool"
 PV = "0.9.0.050+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
+SRCREV = "${EFL_SRCREV}"
 
 inherit efl
+
+SRC_URI = "svn://svn.enlightenment.org/svn/e/OLD;module=${PN};proto=http"
 
 EXTRA_OECONF = "--with-edje-cc=${STAGING_BINDIR_NATIVE}/edje_cc"
 

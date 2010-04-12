@@ -3,6 +3,7 @@ LICENSE = "GPLv2"
 SECTION = "devel"
 AUTHOR = "Daniel Ribeiro"
 
+SRCREV = "2513"
 PV = "0.0+svnr${SRCPV}"
 PR = "r4"
 
@@ -22,7 +23,9 @@ CFLAGS_append = " -DDEBUG "
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_configure() {
-        sed -i -e s:CROSS:CC:g Makefile
+        # Comment out both CC and CROSS definitions
+        sed -i -e 's:^CC.*$:#\0:g' Makefile
+        sed -i -e 's:^CROSS.*$:#\0:g' Makefile
 }
 
 fakeroot do_install() {

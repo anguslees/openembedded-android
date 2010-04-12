@@ -1,36 +1,26 @@
-SECTION = "libs"
-PRIORITY = "optional"
-DESCRIPTION = "Low-level pixel manipulation library."
-LICENSE = "X11"
-
-PV = "0.17.8"
-PR = "r6"
+require pixman.inc
+PV = "0.17.13"
+PR = "${INC_PR}.0"
 PR_append = "+gitr${SRCREV}"
 
-BBCLASSEXTEND="native"
-
-SRCREV = "7a15fa25ddb88ebb4ac00772854271f102f06e81"
-
+SRCREV = "69f1ec9a7827aeb522fcae99846237ef0f896e7b"
+ 
 DEFAULT_PREFERENCE = "-1"
-
-SRC_URI = "git://anongit.freedesktop.org/~sandmann/pixman;protocol=git;branch=flags \
-           file://0003-Generic-C-implementation-of-pixman_blt-with-overlapp.patch;patch=1 \
-           file://0004-Support-of-overlapping-src-dst-for-pixman_blt_mmx.patch;patch=1 \
-           file://0005-Support-of-overlapping-src-dst-for-pixman_blt_sse2.patch;patch=1 \
-           file://0006-Support-of-overlapping-src-dst-for-pixman_blt_neon.patch;patch=1 \
-           file://1-composite.patch;patch=1 \
-           file://2-composite.patch;patch=1 \
-           file://3-composite.patch;patch=1 \
+ 
+SRC_URI = "git://anongit.freedesktop.org/pixman;protocol=git;branch=master \
+           file://0001-Generic-C-implementation-of-pixman_blt-with-overlapp.patch;patch=1 \
+           file://0002-Support-of-overlapping-src-dst-for-pixman_blt_mmx.patch;patch=1 \
+           file://0003-Support-of-overlapping-src-dst-for-pixman_blt_sse2.patch;patch=1 \
+           file://0004-Support-of-overlapping-src-dst-for-pixman_blt_neon.patch;patch=1 \
+           file://0005-ARM-added-NEON-optimizations-for-fetch-store-r5g6b5-.patch;patch=1 \
+           file://0006-Revert-ARM-SIMD-Try-without-any-CFLAGS-before-forcin.patch;patch=1 \ 
+           file://over-n-8-0565.patch;patch=1 \
+           file://src-8888-0565.patch;patch=1 \
 "
 
 S = "${WORKDIR}/git"
 
-inherit autotools_stage
-
 NEON = " --disable-arm-neon "
-NEON_armv7a = ""
+NEON_armv7a = " "
 
 EXTRA_OECONF = "${NEON} --disable-gtk"
-
-AUTOTOOLS_STAGE_PKGCONFIG = "1"
-

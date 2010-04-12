@@ -10,7 +10,8 @@
 #
 # This *must* be removed after initial testing is completed.  MJW 08-Dec-2008
 #
-PREFERRED_VERSION_linux-ixp4xx = "2.6.27.8+svnr${SRCREV}"
+SRCREV_pn-linux-ixp4xx ?= "1089"
+PREFERRED_VERSION_linux-ixp4xx = "2.6.27.8+svnr${SRCREV_pn-linux-ixp4xx}"
 #
 #===============================================================================#
 #===============================================================================#
@@ -20,9 +21,7 @@ PREFERRED_VERSION_linux-ixp4xx = "2.6.27.8+svnr${SRCREV}"
 # be removed as soon as opkg starts to work correctly again as newer opkg
 # versions fix a number of bugs and add some desireable features.
 #
-SRCREV_pn-opkg        = "160"
-SRCREV_pn-opkg-native = "160"
-SRCREV_pn-opkg-sdk    = "160"
+OPKG_SRCREV = "160"
 #
 #===============================================================================#
 #===============================================================================#
@@ -31,7 +30,12 @@ SRCREV_pn-opkg-sdk    = "160"
 ### alphabetically.  Note that the main slugos.inc file
 ### may include preferred versions for toolchain components.
 
-PREFERRED_VERSION_automake-native		?= "1.10.2"
+PREFERRED_VERSION_atk				?= "1.28.0"
+PREFERRED_VERSION_atk-native			?= "1.28.0"
+PREFERRED_VERSION_autoconf			?= "2.61"
+PREFERRED_VERSION_autoconf-native		?= "2.61"
+PREFERRED_VERSION_automake-native		?= "1.10.3"
+PREFERRED_VERSION_automake			?= "1.10.3"
 PREFERRED_VERSION_binutils			?= "2.18.50.0.7"
 PREFERRED_VERSION_binutils-cross		?= "2.18.50.0.7"
 PREFERRED_VERSION_binutils-cross-sdk		?= "2.18.50.0.7"
@@ -46,6 +50,8 @@ PREFERRED_VERSION_glib-2.0			?= "2.22.1"
 PREFERRED_VERSION_glib-2.0-native		?= "2.22.1"
 PREFERRED_VERSION_glibc				?= "2.6.1"
 PREFERRED_VERSION_glibc-initial			?= "2.6.1"
+PREFERRED_VERSION_gtk+				?= "2.18.6"
+PREFERRED_VERSION_gtk+-native			?= "2.18.6"
 PREFERRED_VERSION_ipkg				?= "0.99.163"
 PREFERRED_VERSION_ipkg-native			?= "0.99.163"
 PREFERRED_VERSION_libtool			?= "2.2.6b"
@@ -55,7 +61,6 @@ PREFERRED_VERSION_libtool-sdk			?= "2.2.6b"
 PREFERRED_VERSION_linux-libc-headers		?= "2.6.23"
 PREFERRED_VERSION_m4				?= "1.4.8"
 PREFERRED_VERSION_m4-native			?= "1.4.8"
-PREFERRED_VERSION_netatalk			?= "2.0.3"
 PREFERRED_VERSION_nslu2-linksys-firmware	?= "2.3r63"
 PREFERRED_VERSION_pkgconfig			?= "0.23"
 PREFERRED_VERSION_pkgconfig-native		?= "0.23"

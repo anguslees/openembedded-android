@@ -3,9 +3,6 @@ require navit.inc
 PV = "0.1.0+svnr${SRCPV}"
 PR = "${INC_PR}.5"
 
-DEFAULT_PREFERENCE = "-1"
-DEFAULT_PREFERENCE_shr = "1"
-
 S = "${WORKDIR}/navit"
 
 # override navit.inc RRECOMMENDS, we only suggest a text2speech app
@@ -16,6 +13,7 @@ DEPENDS_shr += " librsvg-native"
 RDEPENDS = " navit-icons"
 EXTRA_OECONF += " --enable-svg2png-scaling-flag=32 --disable-speech-speech-dispatcher --enable-cache-size=20971520"
 
+SRCREV = "3012"
 SRC_URI = "svn://anonymous@navit.svn.sourceforge.net/svnroot/navit/trunk;module=navit;proto=https"
 
 EXTRA_AUTORECONF = " -I m4"
@@ -35,7 +33,7 @@ SRC_URI += "file://navit.xml \
             file://osd.xml \
             file://speech.xml \
             file://plugins.xml \
-	   "
+           "
 
 #Second launcher for shr
 SRC_URI_append_shr = "file://navitD.desktop \

@@ -4,11 +4,12 @@ PRIORITY = "optional"
 LICENSE = "GPL LGPL FDL"
 
 DEPENDS += "virtual/libiconv"
+DEPENDS_virtclass-native = ""
 
 SRC_URI = "ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-${PV}.tar.gz \
 	   file://pkgconfig.patch;patch=1"
 
-INC_PR = "r6"
+INC_PR = "r7"
 
 # move libgpg-error-config into -dev package
 FILES_${PN} = "${libdir}/lib*.so.*"
@@ -16,17 +17,4 @@ FILES_${PN}-dev += "${bindir}/*"
 
 inherit autotools binconfig pkgconfig gettext
 
-do_stage() {
-	oe_libinstall -a -so -C src libgpg-error ${STAGING_LIBDIR}
-	install -d ${STAGING_BINDIR_CROSS}/
-	install -m 0755 src/gpg-error-config ${STAGING_BINDIR_CROSS}/
-
-	install -d ${STAGING_INCDIR}/
-	for X in gpg-error.h
-	do
-		install -m 0644 ${S}/src/$X ${STAGING_INCDIR}/$X
-	done
-
-	install -d ${STAGING_DATADIR}/aclocal
-	install -m 0644 src/gpg-error.m4 ${STAGING_DATADIR}/aclocal/
-}
+BBCLASSEXTEND = "native"

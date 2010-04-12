@@ -2,9 +2,9 @@ DESCRIPTION = "illume2 SHR config"
 SECTION = "e/utils"
 DEPENDS = "eet"
 LICENSE = "MIT BSD"
-SRCREV = "868999443054da51b198860459b92734a3b16d42"
-PV = "1.1-${EFL_SRCREV}+gitr${SRCREV}"
-PR = "r8"
+RDEPENDS = "shr-e-gadgets"
+SRCREV = "1b6bd24e828455f56c26b2f5cbbf2d16838cace8"
+PV = "1.2+gitr${SRCREV}"
 
 inherit e
 

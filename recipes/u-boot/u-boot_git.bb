@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r42"
+PR ="r44"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -12,25 +12,18 @@ SRCREV_afeb9260 = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_afeb9260-180 = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_palmpre = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_cm-t35 = "3c014f1586d5bfe30dca7549396915c83f31cd30"
+SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
+SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRC_URI_append_afeb9260 = " file://AFEB9260-network-fix.patch;patch=1"
 SRC_URI_append_afeb9260-180 = " file://AFEB9260-network-fix.patch;patch=1"
 SRC_URI_append_cm-t35 = "file://cm-t35/cm-t35.patch;patch=1"
 
-SRC_URI_beagleboard = "git://git.denx.de/u-boot-ti.git;protocol=git \
-                 file://fw_env.config \
-                 file://new-pinmux.patch;patch=1 \
-file://revision-detection.patch;patch=1 \
-file://i2c.patch;patch=1 \
-file://720MHz.patch;patch=1 \
-file://dss.patch;patch=1 \
-file://0001-omap3-clock.c-don-t-reprogram-clocks-when-trying-to-.patch;patch=1 \
-file://0002-beagleboard-add-pinmuxing-for-beagleboard-XM.patch;patch=1 \
-file://0003-beagleboard-move-muxing-into-revision-print-switch.patch;patch=1 \
-file://Cortex-A8-erratum-725233.diff;patch=1 \
+SRC_URI_beagleboard = "git://www.sakoman.com/git/u-boot.git;branch=omap3-v2010.3;protocol=git \
+                       file://0001-Minimal-Display-driver-for-OMAP3.patch;patch=1 \
+                       file://fw_env.config \
 "
-
-SRCREV_beagleboard = "a5cf522a91ba479d459f8221135bdb3e9ae97479"
-PV_beagleboard = "2009.11-rc1+${PR}+gitr${SRCREV}"
+SRCREV_beagleboard = "946351081bd14e8bf5816fc38b82e004a0e6b4fe"
+PV_beagleboard = "2010.03-rc1+${PR}+gitr${SRCREV}"
 
 SRCREV_calamari = "533cf3a024947aaf74c16573a6d951cd0c3d0a7d"
 
@@ -102,6 +95,20 @@ PV_omapzoom2 = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom2 = "1"
 
 do_compile_omapzoom2 () {
+        unset LDFLAGS
+        unset CFLAGS
+        unset CPPFLAGS
+        oe_runmake ${UBOOT_MACHINE}
+        oe_runmake all
+        oe_runmake tools
+}
+
+SRC_URI_omapzoom36x = "git://dev.omapzoom.org/pub/scm/bootloader/u-boot.git;branch=master;protocol=git"
+SRCREV_omapzoom36x = "ab45d2a787a9674bed30542139175d8e090e0749"
+PV_omapzoom36x = "1.1.4+${PR}+gitr${SRCREV}"
+PE_omapzoom36x = "1"
+
+do_compile_omapzoom36x () {
         unset LDFLAGS
         unset CFLAGS
         unset CPPFLAGS
@@ -191,6 +198,9 @@ SRC_URI_append_c7x0 = "file://pdaXrom-u-boot.patch;patch=1 \
 SRC_URI_sheevaplug = "git://git.denx.de/u-boot-marvell.git;protocol=git;branch=testing"
 SRCREV_sheevaplug = "119b9942da2e450d4e525fc004208dd7f7d062e0"
 
+SRC_URI_xilinx-ml507 = "git://git.xilinx.com/u-boot-xlnx.git;protocol=git"
+SRCREV_xilinx-ml507 = "26e999650cf77c16f33c580abaadab2532f5e8b2"
+
 S = "${WORKDIR}/git"
 
 
@@ -220,4 +230,20 @@ do_deploy_prepend_mini2440() {
 
 do_deploy_prepend_micro2440() {
 	cp ${S}/u-boot-nand16k.bin ${S}/u-boot.bin
+}
+
+do_configure_prepend_xilinx-ml507() {
+if [ -e "${XILINX_BSP_PATH}/ppc440_0/include/xparameters.h" ]; then
+    cp ${XILINX_BSP_PATH}/ppc440_0/include/xparameters.h \
+    ${S}/board/xilinx/ml507
+    echo "#define XPAR_PLB_CLOCK_FREQ_HZ XPAR_CPU_PPC440_MPLB_FREQ_HZ
+#define XPAR_CORE_CLOCK_FREQ_HZ XPAR_CPU_PPC440_CORE_CLOCK_FREQ_HZ
+#define XPAR_PCI_0_CLOCK_FREQ_HZ    0" >> ${S}/board/xilinx/ml507/xparameters.h
+fi
+}
+
+do_deploy_prepend_xilinx-ml507() {
+if [ -d "${XILINX_BSP_PATH}" ]; then
+    install ${S}/u-boot ${XILINX_BSP_PATH}
+fi
 }

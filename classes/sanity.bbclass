@@ -87,26 +87,8 @@ def check_sanity(e):
 
 	# If we'll be running qemu, perform some sanity checks
 	if data.getVar('ENABLE_BINARY_LOCALE_GENERATION', e.data, True):
-		# Some versions of qemu-native needs gcc 3.x.  Do a special
-		# check here to allow for host 'gcc' is 3.x.
-		if "qemu-native" not in assume_provided and "gcc3-native" in assume_provided:
-			gcc_version = commands.getoutput("${BUILD_PREFIX}gcc --version | head -n 1 | cut -f 3 -d ' '")
-
-			if not check_gcc3(e.data) and gcc_version[0] != '3':
-				messages = messages + "gcc3-native was in ASSUME_PROVIDED but the gcc-3.x binary can't be found in PATH"
-				missing = missing + "gcc-3.x (needed for qemu-native),"
-
 		if "qemu-native" in assume_provided:
 			required_utilities += " %s" % (qemu_target_binary(e.data))
-
-		try:
-			if os.path.exists("/proc/sys/vm/mmap_min_addr"):
-				f = file("/proc/sys/vm/mmap_min_addr", "r")
-				if (f.read().strip() != "0"):
-					messages = messages + "/proc/sys/vm/mmap_min_addr is not 0. This will cause problems with qemu so please fix the value (as root).\n\nTo fix this in later reboots, set vm.mmap_min_addr = 0 in /etc/sysctl.conf.\n"
-				f.close()
-		except:
-			pass
 
 	for util in required_utilities.split():
 		if not check_app_exists( util, e.data ):
@@ -198,9 +180,6 @@ def check_sanity(e):
 
 addhandler check_sanity_eventhandler
 python check_sanity_eventhandler() {
-    from bb.event import Handled, NotHandled
     if bb.event.getName(e) == "ConfigParsed":
         check_sanity(e)
-
-    return NotHandled
 }

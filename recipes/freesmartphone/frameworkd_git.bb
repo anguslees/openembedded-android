@@ -4,10 +4,11 @@ AUTHOR = "FreeSmartphone.Org Development Team"
 SECTION = "console/network"
 DEPENDS = "python-cython-native python-pyrex-native"
 LICENSE = "GPL"
+SRCREV = "f751f2724eea23d0ca050bdf2672f9011ae09517"
 PV = "0.9.5.9+gitr${SRCREV}"
-PR = "r2"
+PR = "r3"
 
-inherit distutils update-rc.d
+inherit distutils update-rc.d python-dir
 
 INITSCRIPT_NAME = "frameworkd"
 INITSCRIPT_PARAMS = "defaults 29"
@@ -31,8 +32,14 @@ do_install_append() {
 }
 
 pkg_postinst_${PN} () {
-	echo "NOTE: if you have old contacts without field types and the"
-	echo "      tel: prefix instead please use the remove-tel script"
+	echo "*IMPORTANT NOTICE*: There has been a change in internal opimd database structure as well as in the backend mechanism."
+	echo "  This change is not backwards compatible so a conversion is needed, furthermore, since new opimd does not (and will not) support working with SIM, importing your SIM data is also required."
+	echo "  In order to import SIM contacts, please use PISI."
+	echo "  If you still have old contacts with 'tel:' prefix instead of field types (i.e you haven't upgraded since 26.1.2010) please run the 'remove-tel' script first."
+	echo "  For the database conversion:"
+	echo "    1) stop frameworkd '/etc/init.d/frameworkd stop'"
+	echo "    2) use the conversion script, called: 'opimd_convert_db' which is already installed in your system"
+	echo "    3) restart your device"
 }
 
 RDEPENDS_${PN} += "\
@@ -94,4 +101,4 @@ CONFFILES_${PN}-config = "\
 
 PACKAGE_ARCH_${PN} = "${BASE_PACKAGE_ARCH}"
 FILES_${PN} += "${sysconfdir}/dbus-1 ${sysconfdir}/freesmartphone ${sysconfdir}/init.d ${datadir}"
-FILES_${PN}-dbg += "${libdir}/${PYTHON_DIR}/site-packages/framework/subsystems/*/.debug"
+FILES_${PN}-dbg += "${PYTHON_SITEPACKAGES_DIR}/framework/subsystems/*/.debug"

@@ -2,7 +2,7 @@ SECTION = "x11/network"
 DESCRIPTION = "Mail user agent"
 DEPENDS = "gtk+ libetpan openssl aspell"
 LICENSE = "GPL"
-PR = "r1"
+PR = "r2"
 
 inherit autotools pkgconfig
 
@@ -12,6 +12,7 @@ SRC_URI = "\
 	http://www.penguin.cz/~utx/ftp/claws-mail/claws-mail-${PV}-po-update.patch;patch=1 \
 	file://desktop.patch;patch=1 \
 	file://claws-mail-g_strcmp0.patch;patch=1 \
+	file://duplicate-header.patch;patch=1 \
 	"
 
 do_configure_append() {
@@ -50,6 +51,3 @@ do_install_append() {
 	sed -i 's/Icon=[^.]*$/&.png/' ${D}${datadir}/applications/claws-mail.desktop
 }
 
-do_stage() {
-	autotools_stage_includes
-}

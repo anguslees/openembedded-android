@@ -1,6 +1,7 @@
 DESCRIPTION = "Paroli"
 SECTION = "x11"
 LICENSE = "GPL"
+SRCREV = "bb9fb1969acdfbaa48b55902675a6d8949014c6d"
 PV = "0.2.1+gitr${SRCREV}"
 PE = "1"
 PR = "r0"
@@ -35,7 +36,7 @@ do_configure_append() {
 	# fix absolute etc reference
 	sed -i "s|/etc/|../../etc/|" ${S}/setup.py
 	sed -i "s|prefix,|'../../usr/',|" ${S}/setup.py
-	sed -i "s|core/|/usr/lib/python2.6/site-packages/|" ${S}/scripts/paroli
+	sed -i "s|core/|${PYTHON_SITEPACKAGES_DIR}/|" ${S}/scripts/paroli
 	sed -i "s|services|/usr/share/paroli/services|" ${S}/scripts/paroli.fso.cfg
 	sed -i "s|applications|/usr/share/paroli/applications|" ${S}/scripts/paroli.fso.cfg
 }

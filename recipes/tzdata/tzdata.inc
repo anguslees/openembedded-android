@@ -3,7 +3,7 @@ SECTION = "base"
 PRIORITY = "optional"
 DEPENDS = "tzcode-native"
 
-INC_PR = "r5"
+INC_PR = "r7"
 
 DEFAULT_TIMEZONE ?= "Europe/London"
 
@@ -12,7 +12,7 @@ RCONFLICTS= "timezones timezone-africa timezone-america timezone-antarctica \
              timezone-australia timezone-europe timezone-indian \
              timezone-iso3166.tab timezone-pacific timezone-zone.tab"
 
-SRC_URI = "http://bent.latency.net/bent/darcs/zoneinfo-${PV}/src/tzdata${PV}.tar.gz"
+SRC_URI = "ftp://elsie.nci.nih.gov/pub/tzdata${PV}.tar.gz;name=tar"
 
 S = "${WORKDIR}"
 
@@ -50,6 +50,7 @@ do_install () {
         cp -pPR ${WORKDIR}/build${datadir}/zoneinfo/${DEFAULT_TIMEZONE} ${D}${sysconfdir}/localtime
 }
 
+PACKAGE_ARCH = "all"
 # Packages primarily organized by directory with a major city
 # in most time zones in the base package
 

@@ -16,6 +16,7 @@ EXTRA_OECONF = " \
 		--enable-browsing \
                 --disable-openssl \
 		--disable-tiff \
+		--disable-ssl \
 		--without-php \
 		--without-perl \
 		--without-python \
@@ -49,14 +50,6 @@ fakeroot do_install () {
 
    # This directory gets installed with perms 511, which makes packaging fail
    chmod 0711 "${D}/${localstatedir}/run/cups/certs"
-}
-
-do_stage () {
-	install -d ${STAGING_INCDIR}/cups
-	install ${S}/cups/*.h ${STAGING_INCDIR}/cups/
-	install ${S}/filter/*.h ${STAGING_INCDIR}/cups/
-	oe_libinstall -C cups -so libcups ${STAGING_LIBDIR}
-	oe_libinstall -C filter -so libcupsimage ${STAGING_LIBDIR}
 }
 
 python do_package_append() {

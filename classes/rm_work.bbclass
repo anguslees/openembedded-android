@@ -20,7 +20,7 @@ do_rm_work () {
         if [ `basename ${dir}` = "temp" ]; then
             echo "Not removing temp"
         else 
-            echo "Removing $dir" ; rm $dir -rf		
+            echo "Removing $dir" ; rm -rf $dir
         fi
     done
 }
@@ -44,7 +44,5 @@ python rmwork_stampfixing_eventhandler() {
                 dir = "%s.*" % e.stampPrefix[fn]
                 bb.note("Removing stamps: " + dir)
                 os.system('rm -f '+ dir)
-
-    return NotHandled
 }
 

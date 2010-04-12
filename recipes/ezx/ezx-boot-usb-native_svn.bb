@@ -3,6 +3,7 @@ DEPENDS = "virtual/libusb0-native virtual/kernel"
 SECTION = "devel"
 AUTHOR = "Team OpenEZX <openezx-devel@lists.openezx.org>"
 LICENSE = "GPL"
+SRCREV = "2512"
 PV = "0.3.0+svnr${SRCPV}"
 
 SRC_URI = "svn://svn.openezx.org/trunk/src/host;module=boot_usb;proto=http" 
@@ -14,7 +15,7 @@ inherit autotools native
 
 do_deploy() {
         install -d ${DEPLOY_DIR_TOOLS}
-        install -m 0755 boot_usb ${DEPLOY_DIR_TOOLS}/ezx-boot-usb-${PV}
+        install -m 0755 src/boot_usb ${DEPLOY_DIR_TOOLS}/ezx-boot-usb-${PV}
 }
 
 do_stage() {

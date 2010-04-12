@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r44"
+PR = "r51"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -7,6 +7,7 @@ inherit task
 
 RDEPENDS_${PN} += "\
 		babiloo-efl \
+		bootchart-lite \
 		claws-mail \
 		claws-plugin-mailmbox \
 #		claws-plugin-gtkhtml2-viewer \
@@ -17,6 +18,7 @@ RDEPENDS_${PN} += "\
 		enotes \
 		epdfview \
 		estardict \
+		evopedia \
 		fbreader \
 		ffalarms \
 		gpe-calendar \
@@ -30,23 +32,23 @@ RDEPENDS_${PN} += "\
 		gtkmm \
 		guitartune \
 		jefliks \
+		libyaml-perl \
+		libnet-dbus-perl \
 		mc \
 		mpd \
 		mplayer \
 		navit \
-# omview depends on deprecated (now broken) epsilon
-#		omview \
 		orrery \
 		python-elementary \
 		pythm \
 		python-wifi \
-		omoney \
 		openmoko-agpsui \
 		openvpn \
 		pyphonelog \
 #		shr-config \
 		shr-today \
                 shr-theme-neo \
+                shr-theme-o2 \
 		shr-theme-niebiee \
 		shr-theme-sixteen \
 # gry should be in image already
@@ -64,7 +66,6 @@ RDEPENDS_${PN} += "\
 		python-pygame \
 		mokoko \
 #		exhibit \
-		edje-viewer \
 		obexpush \
 		obexftp \
 		obex-data-server \
@@ -117,6 +118,7 @@ RDEPENDS_${PN} += "\
 		xev \
 		xwininfo \
 		tcpdump \
+		thone \
 		lsof \
 		zsh \
 		gzip \
@@ -223,6 +225,7 @@ RDEPENDS_${PN} += "\
 		illume-keyboard-default-alt \
 		illume-keyboard-dutch \
 		illume-keyboard-dvorak \
+		illume-keyboard-finnish \
 		illume-keyboard-french \
 		illume-keyboard-german \
 		illume-keyboard-hebrew \
@@ -280,6 +283,7 @@ RDEPENDS_${PN} += "\
 		emtooth \
 		podboy \
 		mcnavi \
+		neolight \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

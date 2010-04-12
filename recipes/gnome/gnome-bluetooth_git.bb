@@ -2,7 +2,6 @@ LICENSE = "GPL"
 SECTION = "x11/gnome"
 
 DEFAULT_PREFERENCE = "-1"
-DEFAULT_PREFERENCE_angstrom = "1"
 
 inherit autotools gnome pkgconfig
 
@@ -23,7 +22,8 @@ RCONFLICTS_${PN} = "bluez-gnome"
 
 do_configure_prepend() {
 	cp ${WORKDIR}/gtk-doc.make ${S}/
-    sed -i -e s:docs::g ${S}/Makefile.am
+	sed -i -e s:docs::g ${S}/Makefile.am
+	sed -i -e s:gnome-bluetooth/plugins/:gnome-bluetooth/plugins:g ${S}/lib/plugins/Makefile.am
 	echo "EXTRA_DIST = version.xml" > gnome-doc-utils.make
 }
 

@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Lite Image Feed"
-PR = "r26"
+PR = "r29"
 PV = "2.0"
 LICENSE = "GPL"
 
@@ -88,6 +88,7 @@ RDEPENDS_${PN}-cli = "\
 
 RDEPENDS_${PN}-fso = "\
   fsoraw \
+  fso-gpsd \
   opimd-utils-cli \
   python-codecs \
   python-gst \
@@ -111,6 +112,8 @@ RDEPENDS_${PN}-x = "\
   shr-theme-gry \
   xcursor-transparent-theme \
   xinput-calibrator \
+# Needed for proper input support in efl based apps  
+  libx11-locale \
 # All localedata based on IMAGE_LINGUAS
   ${@get_rdepends(bb, d)} \
 # Make sure it's available for those who want's to play with illume2  
@@ -118,6 +121,8 @@ RDEPENDS_${PN}-x = "\
 "
 
 RDEPENDS_${PN}-apps = "\
+# because of new opimd doesn't support SIM contacts itself
+  pisi \
   fso-abyss \
   task-fso2-compliance \
   phoneui-apps-messages \

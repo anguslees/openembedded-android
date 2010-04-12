@@ -117,10 +117,10 @@ fso_rootfs_postprocess() {
     echo "# NFS Host" >>./etc/fstab
     echo "192.168.0.200:/local/pkg /local/pkg nfs noauto,nolock,soft,rsize=32768,wsize=32768 0 0" >>./etc/fstab
     # fix .desktop files for illume
-    desktop=`find ./usr/share/applications -name "*.desktop"`
-    for file in $desktop; do
-        echo "Categories=Office;" >>$file
-    done
+    #desktop=`find ./usr/share/applications -name "*.desktop"`
+    #for file in $desktop; do
+    #    echo "Categories=Office;" >>$file
+    #done
     # minimal gtk theme foo
     mkdir -p ./etc/gtk-2.0/
     echo 'gtk-font-name = "Sans 5"' >> ./etc/gtk-2.0/gtkrc
@@ -130,8 +130,11 @@ fso_rootfs_postprocess() {
     # set sensible default DNS entries
     echo "nameserver 208.67.222.222" > ./etc/resolv.conf
     echo "nameserver 208.67.220.220" >> ./etc/resolv.conf
-    # remove autostart of gspd (if installed), we have fso-gpsd and this conflicts
+    # remove autostart of certain packages which we rather want to start on demand
     rm -f ./etc/init.d/gpsd
+    rm -f ./etc/init.d/*blue*
+    rm -f ./etc/init.d/*connman*
+    rm -f ./etc/init.d/*avahi*
     # silence printk
     mkdir -p ./etc/profile.d/
     echo "echo 0 0 0 0 >/proc/sys/kernel/printk" >./etc/profile.d/printk.sh

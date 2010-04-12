@@ -3,11 +3,14 @@ HOMEPAGE = "http://gtk-webcore.sourceforge.net/"
 LICENSE = "GPL"
 PRIORITY = "optional"
 
+SRCREV = "117"
 PV = "0.5.2+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "svn://gtk-webcore.svn.sourceforge.net/svnroot/gtk-webcore/trunk;module=JavaScriptCore;proto=https \
-           file://gcc4-fno-threadsafe-statics-JavaScriptCore.patch;patch=1"
+           file://gcc4-fno-threadsafe-statics-JavaScriptCore.patch;patch=1 \
+	   file://no-static-templates.patch;patch=1 \
+	"
 
 S = "${WORKDIR}/JavaScriptCore"
 

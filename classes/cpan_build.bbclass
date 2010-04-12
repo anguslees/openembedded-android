@@ -3,7 +3,7 @@
 #
 inherit cpan-base
 
-INHIBIT_NATIVE_STAGE_INSTALL = "1"
+NATIVE_INSTALL_WORKS = "1"
 
 #
 # We also need to have built libmodule-build-perl-native for
@@ -25,25 +25,14 @@ cpan_build_do_configure () {
 	if [ ${@is_target(d)} == "yes" ]; then
 		# build for target
 		. ${STAGING_LIBDIR}/perl/config.sh
-		if [ "${IS_NEW_PERL}" = "yes" ]; then
-			perl Build.PL --installdirs vendor \
-				--destdir ${D} \
-				--install_path lib="${datadir}/perl5" \
-				--install_path arch="${libdir}/perl5" \
-				--install_path script=${bindir} \
-				--install_path bin=${bindir} \
-				--install_path bindoc=${mandir}/man1 \
-				--install_path libdoc=${mandir}/man3
-		else
-			perl Build.PL --installdirs vendor \
-				--destdir ${D} \
-				--install_path lib="${libdir}/perl5/site_perl/${version}" \
-				--install_path arch="${libdir}/perl5/site_perl/${version}/${TARGET_SYS}" \
-				--install_path script=${bindir} \
-				--install_path bin=${bindir} \
-				--install_path bindoc=${mandir}/man1 \
-				--install_path libdoc=${mandir}/man3
-		fi
+		perl Build.PL --installdirs vendor \
+			--destdir ${D} \
+			--install_path lib="${datadir}/perl5" \
+			--install_path arch="${libdir}/perl5" \
+			--install_path script=${bindir} \
+			--install_path bin=${bindir} \
+			--install_path bindoc=${mandir}/man1 \
+			--install_path libdoc=${mandir}/man3
 	else
 		# build for host
 		perl Build.PL --installdirs site
@@ -57,12 +46,8 @@ cpan_build_do_compile () {
 cpan_build_do_install () {
 	if [ ${@is_target(d)} == "yes" ]; then
 		perl Build install
-	fi
-}
-
-do_stage_append () {
-	if [ ${@is_target(d)} == "no" ]; then
-		perl Build install
+	else
+		perl Build install destdir="${WORKDIR}/image"
 	fi
 }
 
