@@ -1,3 +1,6 @@
+# bionic's locale.h is simply a stub
+ac_cv_header_locale_h=${ac_cv_header_locale_h=no}
+
 # gcc's libstdc++ wants to know this
 ac_cv_func_shl_load=${ac_cv_func_shl_load=no}
 
