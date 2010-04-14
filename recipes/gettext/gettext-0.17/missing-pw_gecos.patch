@@ -1,0 +1,25 @@
+*** gettext-0.17/configure.ac	Mon Oct  8 05:37:36 2007
+--- gettext-0.17/configure.ac	Thu Apr 15 09:05:08 2010
+***************
+*** 33,38 ****
+--- 33,39 ----
+  dnl Checks for header files.
+  
+  dnl Checks for typedefs, structures, and compiler characteristics.
++ AC_CHECK_MEMBERS([struct passwd.pw_gecos])
+  
+  dnl Checks for library functions.
+  
+
+--- gettext-0.17/gettext-tools/src/msginit.c	Mon Oct  8 05:37:38 2007
++++ gettext-0.17/gettext-tools/src/msginit.c	Thu Apr 15 09:06:58 2010
+@@ -1015,7 +1015,7 @@
+   struct passwd *pwd;
+ 
+   pwd = get_user_pwd ();
+-#if HAVE_PWD_H
++#if HAVE_PWD_H && HAVE_STRUCT_PASSWD_PW_GECOS
+   if (pwd != NULL)
+     {
+       const char *fullname;
+
