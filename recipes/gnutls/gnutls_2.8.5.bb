@@ -6,8 +6,6 @@ SRC_URI += "\
 	file://gnutls-replace-siginterrupt.patch;patch=1 \
 	"
 
-SRC_URI_append_android = "file://android-header-workaround.patch;patch=1"
-
 EXTRA_OECONF += " --without-libgcrypt-prefix "
 
 do_configure_prepend() {
