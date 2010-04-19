@@ -14,6 +14,7 @@ SRC_URI = "\
   file://configure-libtool.patch;patch=1 \
   file://g_once_init_enter.patch;patch=1 \
   file://gatomic-proper-pointer-get-cast.patch;patch=1 \
+  file://struct_checks.patch;patch=1 \
 "
 
 SRC_URI[archive.md5sum] = "45a8bc697d07f859566c0b64c40382a8"

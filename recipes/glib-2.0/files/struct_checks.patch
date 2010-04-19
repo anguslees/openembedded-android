@@ -1,0 +1,94 @@
+*** glib-2.24.0/configure.in	Fri Apr 16 11:55:31 2010
+--- glib-2.24.0/configure.in	Sat Apr 17 00:22:37 2010
+***************
+*** 882,887 ****
+--- 882,888 ----
+  
+  # check for structure fields
+  AC_CHECK_MEMBERS([struct stat.st_mtimensec, struct stat.st_mtim.tv_nsec, struct stat.st_atimensec, struct stat.st_atim.tv_nsec, struct stat.st_ctimensec, struct stat.st_ctim.tv_nsec])
++ AC_CHECK_MEMBERS([struct lconv.decimal_point, struct passwd.pw_gecos])
+  AC_CHECK_MEMBERS([struct stat.st_blksize, struct stat.st_blocks, struct statfs.f_fstypename, struct statfs.f_bavail],,, [#include <sys/types.h>
+  #include <sys/stat.h>
+  #include <unistd.h>
+
+*** glib-2.24.0/glib/gstrfuncs.c	Thu Mar 18 07:55:34 2010
+--- glib-2.24.0/glib/gstrfuncs.c	Sat Apr 17 00:25:01 2010
+***************
+*** 417,423 ****
+--- 417,425 ----
+  {
+    gchar *fail_pos;
+    gdouble val;
++ #ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+    struct lconv *locale_data;
++ #endif
+    const char *decimal_point;
+    int decimal_point_len;
+    const char *p, *decimal_point_pos;
+***************
+*** 428,435 ****
+--- 430,442 ----
+  
+    fail_pos = NULL;
+  
++ #ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+    locale_data = localeconv ();
+    decimal_point = locale_data->decimal_point;
++ #else
++   decimal_point = ".";
++ #endif
++ 
+    decimal_point_len = strlen (decimal_point);
+  
+    g_assert (decimal_point_len != 0);
+***************
+*** 611,617 ****
+--- 618,626 ----
+  		 const gchar *format,
+  		 gdouble      d)
+  {
++ #ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+    struct lconv *locale_data;
++ #endif
+    const char *decimal_point;
+    int decimal_point_len;
+    gchar *p;
+***************
+*** 643,650 ****
+--- 652,663 ----
+        
+    _g_snprintf (buffer, buf_len, format, d);
+  
++ #ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+    locale_data = localeconv ();
+    decimal_point = locale_data->decimal_point;
++ #else
++   decimal_point = ".";
++ #endif
+    decimal_point_len = strlen (decimal_point);
+  
+    g_assert (decimal_point_len != 0);
+
+*** glib-2.24.0/glib/gutils.c	Thu Feb 11 17:34:48 2010
+--- glib-2.24.0/glib/gutils.c	Sat Apr 17 00:43:24 2010
+***************
+*** 1689,1694 ****
+--- 1689,1695 ----
+        {
+  	g_user_name = g_strdup (pw->pw_name);
+  
++ #ifdef HAVE_STRUCT_PASSWD_PW_GECOS
+  	if (pw->pw_gecos && *pw->pw_gecos != '\0') 
+  	  {
+  	    gchar **gecos_fields;
+***************
+*** 1702,1707 ****
+--- 1703,1709 ----
+  	    g_strfreev (gecos_fields);
+  	    g_strfreev (name_parts);
+  	  }
++ #endif
+  
+  	if (!g_home_dir)
+  	  g_home_dir = g_strdup (pw->pw_dir);
+
