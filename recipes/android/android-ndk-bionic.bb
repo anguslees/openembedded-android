@@ -37,20 +37,11 @@ do_compile() {
 
 do_install() {
 	install -d ${D}${includedir} ${D}${base_libdir}
-	cp -R -pf "${S_ARCH_DIR}"/usr/include/* ${D}${includedir}
-	cp -R -pf "${S_ARCH_DIR}"/usr/lib/* ${D}${base_libdir}
+	cp -R -pf ${S_ARCH_DIR}/usr/include/* ${D}${includedir}
+	cp -R -pf ${S_ARCH_DIR}/usr/lib/* ${D}${base_libdir}
+	chmod a+rX -R ${D}${includedir} ${D}${base_libdir}
 
-	# meta-toolchain:do_populate_sdk wants include/c++ to exist
+	# meta-toolchain:do_populate_sdk wants include/c++ to exist.
 	install -d ${D}${includedir}/c++
 	touch ${D}${includedir}/c++/.dummyfile
-}
-
-do_stage() {
-	install -d ${STAGING_INCDIR} ${STAGING_LIBDIR}
-	cp -R -pf "${S_ARCH_DIR}"/usr/include/* ${STAGING_INCDIR}
-	cp -R -pf "${S_ARCH_DIR}"/usr/lib/* ${STAGING_LIBDIR}
-
-	# meta-toolchain:do_populate_sdk wants include/c++ to exist
-	install -d ${STAGING_INCDIR}/c++
-	touch ${STAGING_INCDIR}/c++/.dummyfile
 }
