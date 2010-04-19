@@ -77,3 +77,71 @@
   /* size_t is defined by the GCC-specific <stddef.h> */
   #ifndef _SSIZE_T_DEFINED_
 
+*** android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/cstddef	Wed Jul 29 10:26:01 2009
+--- android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/cstddef	Fri Apr 16 08:46:38 2010
+***************
+*** 0 ****
+--- 1,15 ----
++ #ifndef __CSTDDEF__
++ #define __CSTDDEF__
++ 
++ #include <stddef.h>
++ 
++ extern "C++" {
++ 
++ namespace std {
++     using ::size_t;
++     using ::ptrdiff_t;
++ }
++ 
++ }
++ 
++ #endif
+
+--- android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/new	Wed Jul 29 10:26:01 2009
++++ android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/new	Fri Apr 16 08:47:19 2010
+@@ -1,11 +1,11 @@
+ #ifndef __NEW__
+ #define __NEW__
+ 
+-#include <stddef.h>
++#include <cstddef>
+ 
+-namespace std {
+-    using ::size_t;
++extern "C++" {
+ 
++namespace std {
+     struct nothrow_t {};
+     extern const nothrow_t nothrow;
+ }
+@@ -26,4 +26,6 @@
+ inline void  operator delete(void*, void*) { }
+ inline void  operator delete[](void*, void*) { }
+ 
++}
++
+ #endif // __NEW__
+
+*** android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/typeinfo	Wed Jul 29 10:26:01 2009
+--- android-ndk-1.6_r1/build/platforms/android-4/arch-arm/usr/include/typeinfo	Fri Apr 16 08:48:50 2010
+***************
+*** 1,6 ****
+--- 1,7 ----
+  #ifndef _TYPEINFO_HEADER_GAURD
+  #define _TYPEINFO_HEADER_GAURD
+  
++ extern "C++" {
+  
+  namespace std {
+      class type_info;
+***************
+*** 25,28 ****
+--- 26,31 ----
+      type_info & operator=(type_info const & right);
+  };
+  
++ }
++ 
+  #endif
+
