@@ -32,7 +32,7 @@ do_install() {
 	done
 
 	for p in ${java}; do
-		sed -e 's,^libdir=.*,libdir=${datadir}/java,' "${S}"/$p >${D}${bindir}/$p
+		sed -e 's,^frameworkdir=.*,frameworkdir=${datadir}/java,' "${S}"/$p >${D}${bindir}/$p
 		chmod +x ${D}${bindir}/$p
 	done
 
