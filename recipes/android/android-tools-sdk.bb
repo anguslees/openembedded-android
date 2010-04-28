@@ -1,7 +1,7 @@
 DESCRIPTION = "Android SDK tools"
 SECTION = "libs"
 LICENSE = "Apache"
-PV = "r04"
+PV = "r05"
 
 DEPENDS = "sed-native"
 RDEPENDS = "virtual/java-native"
@@ -11,8 +11,8 @@ inherit sdk
 INHIBIT_DEFAULT_DEPS = "1"
 
 SRC_URI = "http://dl.google.com/android/repository/tools_${PV}-${BUILD_OS}.zip;name=tools"
-SRC_URI[tools.md5sum] = "e2912dbbed6c1e9cb16550cb875ad42d"
-SRC_URI[tools.sha256sum] = "bc0c6c198405445e8a6e8520298470ddb298e69867bb5f066b6493ab1e35e326"
+SRC_URI[tools.md5sum] = "9e7df5d25237fb8cbdc08ce1d71905b3"
+SRC_URI[tools.sha256sum] = "b51a9c22734d4f0daa3faae793d970872dda5eb28c618b237ef5d233e68aaa93"
 
 S = "${WORKDIR}/tools_${PV}-${BUILD_OS}"
 
@@ -22,7 +22,7 @@ do_compile() {
 	:
 }
 
-bins = "adb dmtracedump emulator hprof-conv mksdcard sqlite3 zipalign"
+bins = "adb dmtracedump emulator etc1tool hprof-conv mksdcard sqlite3 zipalign"
 java = "android apkbuilder ddms draw9patch hierarchyviewer layoutopt traceview"
 
 do_install() {
