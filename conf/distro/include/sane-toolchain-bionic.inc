@@ -12,8 +12,8 @@ PREFERRED_PROVIDER_libstdc++ = "android-ndk-bionic"
 PREFERRED_PROVIDER_libstdc++-dev = "android-ndk-bionic"
 
 USE_NLS ?= "no"
-USE_NLS_glib-2.0 = "yes"
-USE_NLS_glib-2.0-native = "yes"
+USE_NLS_glib-2.0 = "no"
+USE_NLS_glib-2.0-native = "no"
 USE_NLS_gcc-cross = "no"
 
 #mess with compiler flags to use -Os instead of -O2
