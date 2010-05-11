@@ -10,6 +10,7 @@ PR = "r6"
 
 SRC_URI = "cvs://anonymous@cvs.sv.gnu.org/cvsroot/config;module=config;method=pserver;date=${FIXEDSRCDATE} \
 	   file://config-guess-uclibc.patch;patch=1 \
+	   file://config-guess-android.patch;patch=1 \
            file://avr32.patch;patch=1 \
            file://gnu-configize.in"
 S = "${WORKDIR}/config"
