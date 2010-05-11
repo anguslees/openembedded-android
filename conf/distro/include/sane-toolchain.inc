@@ -159,8 +159,10 @@ def compute_os_portion_of_target_triplet (d):
 	armv5te iwmmxt armv7a armv7 armv5teb armv4t"
 	ppc_spe_supporting_arches = "ppce500v2 ppce500"
 	gnu_suffix = ""
-	if bb.data.getVar('LIBC', d, 1) == "uclibc":
-		libc_suffix = "uclibc"
+  	if bb.data.getVar('LIBC', d, 1) == "uclibc":
+    		libc_suffix = "uclibc"
+	elif bb.data.getVar('DISTRO_NAME', d, 1) == "android":
+		libc_suffix = "android"
 	else:
 		libc_suffix = ""
 	
@@ -169,8 +171,6 @@ def compute_os_portion_of_target_triplet (d):
 			bb.fatal("bfin is not supported on glibc/eglibc. Please choose uclibc")
 		else:
 			os_suffix = "uclinux"
-	elif bb.data.getVar('DISTRO_NAME',d,1) == 'android':
-		os_suffix = "android"
 	else:
 		os_suffix = "linux"
 	bparch = bb.data.getVar('BASE_PACKAGE_ARCH', d,1)
@@ -183,11 +183,11 @@ def compute_os_portion_of_target_triplet (d):
 				bb.fatal("DISTRO requested EABI but selected machine does not support EABI")
 				abi_suffix = ""
 			else:
-				if bb.data.getVar('LIBC', d, 1) in [ 'glibc', 'eglibc' ]:
+				if bb.data.getVar('LIBC', d, 1) in ['glibc', 'eglibc']:
 					gnu_suffix = "gnu"
 				abi_suffix = "eabi"
 		elif bparch in ppc_spe_supporting_arches.split():
-			if libc_suffix is not "uclibc":
+			if bb.data.getVar('LIBC', d, 1) in ['glibc', 'eglibc']:
 				gnu_suffix = "gnu"
 			abi_suffix = "spe"
 		else:
