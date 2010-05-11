@@ -18,7 +18,3 @@ do_configure () {
 
 	oe_runconf
 }
-
-do_stage () {
-	oe_runmake install
-}
