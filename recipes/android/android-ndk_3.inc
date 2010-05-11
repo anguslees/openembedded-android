@@ -2,7 +2,7 @@ DESCRIPTION ?= "Android NDK"
 SECTION ?= "devel"
 HOMEPAGE = "http://developer.android.com/sdk/index.html"
 
-ANDROID_PLATFORM ?= 5
+ANDROID_PLATFORM ?= 4
 
 # FIXME: generate based on BUILD_OS-BUILD_ARCH
 ANDROID_BUILD_OS = ${BUILD_OS}
