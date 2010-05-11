@@ -11,7 +11,6 @@ SRC_URI = "http://ftp.gnome.org/pub/GNOME/sources/GConf/2.6/GConf-${PV}.tar.bz2 
 	   file://backends.patch;patch=1"
 
 EXTRA_OECONF = "--disable-gtk-doc"
-HEADERS = "gconf.h gconf-changeset.h gconf-listeners.h gconf-schema.h gconf-value.h gconf-error.h gconf-engine.h gconf-client.h gconf-enum-types.h"
 
 inherit autotools pkgconfig gettext
 
@@ -20,10 +19,8 @@ do_compile() {
 }
 
 do_stage() {
-	oe_libinstall -so -C gconf libgconf-2 ${STAGING_LIBDIR}
-	install -d ${STAGING_INCDIR}/gconf/2/gconf/
-	( cd gconf; for i in ${HEADERS}; do install -m 0644 $i ${STAGING_INCDIR}/gconf/2/gconf/$i; done )
-	install -m 0644 gconf.m4 ${STAGING_DATADIR}/aclocal/gconf-2.m4
+	install -d ${D}${datadir}/aclocal
+	install -m 0644 gconf.m4 ${D}${datadir}/aclocal/gconf-2.m4
 }
 
 do_install() {
@@ -32,3 +29,6 @@ do_install() {
 
 FILES_${PN} += " ${libdir}/GConf/*"
 FILES_${PN}-dbg += "${libdir}/*/*/.debug"
+
+SRC_URI[md5sum] = "194fab4e2e87c7ae3c7fea926fd281bc"
+SRC_URI[sha256sum] = "31d894960e0d2eba8fa2746e4fde31983a1e49dc856a880adb59d5f251a690cf"

@@ -58,6 +58,9 @@ do_stage() {
 	elif [ "x${SITEINFO_ENDIANESS}" = "xle" ]; then
 		devio '<<'src/arch-arm/rom/apex.bin >${STAGING_LOADER_DIR}/apex-nslu2-16mb.bin 'xp $,4'
 	else
-		oefatal do_populate_staging cannot determine endianess
+		oefatal do_populate_sysroot cannot determine endianess
 	fi
 }
+
+SRC_URI[md5sum] = "22fb46e76c8221c7bcc9734602367460"
+SRC_URI[sha256sum] = "472e12897931d9e5dcf2d1e3332acfc467aafd0f62e612896a9c71dd0d16d950"

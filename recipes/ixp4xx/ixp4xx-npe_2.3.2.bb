@@ -9,7 +9,7 @@ DEPENDS = "ixp4xx-npe-native"
 # Make sure you *read* and accept the license - it is not a standard one.
 
 SRC_URI = "http://You-Have-To-Download-The-Microcode-Manually-So-Please-Read-ixp4xx-npe_2.3.2.bb-For-Instructions/IPL_ixp400NpeLibrary-2_3_2.zip"
-do_unpack[depends] += "unzip-native:do_populate_staging"
+do_unpack[depends] += "unzip-native:do_populate_sysroot"
 S = "${WORKDIR}/ixp400_xscale_sw/src/npeDl"
 
 COMPATIBLE_MACHINE = "(nslu2|ixp4xx)"
@@ -36,3 +36,6 @@ do_stage() {
 	install ${S}/NPE-C ${STAGING_FIRMWARE_DIR}/
 }
 
+
+SRC_URI[md5sum] = "7cecfaae78431a851bc854264a5ee994"
+SRC_URI[sha256sum] = "31e1c0fb75d1463a6a8badd621d8169e2f8c681d9eb876ff9d5bb261f0e6b451"

@@ -73,15 +73,15 @@ do_configure_prepend() {
 }
 
 
-do_stage_append () {
+do_install_append () {
 #need ppc platforms includes + friends in order for external kernel modules to compile as headers as still split
 
-       install -d ${STAGING_KERNEL_DIR}/arch/
-       cp -pPR arch/ppc ${STAGING_KERNEL_DIR}/arch/
-       cp -pPR arch/powerpc ${STAGING_KERNEL_DIR}/arch/
+       install -d $kerneldir/arch/
+       cp -pPR arch/ppc $kerneldir/arch/
+       cp -pPR arch/powerpc $kerneldir/arch/
 
-       cp -pPR include/asm-powerpc ${STAGING_KERNEL_DIR}/include/
-       cp -pPR include/asm-ppc ${STAGING_KERNEL_DIR}/include/
+       cp -pPR include/asm-powerpc $kerneldir/include/
+       cp -pPR include/asm-ppc $kerneldir/include/
 }
 
 
@@ -112,3 +112,6 @@ pkg_postrm_kernel () {
 }
 
 
+
+SRC_URI[md5sum] = "ca0ce8f288e8ae93ac243b568f906bf8"
+SRC_URI[sha256sum] = "c55c52caa613d1f25718b35811e4614d9712b9e1de56a91aa73c867f351a540b"

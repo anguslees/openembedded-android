@@ -9,6 +9,32 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
+python sys_path_eh () {
+    if isinstance(e, bb.event.ConfigParsed):
+        import sys
+        import os
+        import time
+
+        bbpath = e.data.getVar("BBPATH", True).split(":")
+        sys.path[0:0] = [os.path.join(dir, "lib") for dir in bbpath]
+
+        def inject(name, value):
+            """Make a python object accessible from everywhere for the metadata"""
+            if hasattr(bb.utils, "_context"):
+                bb.utils._context[name] = value
+            else:
+                __builtins__[name] = value
+
+        import oe.path
+        import oe.utils
+        inject("bb", bb)
+        inject("sys", sys)
+        inject("time", time)
+        inject("oe", oe)
+}
+
+addhandler sys_path_eh
+
 die() {
 	oefatal "$*"
 }
@@ -37,11 +63,10 @@ def base_dep_prepend(d):
 	# the case where host == build == target, for now we don't work in
 	# that case though.
 	#
-	deps = "shasum-native coreutils-native"
-	if bb.data.getVar('PN', d, True) == "shasum-native" or bb.data.getVar('PN', d, True) == "stagemanager-native":
+	deps = "coreutils-native"
+	if bb.data.getVar('PN', d, True) in ("shasum-native", "stagemanager-native",
+	                                     "coreutils-native"):
 		deps = ""
-	if bb.data.getVar('PN', d, True) == "coreutils-native":
-		deps = "shasum-native"
 
 	# INHIBIT_DEFAULT_DEPS doesn't apply to the patch command.  Whether or  not
 	# we need that built is the responsibility of the patch function / class, not
@@ -76,7 +101,6 @@ addtask setscene before do_fetch
 
 addtask fetch
 do_fetch[dirs] = "${DL_DIR}"
-do_fetch[depends] = "shasum-native:do_populate_staging"
 python base_do_fetch() {
 	import sys
 
@@ -112,24 +136,6 @@ python base_do_fetch() {
 		raise bb.build.FuncFailed("Unknown fetch Error: %s" % value)
 
 
-	# Verify the SHA and MD5 sums we have in OE and check what do
-	# in
-	checksum_paths = bb.data.getVar('BBPATH', d, True).split(":")
-
-	# reverse the list to give precedence to directories that
-	# appear first in BBPATH
-	checksum_paths.reverse()
-
-	checksum_files = ["%s/conf/checksums.ini" % path for path in checksum_paths]
-	try:
-		parser = base_chk_load_parser(checksum_files)
-	except ValueError:
-		bb.note("No conf/checksums.ini found, not checking checksums")
-		return
-	except:
-		bb.note("Creating the CheckSum parser failed: %s:%s" % (sys.exc_info()[0], sys.exc_info()[1]))
-		return
-
 	pv = bb.data.getVar('PV', d, True)
 	pn = bb.data.getVar('PN', d, True)
 
@@ -146,11 +152,11 @@ python base_do_fetch() {
 				if not "name" in params and first_uri:
 					first_uri = False
 					params["name"] = ""
-				if not (base_chk_file_vars(parser, localpath, params, d) or base_chk_file(parser, pn, pv,uri, localpath, d)):
+				if not base_chk_file(pn, pv, uri, localpath, params, d):
 					if not bb.data.getVar("OE_ALLOW_INSECURE_DOWNLOADS", d, True):
-						bb.fatal("%s-%s: %s has no checksum defined, cannot check archive integrity" % (pn,pv,uri))
+						bb.fatal("%s-%s: %s cannot check archive integrity" % (pn,pv,uri))
 					else:
-						bb.note("%s-%s: %s has no checksum defined, archive integrity not checked" % (pn,pv,uri))
+						bb.note("%s-%s: %s cannot check archive integrity" % (pn,pv,uri))
 		except Exception:
 			raise bb.build.FuncFailed("Checksum of '%s' failed" % uri)
 }
@@ -243,10 +249,9 @@ python base_do_unpack() {
 	localdata = bb.data.createCopy(d)
 	bb.data.update_data(localdata)
 
-	src_uri = bb.data.getVar('SRC_URI', localdata)
+	src_uri = bb.data.getVar('SRC_URI', localdata, True)
 	if not src_uri:
 		return
-	src_uri = bb.data.expand(src_uri, localdata)
 	for url in src_uri.split():
 		try:
 			local = bb.data.expand(bb.fetch.localpath(url, localdata), localdata)
@@ -320,7 +325,7 @@ python base_eventhandler() {
 
 addtask configure after do_unpack do_patch
 do_configure[dirs] = "${S} ${B}"
-do_configure[deptask] = "do_populate_staging"
+do_configure[deptask] = "do_populate_sysroot"
 base_do_configure() {
 	:
 }
@@ -334,7 +339,6 @@ base_do_compile() {
 		oenote "nothing to compile"
 	fi
 }
-
 
 addtask install after do_compile
 do_install[dirs] = "${D} ${S} ${B}"
@@ -383,11 +387,13 @@ python () {
     if use_nls != None:
         bb.data.setVar('USE_NLS', use_nls, d)
 
+    setup_checksum_deps(d)
+
     # Git packages should DEPEND on git-native
     srcuri = bb.data.getVar('SRC_URI', d, 1)
     if "git://" in srcuri:
         depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
-        depends = depends + " git-native:do_populate_staging"
+        depends = depends + " git-native:do_populate_sysroot"
         bb.data.setVarFlag('do_fetch', 'depends', depends, d)
 
     # unzip-native should already be staged before unpacking ZIP recipes
@@ -396,7 +402,7 @@ python () {
 
     if ".zip" in src_uri or need_unzip == "1":
         depends = bb.data.getVarFlag('do_unpack', 'depends', d) or ""
-        depends = depends + " unzip-native:do_populate_staging"
+        depends = depends + " unzip-native:do_populate_sysroot"
         bb.data.setVarFlag('do_unpack', 'depends', depends, d)
 
     # 'multimachine' handling

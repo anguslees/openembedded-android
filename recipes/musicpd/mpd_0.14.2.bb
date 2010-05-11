@@ -9,7 +9,7 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/musicpd/mpd-${PV}.tar.bz2 \
 	   file://mpd/mpd.conf \
            file://mpd/mpd.init"
 
-PR = "r4"
+PR = "r5"
 
 inherit autotools update-rc.d
 INITSCRIPT_NAME = "mpd"
@@ -45,3 +45,6 @@ do_install_append() {
     install -m 644 ${WORKDIR}/mpd/mpd.conf ${D}${sysconfdir}/mpd.conf
 }
 
+
+SRC_URI[md5sum] = "66817a4b4c05454e6488f6b821f2a6a3"
+SRC_URI[sha256sum] = "0b3926a141873f179efc3c3b9d296b65d332dbb898340ac5e5d1dd0c3dd9fb20"

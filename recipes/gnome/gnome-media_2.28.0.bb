@@ -15,10 +15,6 @@ do_configure_prepend() {
 	sed -i 's/^\(SUBDIRS = .*\)\(doc\|help\)/\1/' */Makefile.am
 }
 
-do_stage() {
-	autotools_stage_all
-}
-
 do_install_append() {
 	rm ${D}${libdir}/libglade/2.0/libgnome-media-profiles.la
 }
@@ -28,3 +24,6 @@ FILES_${PN} += "${libdir}/libglade/2.0/libgnome-media-profiles.so \
 		${datadir}/gnome-sound-recorder"
 
 FILES_${PN}-dbg += "${libdir}/libglade/2.0/.debug"
+
+SRC_URI[archive.md5sum] = "1a1dc2638012d47f67c0ccac9e3ac719"
+SRC_URI[archive.sha256sum] = "f715947e42f166c4dba1caeb36f897018d638fcd8031fbc2f077e0cd1d6a1a55"

@@ -2,9 +2,11 @@ DESCRIPTION = "Flex is a tool for generating programs that recognize lexical pat
 SECTION = "devel"
 LICENSE = "BSD"
 
+DEPENDS = "gettext"
+
 S = "${WORKDIR}/flex-${PV}"
 
-inherit autotools
+inherit autotools gettext
 
 # >> flex-2.5.31-r4: /usr/lib/libfl.a
 # That one is a special case: it wants to stay in the main flex package,

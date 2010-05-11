@@ -19,15 +19,15 @@ FILES_kernel-image = "/boot/zImage.elf"
 export OS = "Linux"
 ARCH = "ppc"
 
-do_stage_append () {
+do_install_append () {
 #need ppc platforms includes + friends in order for external kernel modules to compile as headers as still split
 
-       install -d ${STAGING_KERNEL_DIR}/arch/
-       cp -pPR arch/ppc ${STAGING_KERNEL_DIR}/arch/
-       cp -pPR arch/powerpc ${STAGING_KERNEL_DIR}/arch/
+       install -d $kerneldir/arch/
+       cp -pPR arch/ppc $kerneldir/arch/
+       cp -pPR arch/powerpc $kerneldir/arch/
 
-       cp -pPR include/asm-powerpc ${STAGING_KERNEL_DIR}/include/
-       cp -pPR include/asm-ppc ${STAGING_KERNEL_DIR}/include/
+       cp -pPR include/asm-powerpc $kerneldir/include/
+       cp -pPR include/asm-ppc $kerneldir/include/
 }
 
 do_install_append () {
@@ -52,3 +52,6 @@ pkg_postrm_kernel () {
 
 
 
+
+SRC_URI[md5sum] = "34b0f354819217e6a345f48ebbd8f13e"
+SRC_URI[sha256sum] = "2c14ada1ac7d272e03b430d3a530d60fc9ec69cc8252382aa049afba7d2b8558"

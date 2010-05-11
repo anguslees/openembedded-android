@@ -1,14 +1,15 @@
 DEFAULT_PREFERENCE = "-999"
 ARM_INSTRUCTION_SET = "arm"
 
-SRCREV = "156750"
+SRCREV = "158653"
 
 require gcc-common.inc
 
 DEPENDS = "mpfr gmp libmpc"
+NATIVEDEPS = "mpfr-native gmp-native libmpc-native"
 
-BINV = "4.5.0"
-PV = "4.5+svnr${SRCPV}"
+BINV = "4.6.0"
+PV = "4.6+svnr${SRCPV}"
 
 FILESPATHPKG .= ":gcc-svn"
 
@@ -27,6 +28,9 @@ JAVA = ""
 EXTRA_OECONF_BASE = " --enable-libssp \
 		      --disable-bootstrap --disable-libgomp \
 		      --disable-libmudflap"
+
+EXTRA_OECONF_INITIAL = "--disable-libmudflap --disable-libgomp --disable-libssp --enable-decimal-float=no"
+EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-libssp"
 
 rename_srcdir (){
 	mv ${WORKDIR}/trunk ${WORKDIR}/gcc-${PV}

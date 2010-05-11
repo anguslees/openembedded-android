@@ -5,7 +5,7 @@ SECTION = "libs"
 PRIORITY = "optional"
 NOTES = "Needs to be stripped down to: ascii iso8859-1 eucjp iso-2022jp gb utf8"
 PROVIDES = "virtual/libiconv"
-PR = "r4"
+PR = "r5"
 LICENSE = "LGPL"
 SRC_URI = "ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-${PV}.tar.gz"
 
@@ -33,3 +33,6 @@ do_stage () {
 	oe_libinstall -so -a -C libcharset/lib libcharset ${STAGING_LIBDIR}
 	autotools_stage_includes
 }
+
+SRC_URI[md5sum] = "b77a17e4a5a817100ad4b2613935055e"
+SRC_URI[sha256sum] = "fbf5b9a63ea6e3abebfabc04506f0e18a2860071031e34ea4ad4f450b8c43d4b"

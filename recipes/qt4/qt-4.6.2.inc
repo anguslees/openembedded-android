@@ -16,6 +16,9 @@ SRC_URI = "ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-${PV}.
            file://linux.conf \
            "
 
+# Set necessary variables in the profile
+SRC_URI += "file://qte.sh"
+
 S = "${WORKDIR}/qt-everywhere-opensource-src-${PV}"
 
 do_configure_prepend() {
@@ -40,6 +43,11 @@ QT_GLFLAGS ?= ""
 QT_CONFIG_FLAGS += " -no-rpath -qt3support -reduce-relocations -silent ${QT_GLFLAGS}"
 
 do_compile() {
+    # Fixup missing wsegl header in some SGX SDKs
+    if ! [ -e ${STAGING_INCDIR}/wsegl.h ] ; then
+        cp src/3rdparty/powervr/wsegl.h src/plugins/gfxdrivers/powervr/QWSWSEGL/
+    fi
+
     unset CFLAGS CXXFLAGS
     oe_runmake ${EXTRA_ENV}
 }
@@ -54,3 +62,6 @@ do_install_append() {
 LICENSE = "LGPLv2.1 GPLv3"
 SRC_URI += " \
             file://hack-out-pg_config.patch;patch=1"
+
+SRC_URI[md5sum] = "eb651ee4b157c01696aa56777fc6e0e5"
+SRC_URI[sha256sum] = "176f51ddb06dce67ab4b2efc6b327dc21ed8f764c5d97acc15ff1f907c2affae"

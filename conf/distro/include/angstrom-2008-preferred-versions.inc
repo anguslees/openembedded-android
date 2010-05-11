@@ -1,11 +1,14 @@
 ANGSTROM_QT_VERSION ?= "4.6.2"
+CE_VERSION ?= "2.25.01"
+
+require conf/distro/include/angstrom-codec-engine-${CE_VERSION}-preferred-versions.inc
 
 PREFERRED_VERSION_autoconf = "2.65"
 PREFERRED_VERSION_autoconf-native = "2.65"
 PREFERRED_VERSION_automake-native = "1.10.3"
 PREFERRED_VERSION_busybox 	= "1.13.2"
 PREFERRED_VERSION_cairo		= "1.8.10"
-PREFERRED_VERSION_dbus 		= "1.2.22"
+PREFERRED_VERSION_dbus 		= "1.2.24"
 PREFERRED_VERSION_dropbear      = "0.51"
 PREFERRED_VERSION_fontconfig	= "2.8.0"
 PREFERRED_VERSION_glib-2.0 	= "2.24.0"
@@ -54,7 +57,7 @@ UDEV_GE_141 = "1"
 PREFERRED_VERSION_usbutils = "0.86"
 PREFERRED_VERSION_wpa-supplicant = "0.6.9"
 PREFERRED_VERSION_wget = "1.11.4"
-PREFERRED_VERSION_xserver-common = "1.32"
+PREFERRED_VERSION_xserver-common = "1.33"
 PREFERRED_VERSION_xserver-kdrive = "1.4.0.90"
 
 #
@@ -71,6 +74,4 @@ SRCREV_pn-mozilla-headless-services ?= "c7873654894af6c7c6c01194d6185db46667b81f
 SRCREV_pn-mutter ?= "aff4cf110307e149d3497d20543cde27b9699758"
 SRCREV_pn-twitter-glib ?= "849bec29292df88590e0b2898b50b9b8d766817e"
 SRCREV_pn-xf86-video-psb ?= "b6b3bba06fe5a3fe0b1bd6e31a7369dd83812bab"
-
-
 

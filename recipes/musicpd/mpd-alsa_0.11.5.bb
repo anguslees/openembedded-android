@@ -5,7 +5,7 @@ LICENSE = "GPLv2"
 DEPENDS = "libvorbis libogg libao-alsa zlib libmikmod flac audiofile virtual/libiconv \
            ${@base_conditional('ENTERPRISE_DISTRO', '1', '', 'libmad libid3tag', d)}"
 RDEPENDS = "libao-alsa"
-PR = "r4"
+PR = "r5"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/musicpd/mpd-${PV}.tar.gz \
            file://mpd/save-volume-state.patch;patch=1 file://mpd/mpd.init"
@@ -38,3 +38,6 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 755 ${WORKDIR}/mpd/mpd.init ${D}${sysconfdir}/init.d/mpd
 }
+
+SRC_URI[md5sum] = "1a9a1a9d31f00a43838b3752024f7ebe"
+SRC_URI[sha256sum] = "30e454514ef84f65162182b7cbcd0e46fdda4c99111ac500b5b2df7678ca10fd"

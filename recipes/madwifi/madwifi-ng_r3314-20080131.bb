@@ -2,7 +2,7 @@
 
 # Disable stripping of kernel modules, since this action strips too
 # much out, and the resulting module won't load.
-INHIBIT_PACKAGE_STRIP = "1"
+PACKAGE_STRIP = "no"
 
 require madwifi-ng_r.inc
 
@@ -12,3 +12,6 @@ SRC_URI += " \
 
 # PR set after the include, to override what's set in the included file.
 PR = "r6"
+
+SRC_URI[md5sum] = "2c7352cbbdac995de8c3bce5b80db5f2"
+SRC_URI[sha256sum] = "0599c75b95ba63bdc554cb8124192e62c75fbeb71b9e8a5a7bc351c8e0666758"

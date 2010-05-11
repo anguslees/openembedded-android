@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r51"
+PR = "r56"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -64,7 +64,6 @@ RDEPENDS_${PN} += "\
 		pingus \
 		openmoocow \
 		python-pygame \
-		mokoko \
 #		exhibit \
 		obexpush \
 		obexftp \
@@ -95,7 +94,7 @@ RDEPENDS_${PN} += "\
 		intone \
 		vim \
 		vpnc \
-#		emacs \
+		emacs-x11 \
 		mcabber \
 		gdb \
 		oh-puzzles \
@@ -206,7 +205,6 @@ RDEPENDS_${PN} += "\
 #		msn-pecan \
 		qwo \
 		fso-apm \
-		fso-abyss \
 		fsousaged \
 		fsodeviced \
 		fsonetworkd \
@@ -274,16 +272,20 @@ RDEPENDS_${PN} += "\
 		qi \
 		qi-ubi \
 		wpa-gui \
+		iliwi \
 		gabriel \
 		stopwatch \
 		qgpslog \
 		litephone \
+		linphone \
 		rtmom \
 		ventura \
 		emtooth \
 		podboy \
 		mcnavi \
 		neolight \
+		spojegui \
+		dbus-daemon-proxy \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

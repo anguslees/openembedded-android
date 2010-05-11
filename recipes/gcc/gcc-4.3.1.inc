@@ -6,10 +6,11 @@ require gcc-common.inc
 LICENSE = "GPLv3"
 
 DEPENDS = "mpfr gmp"
+NATIVEDEPS = "mpfr-native gmp-native"
 
 INC_PR = "r20"
 
-SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2 \
+SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://fedora/gcc43-c++-builtin-redecl.patch;patch=1;pnum=0 \
 	file://fedora/gcc43-ia64-libunwind.patch;patch=1;pnum=0 \
 	file://fedora/gcc43-java-nomulti.patch;patch=1;pnum=0 \
@@ -71,4 +72,8 @@ JAVA = ""
 FORTRAN_linux-gnueabi = ",fortran"
 
 EXTRA_OECONF_BASE = "  --enable-cheaders=c_std --enable-libssp --disable-bootstrap --disable-libgomp --disable-libmudflap"
+EXTRA_OECONF_INITIAL = "--disable-libmudflap --disable-libgomp --disable-libssp --enable-decimal-float=no"
+EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-libssp"
 
+SRC_URI[archive.md5sum] = "4afa0290cc3a41ac8822666f1110de98"
+SRC_URI[archive.sha256sum] = "66596b80995f88cb66aaaf937598df7a9af10cc06799c3a7a64879e20b552fd5"

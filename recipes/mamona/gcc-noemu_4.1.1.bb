@@ -57,7 +57,7 @@ JAVA_arm = ""
 JAVA = ""
 
 LANGUAGES = "c,c++${FORTRAN}${JAVA}"
-require recipes/gcc/gcc-${PV}.inc
+require ../gcc/gcc-${PV}.inc
 
 EXTRA_OECONF += "--disable-libspp --with-slibdir=\"/lib\""
 
@@ -83,3 +83,6 @@ do_configure () {
     export CXXFLAGS="-fexpensive-optimizations -fomit-frame-pointer -frename-registers -Os -fpermissive -fvisibility-inlines-hidden"
     oe_runconf
 }
+
+SRC_URI[md5sum] = "ad9f97a4d04982ccf4fd67cb464879f3"
+SRC_URI[sha256sum] = "985cbb23a486570a8783395a42a8689218f5218a0ccdd6bec590eef341367bb7"

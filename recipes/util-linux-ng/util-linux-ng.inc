@@ -2,13 +2,13 @@ DESCRIPTION = "Util-linux-ng is a suite of essential utilities for any Linux sys
 SECTION = "base"
 LICENSE = "GPL"
 DEPENDS = "udev zlib ncurses virtual/libintl"
-DEPENDS_virtclass-native = "zlib-native ncurses-native lzo-native"
+DEPENDS_virtclass-native = "zlib-native ncurses-native lzo-native gettext-native"
 
-inherit autotools
+inherit autotools gettext
 
 DEFAULT_PREFERENCE = "-1"
 
-INC_PR = "r20"
+INC_PR = "r23"
 
 # allows for a release candidate
 RC ?= ""
@@ -53,7 +53,7 @@ FILES_util-linux-ng-umount = "${base_bindir}/umount.${PN}"
 # Moved to ${base_sbindir} by do_install:
 FILES_util-linux-ng-readprofile = "${base_sbindir}/readprofile.${PN}"
 FILES_util-linux-ng-fsck = "${base_sbindir}/fsck.${PN}"
-FILES_util-linux-ng-blkid = "${sbindir}/blkid"
+FILES_util-linux-ng-blkid = "${base_sbindir}/blkid.${PN}"
 FILES_${PN}-mountall = "${sysconfdir}/default/mountall.${PN}"
 
 RREPLACES_util-linux-ng-blkid = "e2fsprogs-blkid"
@@ -124,8 +124,8 @@ do_install () {
 	mkdir -p ${D}${base_bindir}
 
         sbinprogs="agetty blockdev ctrlaltdel cfdisk vipw vigr"
-        sbinprogs_a="pivot_root hwclock mkswap shutdown mkfs.minix fsck.minix losetup swapon fdisk readprofile fsck"
-        usrbinprogs_a="chfn chsh hexdump last logger mesg newgrp renice wall"
+        sbinprogs_a="pivot_root hwclock mkswap shutdown mkfs.minix fsck.minix losetup swapon fdisk readprofile fsck blkid"
+        usrbinprogs_a="chfn chsh hexdump last logger mesg newgrp renice wall setsid chrt"
         binprogs_a="dmesg kill more umount mount login reset"
 
         if [ "${base_sbindir}" != "${sbindir}" ]; then
@@ -208,6 +208,8 @@ pkg_postinst_${PN} () {
 	update-alternatives --install ${base_sbindir}/vipw vipw vipw.${PN} 100
 	update-alternatives --install ${base_sbindir}/vigr vigr vigr.${PN} 100
 	update-alternatives --install ${bindir}/reset reset reset.${PN} 100
+	update-alternatives --install ${bindir}/setsid setsid setsid.${PN} 100
+	update-alternatives --install ${bindir}/chrt chrt chrt.${PN} 100
 	
 	# There seems to be problem, atleast on nslu2, with these, until they are
 	# fixed the busybox ones have higher priority
@@ -289,6 +291,14 @@ pkg_postinst_util-linux-ng-fsck () {
 
 pkg_prerm_util-linux-ng-fsck () {
 	update-alternatives --remove fsck fsck.${PN}
+}
+
+pkg_postinst_util-linux-ng-blkid () {
+	update-alternatives --install ${base_sbindir}/blkid blkid blkid.${PN} 100
+}
+
+pkg_prerm_util-linux-ng-blkid () {
+	update-alternatives --remove blkid blkid.${PN}
 }
 
 BBCLASSEXTEND = "native"

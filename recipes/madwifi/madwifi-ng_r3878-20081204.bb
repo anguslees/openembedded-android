@@ -7,7 +7,7 @@ DEFAULT_PREFERENCE_slugos = "1"
 
 # Disable stripping of kernel modules, since this action strips too
 # much out, and the resulting module won't load.
-INHIBIT_PACKAGE_STRIP = "1"
+PACKAGE_STRIP = "no"
 
 require madwifi-ng_r.inc
 
@@ -29,3 +29,6 @@ do_compile() {
 	unset LDFLAGS
 	oe_runmake all
 }
+
+SRC_URI[md5sum] = "bf12d0f9f306dad91bf7530586712dee"
+SRC_URI[sha256sum] = "3b8ea233bee05edc346c66577b6beb5ccc81db9d9440982624d7b39aecc79c77"

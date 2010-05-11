@@ -1,7 +1,7 @@
 LICENSE = "GPL/LGPL"
 DEPENDS = "librsvg libwnck totem-pl-parser libgtop gnome-panel gnome-desktop eds-dbus python-pygtk gnome-python libgnomeprint libgnomeprintui"
 
-PR = "r4"
+PR = "r5"
 
 inherit gnome distutils-base
 
@@ -20,9 +20,7 @@ do_configure_prepend() {
 	${S}/configure.ac
 }	
 
-AUTOTOOLS_STAGE_PKGCONFIG = "1"
-do_stage() {
-	autotools_stage_all
-}	
-
 FILES_${PN}-dev += "${datadir}/pygtk"
+
+SRC_URI[archive.md5sum] = "fbcf4ef5ec4a8c4eec4d390c5889c80f"
+SRC_URI[archive.sha256sum] = "400a5401a591e271c3357d0a8cb05a7927b4c218130497d06f75df9763d4efd8"

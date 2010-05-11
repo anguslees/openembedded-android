@@ -1,5 +1,5 @@
 LICENSE = "MIT"
-do_unpack[depends] += "unzip-native:do_populate_staging"
+do_unpack[depends] += "unzip-native:do_populate_sysroot"
 
 PR = "r1"
 
@@ -26,3 +26,6 @@ do_install() {
 	oe_runmake INSTALLDIR="${D}${libdir}" INCDIR="${D}${includedir}" install
 }
 
+
+SRC_URI[md5sum] = "ad1db36414391417654ba7bf1c0277d3"
+SRC_URI[sha256sum] = "84021b8c0b86e5801479474ad9a99c18d121508ee16d363e02ddcbf24195340c"

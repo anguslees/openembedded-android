@@ -13,7 +13,7 @@ RDEPENDS = "bash"
 SRC_URI = "http://download.berlin.freifunk.net/meshcube.org/nylon/stable/sources/${PN}_gruen.4g__${SRCDATE}.tar.gz \
 	file://firewall-bash.diff;patch=1"
 S = "${WORKDIR}/${PN}"
-INHIBIT_PACKAGE_STRIP = "1"
+PACKAGE_STRIP = "no"
 
 do_install() {
 	install -d -m 755 ${D}
@@ -59,3 +59,6 @@ update-rc.d dummydate remove
 
 CONFFILES_${PN} = "/etc/nylon/backup.list /etc/nylon/hostap.conf /etc/nylon/check-process.list \
 	/etc/nylon/interfaces.conf /etc/nylon/route.list /etc/nylon/wds-bridge.conf"
+
+SRC_URI[md5sum] = "20b1b08f4fea0d18b5ac3179656b6e5d"
+SRC_URI[sha256sum] = "4439ff69bfd0051a51304390619f0392ccb59f606b383d01fbebd554c8eeaf57"

@@ -11,7 +11,7 @@ DEPENDS = "ixp4xx-npe-native"
 
 SRC_URI = "http://You-Have-To-Download-The-Microcode-Manually-So-Please-Read-ixp4xx-npe_2.4.bb-For-Instructions/IPL_ixp400NpeLibrary-2_4.zip \
            file://Intel"
-do_unpack[depends] += "unzip-native:do_populate_staging"
+do_unpack[depends] += "unzip-native:do_populate_sysroot"
 S = "${WORKDIR}/ixp400_xscale_sw/src/npeDl"
 
 COMPATIBLE_MACHINE = "(nslu2|ixp4xx|kixrp435)"
@@ -40,3 +40,6 @@ do_stage() {
 	install ${S}/NPE-C ${STAGING_FIRMWARE_DIR}/
 }
 
+
+SRC_URI[md5sum] = "9a6dc3846041b899edf9eff8a906fb11"
+SRC_URI[sha256sum] = "f764d0554e236357fc55d128a012cb6ac2ceb638023f4af88c8f509511f209fd"

@@ -6,6 +6,7 @@ require gcc-common.inc
 LICENSE = "GPLv3"
 
 DEPENDS = "mpfr gmp"
+NATIVEDEPS = "mpfr-native gmp-native"
 
 INC_PR = "r0"
 
@@ -35,6 +36,9 @@ JAVA = ""
 EXTRA_OECONF_BASE = " --enable-libssp \
 		      --disable-bootstrap --disable-libgomp \
 		      --disable-libmudflap"
+
+EXTRA_OECONF_INITIAL = "--disable-libmudflap --disable-libgomp --disable-libssp --enable-decimal-float=no"
+EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-libssp"
 
 EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "

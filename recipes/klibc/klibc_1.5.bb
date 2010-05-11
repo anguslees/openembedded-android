@@ -1,4 +1,3 @@
-require klibc_1.5.inc
-PR = "r10"
-
-KLIBC_FETCHDIR = "Stable"
+require klibc.inc
+require klibc_${PV}.inc
+PR = "${INC_PR}.0"
