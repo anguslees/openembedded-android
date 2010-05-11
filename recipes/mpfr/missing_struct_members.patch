@@ -1,0 +1,31 @@
+*** mpfr-2.3.1/configure.in~	Tue Jan 29 19:48:51 2008
+--- mpfr-2.3.1/configure.in	Tue May 11 12:44:00 2010
+***************
+*** 249,254 ****
+--- 249,256 ----
+  AC_C_VOLATILE
+  MPFR_CONFIGS
+  
++ AC_CHECK_MEMBERS([struct lconv.decimal_point])
++ 
+  dnl
+  dnl Setup LIBTOOL
+  dnl
+
+*** mpfr-2.3.1/mpfr-impl.h~	Wed Jan 23 23:14:35 2008
+--- mpfr-2.3.1/mpfr-impl.h	Tue May 11 12:45:29 2010
+***************
+*** 966,972 ****
+--- 966,976 ----
+    } while (0)
+  
+  /* Needs <locale.h> */
++ #ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+  #define MPFR_DECIMAL_POINT ((unsigned char) localeconv()->decimal_point[0])
++ #else
++ #define MPFR_DECIMAL_POINT "."
++ #endif
+  
+  /* Set y to s*significand(x)*2^e, for example MPFR_ALIAS(y,x,1,MPFR_EXP(x))
+     sets y to |x|, and MPFR_ALIAS(y,x,MPFR_SIGN(x),0) sets y to x*2^f such
+
