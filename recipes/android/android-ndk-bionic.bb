@@ -1,7 +1,7 @@
 DESCRIPTION = "Android bionic C library (prebuilt)"
 SECTION = "libs"
 LICENSE = "BSD"  # ?
-PV = 1.6
+PV = 3
 
 require android-ndk_${PV}.inc
 
