@@ -1,12 +1,12 @@
-# Codec engine needs a specific set of version of its dependencies, so we specify them here:
-# - using edma-lld 01.11.00.03 (instead of 01.11.00.02) to fix installer issue.
+# This is the latest set of 'GA'd (Production Release) TI components
+#
 
 PREFERRED_VERSION_ti-codec-engine = "2_25_02_11"
 PREFERRED_VERSION_ti-codec-engine-examples = "2_25_02_11"
 
 PREFERRED_VERSION_ti-biosutils = "1_02_02"
-PREFERRED_VERSION_ti-cgt6x = "6_1_5"
-PREFERRED_VERSION_ti-dspbios = "5_41_00_06"
+PREFERRED_VERSION_ti-cgt6x = "6_1_14"
+PREFERRED_VERSION_ti-dspbios = "5_41_03_17"
 PREFERRED_VERSION_ti-dsplink = "1_64"
 PREFERRED_VERSION_ti-dsplink-examples = "1_64"
 PREFERRED_VERSION_ti-dsplink-module = "1_64"
@@ -17,7 +17,7 @@ PREFERRED_VERSION_ti-local-power-manager = "1_24_02_09"
 PREFERRED_VERSION_ti-lpm-module = "1_24_02_09"
 PREFERRED_VERSION_ti-lpm-utils = "1_24_02_09"
 PREFERRED_VERSION_ti-xdais = "6_25_02_11"
-PREFERRED_VERSION_ti-xdctools = "3_16_00_18"
+PREFERRED_VERSION_ti-xdctools = "3_16_03_36"
 
 PREFERRED_VERSION_ti-codecs-dm355 = "1_13_000"
 PREFERRED_VERSION_ti-codecs-dm355-server = "1_13_000"
