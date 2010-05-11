@@ -1,6 +1,8 @@
 require gdb-cross.inc
 LICENSE = "GPLv2"
 
+inherit cross
+
 PR = "r1"
 
 SRC_URI[md5sum] = "7dc98022ee96bba5331f195dc8a5491a"
