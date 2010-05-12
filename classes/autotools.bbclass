@@ -129,7 +129,7 @@ autotools_do_configure() {
 			    oenote Executing glib-gettextize --force --copy
 			    echo "no" | glib-gettextize --force --copy
 			  fi
-			else if grep "^[[:space:]]*AM_GNU_GETTEXT" $CONFIGURE_AC >/dev/null; then
+			else if grep "^[[:space:]]*AM_GNU_GETTEXT" $CONFIGURE_AC >/dev/null && [ ${USE_NLS} = yes ]; then
 			  cp ${STAGING_DATADIR}/gettext/config.rpath ${S}/
 			fi
 
