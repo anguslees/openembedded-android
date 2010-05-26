@@ -1,7 +1,7 @@
 DESCRIPTION = "Android bionic C library (prebuilt)"
 SECTION = "libs"
 LICENSE = "BSD"  # ?
-PV = 3
+PV = 4
 
 require android-ndk_${PV}.inc
 
@@ -9,7 +9,7 @@ PN = "android-ndk-bionic"
 
 PACKAGES_prepend = "${PN}-thread-db "
 
-SRC_URI += "file://header-fixups.patch;patch=1"
+SRC_URI += "file://header-fixups-${ANDROID_PLATFORM}.patch;patch=1"
 
 INHIBIT_DEFAULT_DEPS = "1"
 LEAD_SONAME = "libc.so"

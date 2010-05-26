@@ -1,0 +1,147 @@
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/pthread.h	2009-07-29 10:26:01.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/pthread.h	2009-05-06 22:14:18.000000000 +1000
+@@ -197,6 +197,9 @@
+ 
+ int pthread_getcpuclockid(pthread_t  tid, clockid_t  *clockid);
+ 
++#include <errno.h>
++static __inline__ int pthread_cancel(pthread_t thread) { return ENOTSUP; }
++
+ int pthread_once(pthread_once_t  *once_control, void (*init_routine)(void));
+ 
+ typedef void  (*__pthread_cleanup_func_t)(void*);
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/sys/types.h	2009-07-29 10:26:01.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/sys/types.h	2009-05-06 08:22:14.000000000 +1000
+@@ -119,7 +119,9 @@
+ typedef uint32_t       u_int32_t;
+ typedef uint16_t       u_int16_t;
+ typedef uint8_t        u_int8_t;
++#if !defined(__STRICT_ANSI__)
+ typedef uint64_t       u_int64_t;
+ #endif
++#endif
+ 
+ #endif
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/wchar.h	2009-07-29 10:26:01.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/wchar.h	2010-03-09 19:00:53.000000000 +1100
+@@ -36,7 +36,6 @@
+ #include <stddef.h>
+ 
+ #include <stdarg.h>
+-#include <time.h>
+ #include <malloc.h>
+ 
+ #include <stddef.h>
+@@ -50,6 +49,8 @@
+ 
+ __BEGIN_DECLS
+ 
++struct tm;
++
+ typedef int                     wint_t;
+ typedef struct { int  dummy; }  mbstate_t;
+ 
+
+***************
+*** 71,78 ****
+--- 71,82 ----
+      WC_TYPE_MAX
+  } wctype_t;
+  
++ #ifndef WCHAR_MAX
+  #define  WCHAR_MAX   255
++ #endif
++ #ifndef WCHAR_MIN
+  #define  WCHAR_MIN   0
++ #endif
+  #define  WEOF        (-1)
+  
+  extern wint_t            btowc(int);
+
+*** android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Fri Jan  8 10:14:48 2010
+--- android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Wed Apr 14 08:46:20 2010
+***************
+*** 251,256 ****
+--- 251,263 ----
+  
+  #endif /* !__STDC_INT64__ */
+  
++ /* Also defined in wchar.h */
++ #ifndef WCHAR_MAX
++ #define  WCHAR_MAX   255
++ #endif
++ #ifndef WCHAR_MIN
++ #define  WCHAR_MIN   0
++ #endif
+  
+  /* size_t is defined by the GCC-specific <stddef.h> */
+  #ifndef _SSIZE_T_DEFINED_
+
+*** android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Wed Jul 29 10:26:01 2009
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Fri Apr 16 08:46:38 2010
+***************
+*** 0 ****
+--- 1,15 ----
++ #ifndef __CSTDDEF__
++ #define __CSTDDEF__
++ 
++ #include <stddef.h>
++ 
++ extern "C++" {
++ 
++ namespace std {
++     using ::size_t;
++     using ::ptrdiff_t;
++ }
++ 
++ }
++ 
++ #endif
+
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/new	Wed Jul 29 10:26:01 2009
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/new	Fri Apr 16 08:47:19 2010
+@@ -1,11 +1,11 @@
+ #ifndef __NEW__
+ #define __NEW__
+ 
+-#include <stddef.h>
++#include <cstddef>
+ 
+-namespace std {
+-    using ::size_t;
++extern "C++" {
+ 
++namespace std {
+     struct nothrow_t {};
+     extern const nothrow_t nothrow;
+ }
+@@ -26,4 +26,6 @@
+ inline void  operator delete(void*, void*) { }
+ inline void  operator delete[](void*, void*) { }
+ 
++}
++
+ #endif // __NEW__
+
+*** android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Wed Jul 29 10:26:01 2009
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Fri Apr 16 08:48:50 2010
+***************
+*** 1,6 ****
+--- 1,7 ----
+  #ifndef _TYPEINFO_HEADER_GAURD
+  #define _TYPEINFO_HEADER_GAURD
+  
++ extern "C++" {
+  
+  namespace std {
+      class type_info;
+***************
+*** 25,28 ****
+--- 26,31 ----
+      type_info & operator=(type_info const & right);
+  };
+  
++ }
++ 
+  #endif
+

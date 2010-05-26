@@ -1,7 +1,7 @@
 DESCRIPTION = "Android SDK tools"
 SECTION = "libs"
 LICENSE = "Apache"
-PV = "r05"
+PV = "r06"
 
 DEPENDS = "sed-native"
 RDEPENDS = "virtual/java-native"
@@ -11,8 +11,8 @@ inherit sdk
 INHIBIT_DEFAULT_DEPS = "1"
 
 SRC_URI = "http://dl.google.com/android/repository/tools_${PV}-${BUILD_OS}.zip;name=tools"
-SRC_URI[tools.md5sum] = "9e7df5d25237fb8cbdc08ce1d71905b3"
-SRC_URI[tools.sha256sum] = "b51a9c22734d4f0daa3faae793d970872dda5eb28c618b237ef5d233e68aaa93"
+SRC_URI[tools.md5sum] = "3d196f3b21027aade41da90cbbdf2f07"
+SRC_URI[tools.sha256sum] = "89d12faee15ada258f4c7419a1d6ed68dc6357fa6584c8ec66595d7c92de7415"
 
 S = "${WORKDIR}/tools_${PV}-${BUILD_OS}"
 
