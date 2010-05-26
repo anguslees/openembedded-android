@@ -1,0 +1,13 @@
+This setpwent serves no purpose?
+
+--- glib-2.24.0/glib/gutils.c~	2010-05-26 16:26:31.000000000 +1000
++++ glib-2.24.0/glib/gutils.c	2010-05-26 16:28:10.000000000 +1000
+@@ -1681,7 +1681,7 @@
+     
+     if (!pw)
+       {
+-	setpwent ();
++	/* setpwent (); */
+ 	pw = getpwuid (getuid ());
+ 	endpwent ();
+       }

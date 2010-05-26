@@ -1,7 +1,9 @@
 glib_cv_stack_grows=${glib_cv_stack_grows=no}
 glib_cv_uscore=${glib_cv_uscore=no}
-ac_cv_func_posix_getpwuid_r=${ac_cv_func_posix_getpwuid_r=yes}
-ac_cv_func_posix_getgrgid_r=${ac_cv_func_posix_getgrgid_r=yes}
+
+# in headers, but not in libc. boo.
+ac_cv_func_posix_getpwuid_r=${ac_cv_func_posix_getpwuid_r=no}
+ac_cv_func_posix_getgrgid_r=${ac_cv_func_posix_getgrgid_r=no}
 
 # bionic's locale.h is simply a stub
 ac_cv_header_locale_h=${ac_cv_header_locale_h=no}

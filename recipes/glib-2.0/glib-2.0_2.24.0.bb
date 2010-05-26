@@ -21,6 +21,7 @@ SRC_URI = "\
   file://gasync.patch \
   file://60_wait-longer-for-threads-to-die.patch \
   file://struct_checks.patch \
+  file://avoid-setpwent.patch \
 "
 
 SRC_URI[archive.md5sum] = "45a8bc697d07f859566c0b64c40382a8"
