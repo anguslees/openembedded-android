@@ -8,14 +8,14 @@ inherit autotools gettext
 
 DEFAULT_PREFERENCE = "-1"
 
-INC_PR = "r23"
+INC_PR = "r24"
 
 # allows for a release candidate
 RC ?= ""
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/utils/util-linux-ng/v${PV}/util-linux-ng-${PV}${RC}.tar.bz2;name=archive"
 
-SRC_URI_append_chinook-compat = " file://chinook_libtool.patch;patch=1 "
+SRC_URI_append_chinook-compat = " file://chinook_libtool.patch "
 
 PACKAGES =+ "${PN}-fdisk ${PN}-cfdisk ${PN}-sfdisk ${PN}-swaponoff \
 	     ${PN}-losetup ${PN}-umount ${PN}-mount ${PN}-readprofile \
@@ -71,7 +71,7 @@ EXTRA_OECONF = "--disable-use-tty-group --disable-makeinstall-chown \
 --with-fsprobe=builtin --enable-libuuid --enable-libblkid \
 --enable-fsck --enable-reset"
 
-LDFLAGS_append_libc-uclibc = " -lintl"
+LDFLAGS_append_libc-uclibc = "${@['',' -lintl'][bb.data.getVar('USE_NLS', d, 1) == 'yes']}"
 LDFLAGS_virtclass-native = "${BUILD_LDFLAGS}"
 
 S = "${WORKDIR}/util-linux-ng-${PV}${RC}"
