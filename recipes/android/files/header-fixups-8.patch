@@ -145,3 +145,43 @@
 + 
   #endif
 
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/netinet/in6.h	2010-05-15 05:18:31.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/netinet/in6.h	2010-05-27 08:44:08.000000000 +1000
+@@ -74,6 +74,9 @@
+ #define IPV6_ADDR_MC_SCOPE(a)	\
+ 	((a)->s6_addr[1] & 0x0f)
+ 
++#define IN6_IS_ADDR_MC_NODELOCAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&  \
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_NODELOCAL))
+ #define IN6_IS_ADDR_MC_LINKLOCAL(a)	\
+ 	(IN6_IS_ADDR_MULTICAST(a) &&  \
+ 	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_LINKLOCAL))
+@@ -83,6 +86,9 @@
+ #define IN6_IS_ADDR_MC_ORGLOCAL(a)     \
+ 	(IN6_IS_ADDR_MULTICAST(a) &&  \
+ 	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_ORGLOCAL))
++#define IN6_IS_ADDR_MC_GLOBAL(a)     \
++	(IN6_IS_ADDR_MULTICAST(a) &&  \
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_GLOBAL))
+ 
+ 
+ #define IN6_ARE_ADDR_EQUAL(a, b)			\
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/pthread.h	2010-05-26 11:32:12.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/pthread.h	2010-05-27 18:49:49.000000000 +1000
+@@ -165,10 +165,11 @@
+ int pthread_mutex_trylock(pthread_mutex_t *mutex);
+ int pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec*  ts);
+ 
+-int pthread_condattr_init(pthread_condattr_t *attr);
+-int pthread_condattr_getpshared(pthread_condattr_t *attr, int *pshared);
+-int pthread_condattr_setpshared(pthread_condattr_t* attr, int pshared);
+-int pthread_condattr_destroy(pthread_condattr_t *attr);
++#include <errno.h>
++static __inline__ int pthread_condattr_init(pthread_condattr_t *attr) {}
++static __inline__ int pthread_condattr_getpshared(pthread_condattr_t *attr, int *pshared) { *pshared = 0; }
++static __inline__ int pthread_condattr_setpshared(pthread_condattr_t* attr, int pshared) { return EINVAL; }
++static __inline__ int pthread_condattr_destroy(pthread_condattr_t *attr) {}
+ 
+ int pthread_cond_init(pthread_cond_t *cond,
+                       const pthread_condattr_t *attr);
