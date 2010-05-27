@@ -1,0 +1,13 @@
+--- faac/frontend/main.c~	2010-05-28 08:11:20.000000000 +1000
++++ faac/frontend/main.c	2010-05-28 08:12:51.000000000 +1000
+@@ -29,6 +29,10 @@
+ #include "config.h"
+ #endif
+ 
++#ifdef __ANDROID__
++#define __unix__ 1
++#endif
++
+ #ifdef HAVE_LIBMP4V2
+ # include <mp4.h>
+ #endif
