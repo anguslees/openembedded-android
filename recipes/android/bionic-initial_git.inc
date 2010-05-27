@@ -29,7 +29,7 @@ GIT_TAG = "android-${PV}"
 
 SRC_URI = "\
     git://android.git.kernel.org/platform/bionic.git;tag=${GIT_TAG};protocol=git \
-    file://bionic-fixes.patch;patch=1 \
+    file://bionic-fixes.patch \
     "
 S = "${WORKDIR}/git"
 

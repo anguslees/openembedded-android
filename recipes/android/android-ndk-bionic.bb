@@ -9,7 +9,7 @@ PN = "android-ndk-bionic"
 
 PACKAGES_prepend = "${PN}-thread-db "
 
-SRC_URI += "file://header-fixups-${ANDROID_PLATFORM}.patch;patch=1"
+SRC_URI += "file://header-fixups-${ANDROID_PLATFORM}.patch"
 
 INHIBIT_DEFAULT_DEPS = "1"
 LEAD_SONAME = "libc.so"
