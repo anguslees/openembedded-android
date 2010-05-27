@@ -1,0 +1,15 @@
+--- schroedinger-1.0.9/configure.ac~	2010-05-27 10:16:45.000000000 +1000
++++ schroedinger-1.0.9/configure.ac	2010-05-27 10:17:21.000000000 +1000
+@@ -79,7 +79,11 @@
+ AC_SUBST(THREAD_IMPL)
+ 
+ if test "x${with_thread}" = "xpthread" ; then
+-  case "$host_os" in 
++  case "$host_os:$host_vendor" in 
++    *:android)
++      PTHREAD_CFLAGS=
++      PTHREAD_LIBS=
++      ;;
+     *)
+       PTHREAD_CFLAGS=
+       PTHREAD_LIBS=-lpthread
