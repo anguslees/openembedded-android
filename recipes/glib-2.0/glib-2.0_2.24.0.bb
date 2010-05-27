@@ -24,6 +24,8 @@ SRC_URI = "\
   file://avoid-setpwent.patch \
 "
 
+SRC_URI_append_android = "file://android-hacks.patch"
+
 SRC_URI[archive.md5sum] = "45a8bc697d07f859566c0b64c40382a8"
 SRC_URI[archive.sha256sum] = "7b6aa2cf21e734a6092a711bf196b8d2ddc589b971f93337610c10fa4f23400d"
 

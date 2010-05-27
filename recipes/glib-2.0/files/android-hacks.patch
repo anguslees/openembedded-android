@@ -1,0 +1,106 @@
+--- glib-2.24.0/gio/gunixresolver.c~	2010-05-27 08:30:09.000000000 +1000
++++ glib-2.24.0/gio/gunixresolver.c	2010-05-27 08:31:06.000000000 +1000
+@@ -474,6 +474,7 @@
+ 		      gpointer             user_data)
+ {
+   GUnixResolver *gur = G_UNIX_RESOLVER (resolver);
++#ifndef __ANDROID__
+   GUnixResolverRequest *req;
+   _g_asyncns_query_t *qy;
+ 
+@@ -481,6 +482,7 @@
+   req = resolve_async (gur, qy, lookup_service_process, lookup_service_free,
+                        cancellable, callback, user_data, lookup_service_async);
+   req->u.service.service = g_strdup (rrname);
++#endif
+ }
+ 
+ static GList *
+--- glib-2.24.0/gio/glocalfileinfo.c~	2010-05-27 08:32:41.000000000 +1000
++++ glib-2.24.0/gio/glocalfileinfo.c	2010-05-27 08:34:01.000000000 +1000
+@@ -1102,6 +1102,7 @@
+       if (pwbufp->pw_name != NULL && pwbufp->pw_name[0] != 0)
+ 	data->user_name = convert_pwd_string_to_utf8 (pwbufp->pw_name);
+ 
++#ifdef HAVE_STRUCT_PASSWD_PW_GECOS
+       gecos = pwbufp->pw_gecos;
+ 
+       if (gecos)
+@@ -1111,6 +1112,7 @@
+ 	    *comma = 0;
+ 	  data->real_name = convert_pwd_string_to_utf8 (gecos);
+ 	}
++#endif
+     }
+ 
+   /* Default fallbacks */
+--- glib-2.24.0/gio/gresolver.c~	2010-05-27 08:26:55.000000000 +1000
++++ glib-2.24.0/gio/gresolver.c	2010-05-27 08:27:22.000000000 +1000
+@@ -205,7 +205,9 @@
+       if (st.st_mtime != resolver->priv->resolv_conf_timestamp)
+         {
+           resolver->priv->resolv_conf_timestamp = st.st_mtime;
++#ifndef __ANDROID__
+           res_init ();
++#endif
+           g_signal_emit (resolver, signals[RELOAD], 0);
+         }
+     }
+@@ -801,6 +803,9 @@
+                                     gint              herr,
+                                     GError          **error)
+ {
++#ifdef __ANDROID__
++  return NULL;
++#else
+   gint count;
+   gchar namebuf[1024];
+   guchar *end, *p;
+@@ -875,6 +880,7 @@
+     }
+ 
+   return g_srv_target_list_sort (targets);
++#endif
+ }
+ #elif defined(G_OS_WIN32)
+ /* Private method to process a DnsQuery response into GSrvTargets */
+--- glib-2.24.0/gio/libasyncns/asyncns.c~	2010-05-27 08:24:40.000000000 +1000
++++ glib-2.24.0/gio/libasyncns/asyncns.c	2010-05-27 08:22:58.000000000 +1000
+@@ -597,6 +597,9 @@
+ 
+         case REQUEST_RES_QUERY:
+         case REQUEST_RES_SEARCH: {
++#ifdef __ANDROID__
++	    return -1;
++#else
+             int ret;
+             HEADER answer[BUFSIZE/sizeof(HEADER) + 1];
+             const res_request_t *res_req = &packet->res_request;
+@@ -613,6 +616,7 @@
+                 ret = res_search(dname, res_req->class, res_req->type, (unsigned char *) answer, BUFSIZE);
+ 
+             return send_res_reply(out_fd, req->id, (unsigned char *) answer, ret, errno, h_errno);
++#endif
+         }
+ 
+         case REQUEST_TERMINATE:
+@@ -690,7 +694,7 @@
+         goto fail;
+ 
+ #ifdef PR_SET_PDEATHSIG
+-    if (prctl(PR_SET_PDEATHSIG, SIGTERM) >= 0)
++    if (prctl(PR_SET_PDEATHSIG, SIGTERM, 0, 0, 0) >= 0)
+         have_death_sig = 1;
+ #endif
+ 
+--- glib-2.24.0/gio/gthreadedresolver.c~	2010-05-27 08:28:30.000000000 +1000
++++ glib-2.24.0/gio/gthreadedresolver.c	2010-05-27 08:29:15.000000000 +1000
+@@ -526,7 +526,7 @@
+   DNS_RECORD *results;
+ #endif
+ 
+-#if defined(G_OS_UNIX)
++#if defined(G_OS_UNIX) && !defined(__ANDROID__)
+   len = res_query (req->u.service.rrname, C_IN, T_SRV, answer, sizeof (answer));
+   herr = h_errno;
+   req->u.service.targets = _g_resolver_targets_from_res_query (req->u.service.rrname, answer, len, herr, error);
