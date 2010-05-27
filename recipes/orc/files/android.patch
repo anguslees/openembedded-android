@@ -1,0 +1,19 @@
+--- orc-0.4.4/configure.ac~	2010-05-27 09:37:26.000000000 +1000
++++ orc-0.4.4/configure.ac	2010-05-27 09:38:23.000000000 +1000
+@@ -84,14 +84,14 @@
+   AS_COMPILER_FLAG(-Werror, ORC_CFLAGS="$ORC_CFLAGS -Werror")
+ fi
+ 
+-case "${host_os}" in
++case "${host_os}:${host_vendor}" in
+   nobody_is_using_this_currently)
+     AC_DEFINE(HAVE_CODEMEM_MALLOC, 1, [Use malloc to allocate code for execution])
+     ;;
+   mingw*|pw32*|cygwin*)
+     AC_DEFINE(HAVE_CODEMEM_VIRTUALALLOC, 1, [Use VirtualAlloc to allocate code for execution])
+     ;;
+-  linux*|darwin*|solaris*|netbsd*|freebsd*|openbsd*|kfreebsd*|gnu*)
++  linux*|darwin*|solaris*|netbsd*|freebsd*|openbsd*|kfreebsd*|gnu*|*android*)
+     AC_DEFINE(HAVE_CODEMEM_MMAP, 1, [Use mmap to allocate code for execution])
+     ;;
+   *)
