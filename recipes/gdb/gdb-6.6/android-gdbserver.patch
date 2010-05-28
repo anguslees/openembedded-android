@@ -1,0 +1,57 @@
+--- gdb-6.6/gdb/gdbserver/configure.ac~	2010-05-28 18:43:05.000000000 +1000
++++ gdb-6.6/gdb/gdbserver/configure.ac	2010-05-28 18:45:07.000000000 +1000
+@@ -40,7 +40,7 @@
+ 		 proc_service.h sys/procfs.h thread_db.h linux/elf.h dnl
+ 		 stdlib.h unistd.h dnl
+ 		 terminal.h sys/ioctl.h netinet/in.h sys/socket.h netdb.h dnl
+-		 netinet/tcp.h arpa/inet.h sys/wait.h)
++		 netinet/tcp.h arpa/inet.h sys/wait.h sys/dir.h sys/user.h)
+ 
+ AC_CHECK_DECLS(strerror)
+ 
+--- gdb-6.6/gdb/gdbserver/configure.srv~	2010-05-28 18:44:01.000000000 +1000
++++ gdb-6.6/gdb/gdbserver/configure.srv	2010-05-28 18:44:29.000000000 +1000
+@@ -18,7 +18,7 @@
+ # Input is taken from the "${target}" variable.
+ 
+ case "${target}" in
+-  arm*-*-linux*)	srv_regobj=reg-arm.o
++  arm*-*-linux*|arm-android-*)	srv_regobj=reg-arm.o
+ 			srv_tgtobj="linux-low.o linux-arm-low.o"
+ 			srv_linux_usrregs=yes
+ 			srv_linux_thread_db=yes
+--- gdb-6.6/gdb/gdbserver/linux-low.c~	2010-05-28 18:45:18.000000000 +1000
++++ gdb-6.6/gdb/gdbserver/linux-low.c	2010-05-28 18:46:52.000000000 +1000
+@@ -26,9 +26,13 @@
+ #include <sys/wait.h>
+ #include <stdio.h>
+ #include <sys/param.h>
++#ifdef HAVE_SYS_DIR_H
+ #include <sys/dir.h>
++#endif
+ #include <sys/ptrace.h>
++#ifdef HAVE_USER_H
+ #include <sys/user.h>
++#endif
+ #include <signal.h>
+ #include <sys/ioctl.h>
+ #include <fcntl.h>
+@@ -38,6 +42,10 @@
+ #include <errno.h>
+ #include <sys/syscall.h>
+ 
++#ifdef __ANDROID__
++#define __SIGRTMIN SIGRTMIN
++#endif
++
+ #ifndef PTRACE_GETSIGINFO
+ # define PTRACE_GETSIGINFO 0x4202
+ # define PTRACE_SETSIGINFO 0x4203
+@@ -1454,7 +1462,6 @@
+   = (((memaddr + len) - addr) + sizeof (PTRACE_XFER_TYPE) - 1) / sizeof (PTRACE_XFER_TYPE);
+   /* Allocate buffer of that many longwords.  */
+   register PTRACE_XFER_TYPE *buffer = (PTRACE_XFER_TYPE *) alloca (count * sizeof (PTRACE_XFER_TYPE));
+-  extern int errno;
+ 
+   if (debug_threads)
+     {

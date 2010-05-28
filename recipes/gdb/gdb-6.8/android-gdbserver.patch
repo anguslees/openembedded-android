@@ -1,0 +1,81 @@
+--- gdb-6.8/gdb/gdbserver/configure.ac~	2010-05-28 09:47:06.000000000 +1000
++++ gdb-6.8/gdb/gdbserver/configure.ac	2010-05-28 09:41:43.000000000 +1000
+@@ -40,7 +40,7 @@
+ 		 stdlib.h unistd.h dnl
+  		 errno.h fcntl.h signal.h sys/file.h malloc.h dnl
+ 		 sys/ioctl.h netinet/in.h sys/socket.h netdb.h dnl
+-		 netinet/tcp.h arpa/inet.h sys/wait.h)
++		 netinet/tcp.h arpa/inet.h sys/wait.h sys/dir.h sys/user.h)
+ AC_CHECK_FUNCS(pread pwrite pread64)
+ 
+ have_errno=no
+--- gdb-6.8/gdb/gdbserver/configure.srv~	2010-05-28 08:53:45.000000000 +1000
++++ gdb-6.8/gdb/gdbserver/configure.srv	2010-05-28 08:54:35.000000000 +1000
+@@ -26,7 +26,7 @@
+ # Input is taken from the "${target}" variable.
+ 
+ case "${target}" in
+-  arm*-*-linux*)	srv_tgtobj="linux-low.o linux-arm-low.o"
++  arm*-*-linux*|arm-android-*)	srv_tgtobj="linux-low.o linux-arm-low.o"
+ 			srv_linux_usrregs=yes
+ 			srv_linux_regsets=yes
+ 			srv_linux_thread_db=yes
+--- gdb-6.8/gdb/gdbserver/linux-low.c~	2010-05-28 09:44:36.000000000 +1000
++++ gdb-6.8/gdb/gdbserver/linux-low.c	2010-05-28 09:43:47.000000000 +1000
+@@ -23,9 +23,13 @@
+ #include <sys/wait.h>
+ #include <stdio.h>
+ #include <sys/param.h>
++#ifdef HAVE_SYS_DIR_H
+ #include <sys/dir.h>
++#endif
+ #include <sys/ptrace.h>
++#ifdef HAVE_SYS_DIR_H
+ #include <sys/user.h>
++#endif
+ #include <signal.h>
+ #include <sys/ioctl.h>
+ #include <fcntl.h>
+@@ -41,6 +45,10 @@
+ # define PTRACE_SETSIGINFO 0x4203
+ #endif
+ 
++#ifdef __ANDROID__
++#define __SIGRTMIN SIGRTMIN
++#endif
++
+ #ifndef O_LARGEFILE
+ #define O_LARGEFILE 0
+ #endif
+@@ -1705,7 +1713,6 @@
+   = (((memaddr + len) - addr) + sizeof (PTRACE_XFER_TYPE) - 1) / sizeof (PTRACE_XFER_TYPE);
+   /* Allocate buffer of that many longwords.  */
+   register PTRACE_XFER_TYPE *buffer = (PTRACE_XFER_TYPE *) alloca (count * sizeof (PTRACE_XFER_TYPE));
+-  extern int errno;
+ 
+   if (debug_threads)
+     {
+@@ -1760,7 +1767,10 @@
+ {
+   ptrace (PTRACE_TRACEME, 0, 0, 0);
+   kill (getpid (), SIGSTOP);
+-#ifdef __ia64__
++#ifdef __ANDROID__
++    __clone (linux_tracefork_grandchild, arg + STACK_SIZE,
++         CLONE_VM | SIGCHLD, NULL);
++#elif defined (__ia64__)
+   __clone2 (linux_tracefork_grandchild, arg, STACK_SIZE,
+ 	    CLONE_VM | SIGCHLD, NULL);
+ #else
+@@ -1799,7 +1809,10 @@
+   linux_supports_tracefork_flag = 0;
+ 
+   /* Use CLONE_VM instead of fork, to support uClinux (no MMU).  */
+-#ifdef __ia64__
++#ifdef __ANDROID__
++  child_pid = __clone (linux_tracefork_child, stack + STACK_SIZE,
++                     CLONE_VM | SIGCHLD, stack + STACK_SIZE * 2);
++#elif defined (__ia64__)
+   child_pid = __clone2 (linux_tracefork_child, stack, STACK_SIZE,
+ 			CLONE_VM | SIGCHLD, stack + STACK_SIZE * 2);
+ #else

@@ -7,4 +7,5 @@ RDEPENDS_${PN} += "\
     task-sdk-bare \
     bionic-dev \
     zlib-dev \
+    gdbserver \
     "
