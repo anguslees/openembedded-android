@@ -1,8 +1,6 @@
 require linux.inc
 require linux-openmoko.inc
 
-DESCRIPTION_${PN} = "Linux ${KERNEL_RELEASE} kernel for the Openmoko Neo GSM Smartphones"
-
 KERNEL_RELEASE="2.6.32.13"
 
 SRCREV = "a9254be10ac2294ea20165a87c09ea6afcf66d94"

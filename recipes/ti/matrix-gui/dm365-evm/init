@@ -1,6 +1,6 @@
 #! /bin/sh
 matrixgui="/usr/bin/matrix_gui"
-GUI_OPTS="-qws -geometry 720x480+0+10 -display transformed:Rot0 /usr/share/matrix/html/menu_main.html"
+GUI_OPTS="-geometry 720x480+0+10 -display transformed:Rot0 /usr/share/matrix/html/menu_main.html"
 
 test -x "$matrixgui" || exit 0
 
