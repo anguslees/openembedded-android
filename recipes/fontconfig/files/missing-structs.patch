@@ -1,0 +1,30 @@
+--- fontconfig-2.8.0/configure.in~	Thu Nov 19 10:49:23 2009
++++ fontconfig-2.8.0/configure.in	Sat May 29 16:46:53 2010
+@@ -164,6 +164,7 @@
+ AC_C_CONST
+ AC_C_INLINE
+ AC_TYPE_PID_T
++AC_CHECK_MEMBERS([struct lconv.decimal_point])
+ 
+ # Checks for library functions.
+ AC_FUNC_VPRINTF
+
+--- fontconfig-2.8.0/src/fcxml.c~	Tue Nov 17 09:46:18 2009
++++ fontconfig-2.8.0/src/fcxml.c	Sat May 29 16:50:28 2010
+@@ -1119,6 +1119,7 @@
+     char	    *dot;
+     double	    v;
+ 
++#ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
+     /*
+      * Have to swap the decimal point to match the current locale
+      * if that locale doesn't use 0x2e
+@@ -1159,6 +1160,7 @@
+ 	}
+     }
+     else
++#endif
+ 	v = strtod (s, end);
+     return v;
+ }
+
