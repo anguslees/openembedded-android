@@ -16,24 +16,6 @@
  }
  
  static GList *
---- glib-2.24.0/gio/glocalfileinfo.c~	2010-05-27 08:32:41.000000000 +1000
-+++ glib-2.24.0/gio/glocalfileinfo.c	2010-05-27 08:34:01.000000000 +1000
-@@ -1102,6 +1102,7 @@
-       if (pwbufp->pw_name != NULL && pwbufp->pw_name[0] != 0)
- 	data->user_name = convert_pwd_string_to_utf8 (pwbufp->pw_name);
- 
-+#ifdef HAVE_STRUCT_PASSWD_PW_GECOS
-       gecos = pwbufp->pw_gecos;
- 
-       if (gecos)
-@@ -1111,6 +1112,7 @@
- 	    *comma = 0;
- 	  data->real_name = convert_pwd_string_to_utf8 (gecos);
- 	}
-+#endif
-     }
- 
-   /* Default fallbacks */
 --- glib-2.24.0/gio/gresolver.c~	2010-05-27 08:26:55.000000000 +1000
 +++ glib-2.24.0/gio/gresolver.c	2010-05-27 08:27:22.000000000 +1000
 @@ -205,7 +205,9 @@
