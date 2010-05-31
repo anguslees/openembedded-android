@@ -185,3 +185,25 @@
  
  int pthread_cond_init(pthread_cond_t *cond,
                        const pthread_condattr_t *attr);
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h	2010-05-02 08:48:20.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h	2010-05-30 00:31:13.000000000 +1000
+@@ -91,7 +91,7 @@
+ #   define KHRONOS_APICALL __declspec(dllimport)
+ #elif defined (__SYMBIAN32__)
+ #   define KHRONOS_APICALL IMPORT_C
+-#elif defined(ANDROID)
++#elif defined(__ANDROID__)
+ #   define KHRONOS_APICALL __attribute__((visibility("default")))
+ #else
+ #   define KHRONOS_APICALL
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/GLES/glplatform.h      2010-05-02 08:48:20.000000000 +1000
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/GLES/glplatform.h	2010-05-30 00:30:48.000000000 +1000
+@@ -24,7 +24,7 @@
+ #define GL_API      KHRONOS_APICALL
+ #endif
+ 
+-#if defined(ANDROID)
++#if defined(__ANDROID__)
+ 
+ #define GL_APIENTRY KHRONOS_APIENTRY
+ 
