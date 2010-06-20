@@ -16,7 +16,12 @@ SRC_URI[tools.sha256sum] = "89d12faee15ada258f4c7419a1d6ed68dc6357fa6584c8ec6659
 
 S = "${WORKDIR}/tools_${PV}-${BUILD_OS}"
 
+# disk images are big, so make the emulator optional
+PACKAGES =+ "android-emulator"
+RDEPENDS_android-emulator += "android-emulator-data"
+
 FILES_${PN} += "${bindir}/* ${datadir}/*"
+FILES_android-emulator += "${bindir}/emulator"
 
 do_compile() {
 	:

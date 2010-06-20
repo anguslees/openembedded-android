@@ -17,6 +17,10 @@ SRC_URI[sdk.sha256sum] = "cbe19ac1ccc4d22eaaaf90e6d7bc614c5d4347fa87d2dbd738b178
 
 S = "${WORKDIR}/android-${PV}-${BUILD_OS}"
 
+# disk images are big, so ship them as a separate package
+PACKAGES =+ "android-emulator-data"
+FILES_android-emulator-data += "${datadir}/emulator"
+
 do_compile() {
 	:
 }
