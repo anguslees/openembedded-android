@@ -7,7 +7,7 @@ require android-ndk_${PV}.inc
 
 PN = "android-ndk-bionic"
 
-PACKAGES_prepend = "${PN}-thread-db "
+PACKAGES =+ "${PN}-thread-db"
 
 SRC_URI += "file://header-fixups-${ANDROID_PLATFORM}.patch"
 
