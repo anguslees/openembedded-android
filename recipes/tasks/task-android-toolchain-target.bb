@@ -6,6 +6,5 @@ LIBC_PKGS_android = "bionic bionic-dev bionic-thread-db"
 RDEPENDS_${PN} += "\
     task-sdk-bare \
     bionic-dev \
-    zlib-dev \
     gdbserver \
     "
