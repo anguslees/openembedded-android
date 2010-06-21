@@ -4,10 +4,10 @@ SECTION = "libs"
 PRIORITY = "optional"
 LICENSE = "GPLv2"
 DEPENDS = ""
-RDEPENDS = "libpam"
-RRECOMMENDS = "libpam-meta"
+RDEPENDS_${PN} = "libpam"
+RRECOMMENDS_${PN} = "libpam-meta"
 
-PR = "r5"
+PR = "r6"
 
 SRC_URI = " \
            file://pam.d/* \

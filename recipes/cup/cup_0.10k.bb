@@ -2,7 +2,8 @@ DESCRIPTION = "Lexical analyzer generator for Java"
 AUTHOR = "Elliot Berk, A. Appel, C. Scott Ananian"
 
 DEPENDS = "virtual/javac-native fastjar-native"
-RDEPENDS = "java2-runtime"
+RDEPENDS_${PN} = "java2-runtime"
+PR = "r1"
 
 inherit java-library
 

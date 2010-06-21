@@ -4,11 +4,12 @@
 # in the kernel .config
 
 DESCRIPTION = "Mobile ipv6 extensions"
+PR = "r1"
 
 inherit task
 
-RDEPENDS = "mipv6"
-RRECOMMENDS = "kernel-module-ipv6 \
+RDEPENDS_${PN} = "mipv6"
+RRECOMMENDS_${PN} = "kernel-module-ipv6 \
                kernel-module-mip6 \
               "
 

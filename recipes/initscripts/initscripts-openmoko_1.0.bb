@@ -3,7 +3,8 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "GPL"
 DEPENDS = ""
-RDEPENDS = ""
+RDEPENDS_${PN} = ""
+PR = "r1"
 
 RCONFLICTS_${PN} = "initscripts"
 

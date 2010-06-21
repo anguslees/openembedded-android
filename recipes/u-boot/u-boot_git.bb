@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r50"
+PR ="r55"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -14,9 +14,12 @@ SRCREV_palmpre = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_cm-t35 = "3c014f1586d5bfe30dca7549396915c83f31cd30"
 SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
+SRCREV_bug20 = "169a4c804dbaf11facb041b1333d394c6ceb8d68"
 SRC_URI_append_afeb9260 = " file://AFEB9260-network-fix.patch"
 SRC_URI_append_afeb9260-180 = " file://AFEB9260-network-fix.patch"
 SRC_URI_append_cm-t35 = "file://cm-t35/cm-t35.patch"
+SRC_URI_append_bug20 = "file://bug-uboot.patch"
+SRC_URI_append_bug20 += "file://bug-video-setting.patch"
 
 SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
                        file://0001-OMAP3-enable-i2c-bus-switching-for-Beagle-and-Overo.patch \
@@ -56,6 +59,16 @@ SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
                        file://0035-OMAP3-Beagle-set-mpurate-to-1000-for-xM.patch \
                        file://0036-OMAP3-Beagle-decrease-bootdelay-to-3-use-VGA-for-def.patch \
                        file://0037-OMAP3-beagle-pass-expansionboard-name-in-bootargs.patch \
+                       file://0038-Added-configurations-for-xM-Rev-A-board.patch \
+                       file://0039-OMAP3-beagle-setenv-beaglerev-for-AxBx-Cx-xMA-for-be.patch \
+                       file://0001-OMAP-mmc-add-support-for-second-and-third-mmc-chan.patch \
+		       file://0001-OMAP3-Beagle-enable-support-for-second-and-third-m.patch \
+		       file://0038-BeagleBoard-Added-LED-driver.patch \
+		       file://0039-Add-led-command.patch \
+		       file://0040-BeagleBoard-Check-for-ramdisk-on-boot.patch \
+		       file://0041-BeagleBoard-Enabled-LEDs.patch \
+		       file://0042-BeagleBoard-New-command-for-status-of-USER-button.patch \
+		       file://0043-BeagleBoard-Add-CONFIG_SYS_MEMTEST_SCRATCH.patch \
                        file://fw_env.config \
 "
 SRCREV_beagleboard = "ca6e1c136ddb720c3bb2cc043b99f7f06bc46c55"

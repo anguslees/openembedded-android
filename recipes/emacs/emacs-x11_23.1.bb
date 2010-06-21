@@ -3,15 +3,15 @@ require emacs.inc
 # full X (non-diet) is needed for X support
 DEPENDS += "gtk+ libungif dbus"
 
-PR = "r1"
+PR = "r2"
 
 EXTRA_OECONF = "--without-sound --with-x-toolkit=gtk"
 
 DEFAULT_PREFERENCE = "-1"
 
-RREPLACES = "emacs"
+RREPLACES_${PN} = "emacs"
 
-FILESPATH = "${FILE_DIRNAME}/emacs-${PV}:${FILE_DIRNAME}/files"
+FILESPATHPKG =. "emacs-${PV}:"
 SRC_URI = "${GNU_MIRROR}/emacs/emacs-${PV}.tar.gz;name=tarball \
 	   file://emacs23.1-use-qemu.patch \
 	   file://nostdlib-unwind.patch"

@@ -3,9 +3,9 @@ DESCRIPTION = "Control program for GPS units using the MediaTek (MTK) chipset"
 HOMEPAGE = "http://www.rigacci.org/wiki/doku.php/doc/appunti/hardware/gps_logger_i_blue_747"
 LICENSE = "GPL"
 PACKAGE_ARCH = "all"
-PR = "r1"
+PR = "r2"
 
-RDEPENDS = "libdevice-serialport-perl libtimedate-perl perl-module-file-basename perl-module-getopt-std"
+RDEPENDS_${PN} = "libdevice-serialport-perl libtimedate-perl perl-module-file-basename perl-module-getopt-std"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/sourceforge/${PN}/${P}.tar.gz \
 	   file://fast-logging.patch"

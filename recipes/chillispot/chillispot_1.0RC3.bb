@@ -4,7 +4,8 @@ LICENSE = "GPL"
 SRC_URI = "http://www.chillispot.org/download/chillispot-${PV}.tar.gz \
 	file://no-ansi.patch \
 	file://init"
-RDEPENDS = "kernel-module-tun"
+RDEPENDS_${PN} = "kernel-module-tun"
+PR = "r1"
 
 inherit autotools
 

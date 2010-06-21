@@ -4,8 +4,8 @@ HOMEPAGE = "http://www.litephone.org"
 SECTION = "x11/applications"
 PRIORITY = "optional"
 LICENSE = "GPL QPL"
-RRECOMMENDS = "fsodeviced fsogsmd fsousaged frameworkd"
-INC_PR = "r0"
+RRECOMMENDS_${PN} = "fsodeviced fsogsmd fsousaged frameworkd"
+INC_PR = "r1"
 
 inherit qt4x11
 

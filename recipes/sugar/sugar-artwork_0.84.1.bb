@@ -1,10 +1,10 @@
 DESCRIPTION = "Sugar artwork"
 LICENSE = "GPLv2"
 
-PR = "r0"
+PR = "r1"
 
 DEPENDS = "sugar icon-slicer-native"
-RDEPENDS = "ttf-dejavu-sans ttf-dejavu-sans-mono ttf-dejavu-sans-condensed \
+RDEPENDS_${PN} = "ttf-dejavu-sans ttf-dejavu-sans-mono ttf-dejavu-sans-condensed \
             ttf-dejavu-serif ttf-dejavu-serif-condensed \
             python-pycairo fontconfig freetype python-pygtk"
 

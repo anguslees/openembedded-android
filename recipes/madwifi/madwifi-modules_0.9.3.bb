@@ -2,11 +2,12 @@ DESCRIPTION = "Linux driver for 802.11a/b/g universal NIC cards using Atheros ch
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION}) wireless-tools (>=27)"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION}) wireless-tools (>=27)"
 DEPENDS = "virtual/kernel"
 CONFLICTS = "hostap-daemon (<0.4.8)"
 SRCDATE = "20050803"
 PV = "0.9.3"
+PR = "r1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/madwifi/madwifi-${PV}.tar.bz2 \
 	   file://madwifi-devname.patch \

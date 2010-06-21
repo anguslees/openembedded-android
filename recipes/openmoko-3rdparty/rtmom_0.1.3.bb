@@ -5,12 +5,12 @@ LICENSE = "GPL"
 HOMEPAGE = "http://freshmeat.net/projects/rtmom"
 SRCNAME = "rtmom"
 DEPENDS = "python python-elementary"
-RDEPENDS = "python-core pyrtm"
+RDEPENDS_${PN} = "python-core pyrtm"
 RSUGGESTS_${PN} = "python-simplejson"
 
 PACKAGE_ARCH = "all"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://cloud.github.com/downloads/kichkasch/rtmom/rtmom-src-${PV}.tar.gz"
 

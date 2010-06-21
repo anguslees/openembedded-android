@@ -1,8 +1,8 @@
-PR = "r3"
+PR = "r4"
 
 DESCRIPTION = "additional application registry files"
 DEPENDS = "shared-mime-info"
-RDEPENDS = "shared-mime-info"
+RDEPENDS_${PN} = "shared-mime-info"
 SECTION = "gpe"
 PRIORITY = "optional"
 LICENSE = "MIT"

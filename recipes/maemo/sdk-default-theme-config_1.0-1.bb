@@ -1,8 +1,8 @@
-PR         = "r0"
+PR         = "r1"
 LICENSE    = "GPL"
 
 DEPENDS = "sdk-default-theme"
-RDEPENDS = "sdk-default-theme"
+RDEPENDS_${PN} = "sdk-default-theme"
 
 SRC_URI = "http://repository.maemo.org/pool/maemo/ossw/source/s/${PN}/${PN}_${PV}.tar.gz"
 

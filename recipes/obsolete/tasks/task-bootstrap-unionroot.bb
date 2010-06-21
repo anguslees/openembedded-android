@@ -1,7 +1,7 @@
 DESCRIPTION = "Core packages required for a basic installation with unionroot"
 PROVIDES = "task-bootstrap"
-RPROVIDES = "task-bootstrap"
-PR = "r2"
+RPROVIDES_${PN} = "task-bootstrap"
+PR = "r3"
 DEFAULT_PREFERENCE = "-1"
 
 # The BOOTSTRAP_EXTRA_ variables are often manipulated by the
@@ -16,7 +16,7 @@ require task-bootstrap.inc
 
 HOTPLUG ?= "linux-hotplug"
 
-RDEPENDS = 'base-files base-passwd busybox \
+RDEPENDS_${PN} = 'base-files base-passwd busybox \
 	initscripts \
 	netbase sysvinit sysvinit-pidof tinylogin \
 	modutils-initscripts \
@@ -28,6 +28,6 @@ RDEPENDS = 'base-files base-passwd busybox \
 	unionroot \
 	unionroot-utils'
 
-RRECOMMENDS = 'dropbear portmap \
+RRECOMMENDS_${PN} = 'dropbear portmap \
 	${BOOTSTRAP_EXTRA_RRECOMMENDS}'
 LICENSE = "MIT"

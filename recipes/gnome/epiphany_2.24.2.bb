@@ -1,10 +1,10 @@
 DESCRIPTION = "GNOME default webbrowser"
 DEPENDS = "libsoup-2.4 gnome-desktop gnome-vfs libgnomeui webkit-gtk iso-codes startup-notification"
-RDEPENDS = "gnome-vfs-plugin-http iso-codes"
+RDEPENDS_${PN} = "gnome-vfs-plugin-http iso-codes"
 
 inherit gnome
 
-PR = "r2"
+PR = "r3"
 
 EXTRA_OECONF = "--with-engine=webkit --with-distributor-name=${DISTRO}"
 

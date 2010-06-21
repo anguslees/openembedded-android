@@ -5,8 +5,8 @@ SECTION = "console/network"
 PRIORITY = "optional"
 LICENSE = "GPLv2"
 DEPENDS = "glib-2.0 fuse curl"
-RDEPENDS += " libcurl "
-PR = "r0"
+RDEPENDS_${PN} += " libcurl "
+PR = "r1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/curlftpfs/${P}.tar.gz"
 

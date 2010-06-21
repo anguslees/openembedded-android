@@ -1,14 +1,18 @@
 # xfwm4-themes OE build file
 
 SECTION = "x11/wm"
-PR = "r3"
+PR = "r5"
 
 DEPENDS = "xfwm4 libglade libxml2"
-RDEPENDS = "xfwm4 libglade libxml2"
+RDEPENDS_${PN} = "xfwm4 libglade libxml2"
 
 inherit xfce46
 
 SRC_URI = "http://mocha.xfce.org/archive/src/art/xfwm4-themes/4.6/xfwm4-themes-${PV}.tar.bz2"
+
+SRC_URI += " \
+    file://remove-double-files.patch \
+"
 
 PACKAGES_DYNAMIC = "xfwm4-theme-*"
 

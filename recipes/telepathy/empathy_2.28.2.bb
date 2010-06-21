@@ -5,8 +5,9 @@ DEPENDS = "libcanberra telepathy-farsight gnome-doc-utils \
 python-native telepathy-python telepathy-mission-control \
 libtelepathy telepathy-glib gtk+ gconf libglade eds-dbus \
 libunique"
-RDEPENDS = "telepathy-mission-control"
-RRECOMMENDS = "telepathy-gabble"
+RDEPENDS_${PN} = "telepathy-mission-control"
+RRECOMMENDS_${PN} = "telepathy-gabble"
+PR = "r1"
 
 inherit gnome
 

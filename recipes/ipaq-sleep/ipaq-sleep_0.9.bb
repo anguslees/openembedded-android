@@ -3,8 +3,8 @@ SECTION = "x11/base"
 LICENSE = "GPL"
 DEPENDS = "apmd virtual/xserver libxext virtual/libx11 libxau xscrnsaverh libxss"
 DISTRO_APM ?= "apm"
-RDEPENDS = "${DISTRO_APM}"
-PR = "r7"
+RDEPENDS_${PN} = "${DISTRO_APM}"
+PR = "r8"
 
 inherit gpe pkgconfig
 

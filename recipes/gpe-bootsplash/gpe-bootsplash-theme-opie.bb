@@ -3,8 +3,8 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "gpe-bootsplash"
-RDEPENDS = "gpe-bootsplash"
-PR = "r1"
+RDEPENDS_${PN} = "gpe-bootsplash"
+PR = "r2"
 
 export THEME = "opie"
 

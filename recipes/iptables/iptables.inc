@@ -6,7 +6,7 @@ LICENSE = "GPL"
 SRC_URI = "http://netfilter.org/projects/iptables/files/iptables-${PV}.tar.bz2;name=iptables-${PV}"
 S = "${WORKDIR}/iptables-${PV}"
 
-INC_PR = "r6"
+INC_PR = "r7"
 
 PARALLEL_MAKE = ""
 
@@ -15,7 +15,7 @@ RPROVIDES_${PN} += "iptables-utils"
 FILES_${PN}-dbg += "${libexecdir}/xtables/.debug"
 FILES_${PN}-doc += "${mandir}"
 
-RRECOMMENDS = "\
+RRECOMMENDS_${PN} = "\
   kernel-module-ip-tables \
   kernel-module-iptable-nat \
   kernel-module-iptable-filter \

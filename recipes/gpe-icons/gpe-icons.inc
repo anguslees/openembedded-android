@@ -1,10 +1,10 @@
 SECTION = "gpe"
-RDEPENDS += "gdk-pixbuf-loader-png"
+RDEPENDS_${PN} += "gdk-pixbuf-loader-png"
 
 #only icons present in the package
 PACKAGE_ARCH = "all"
 
-INC_PR = "r5"
+INC_PR = "r6"
 
 ALTERNATIVE_NAME = "gpe-pixmaps"
 ALTERNATIVE_LINK = "${datadir}/gpe/pixmaps"

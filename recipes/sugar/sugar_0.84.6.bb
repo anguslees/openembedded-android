@@ -2,7 +2,8 @@ DESCRIPTION = "Sugar base system"
 LICENSE = "GPLv2"
 
 DEPENDS = "sugar-toolkit libxml2 gtk+"
-RDEPENDS = "sugar-toolkit sugar-base sugar-datastore sugar-artwork gnome-python gnome-python-desktop python-cjson python-pygtksourceview"
+RDEPENDS_${PN} = "sugar-toolkit sugar-base sugar-datastore sugar-artwork gnome-python gnome-python-desktop python-cjson python-pygtksourceview"
+PR = "r1"
 
 SRC_URI = "http://download.sugarlabs.org/sources/sucrose/glucose/sugar/${PN}-${PV}.tar.bz2"
 

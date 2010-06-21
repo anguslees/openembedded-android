@@ -1,7 +1,7 @@
 DESCRIPTION = "Text editor for Xfce based on Leafpad"
-RDEPENDS = "libxfce4util hal"
+RDEPENDS_${PN} = "libxfce4util hal"
 SECTION = "x11"
-PR = "r2"
+PR = "r3"
 
 inherit xfce46
 

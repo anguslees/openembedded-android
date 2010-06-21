@@ -2,8 +2,8 @@ SECTION = "x11/base"
 LICENSE = "GPL"
 SRC_URI = "file://gtkrc file://gtkrc-global"
 DEPENDS = "gnome-themes"
-RDEPENDS = "gtk-engine-mist"
-PR = "r3"
+RDEPENDS_${PN} = "gtk-engine-mist"
+PR = "r4"
 
 FILES_${PN} += "${datadir}/themes"
 

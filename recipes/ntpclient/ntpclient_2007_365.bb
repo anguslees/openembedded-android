@@ -1,10 +1,10 @@
 DESCRIPTION = "NTP (RFC-1305) client for unix-alike computers"
 HOMEPAGE = "http://doolittle.icarus.com/ntpclient"
 AUTHOR = "Larry Doolittle <larry@doolittle.boa.org>"
-RDEPENDS = "busybox"
+RDEPENDS_${PN} = "busybox"
 SECTION = "admin"
 LICENSE = "GPLv2"
-PR = "r2"
+PR = "r3"
 # The ntpclient package uses version numbers that include an underscore :(
 PV = "2007_365"
 # ntpclient unpacks into a directory that doesn't include version info :(

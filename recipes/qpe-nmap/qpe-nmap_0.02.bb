@@ -2,8 +2,8 @@ DESCRIPTION = "A frontend for the nmap port scanner, Qt/Embedded Palmtop Environ
 SECTION = "opie/applications"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RDEPENDS = "nmap"
-PR = "r0"
+RDEPENDS_${PN} = "nmap"
+PR = "r1"
 
 SRC_URI = "http://www.bluelightning.org/qpe-nmap/files/qpe-nmap-${PV}.tar.bz2"
 

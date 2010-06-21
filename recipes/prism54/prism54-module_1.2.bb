@@ -3,10 +3,10 @@ SECTION = "base"
 PRIORITY = "optional"
 HOMEPAGE = "http://prism54.org"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION}) prism54-firmware (1.0.3.0) hotplug"
-RRECOMMENDS = "kernel-module-firmware-class"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION}) prism54-firmware (1.0.3.0) hotplug"
+RRECOMMENDS_${PN} = "kernel-module-firmware-class"
 DEPENDS = "virtual/kernel prism54-firmware"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://prism54.org/pub/linux/testing/tars/2004-06/prism54-1.2.tar.bz2"
 

@@ -2,7 +2,7 @@ DESCRIPTION = "Sugar base system"
 LICENSE = "LGPLv2"
 
 DEPENDS = "python-pygtk sugar-toolkit"
-RDEPENDS = "librsvg-gtk \
+RDEPENDS_${PN} = "librsvg-gtk \
             gconf \
             matchbox-wm \
             ohm-plugin-x11 ohm \
@@ -30,6 +30,8 @@ RDEPENDS = "librsvg-gtk \
             python-mmap \
             python-doctest \
             openssh-keygen"
+
+PR = "r1"
 
 SRC_URI = "http://download.sugarlabs.org/sources/sucrose/glucose/sugar-base/${PN}-${PV}.tar.bz2"
 

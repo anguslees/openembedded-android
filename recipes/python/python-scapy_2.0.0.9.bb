@@ -7,14 +7,14 @@ HOMEPAGE = "http://www.secdev.org/projects/scapy/"
 LICENSE = "GPL"
 PRIORITY = "optional"
 SRCNAME = "scapy"
-PR = "ml1"
+PR = "ml2"
 
 SRC_URI = "http://www.secdev.org/projects/scapy/files/scapy-${PV}.tar.gz"
 S = "${WORKDIR}/${SRCNAME}-${PV}"
 
 inherit distutils
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   python-netclient \
   python-netserver \
 "

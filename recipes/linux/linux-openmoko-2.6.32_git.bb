@@ -4,7 +4,7 @@ require linux-openmoko.inc
 KERNEL_RELEASE="2.6.32.13"
 
 SRCREV = "a9254be10ac2294ea20165a87c09ea6afcf66d94"
-OEV = "oe2"
+OEV = "oe3"
 PV = "${KERNEL_RELEASE}-${OEV}+gitr${SRCPV}"
 
 SRC_URI = "\
@@ -14,6 +14,8 @@ SRC_URI = "\
   ${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/patch-${KERNEL_RELEASE}.bz2;apply=yes;name=stablepatch \
 # build fix
   file://0001-wm8753-fix-build-with-gcc-4.4.2-which-works-ok-with-.patch \
+# fix runtime issue when built with gcc-4.5
+  file://use-noclone-attribute-for-naked.patch \
 # patches from Radek Polak used in qtmoko
   file://0002-accels.patch.patch \
   file://0003-usbhost.patch.patch \
@@ -30,6 +32,8 @@ SRC_URI = "\
   file://0012-Fix-dynamic-command-queue-allocation.patch \
   file://0013-Debug-statements-for-testing.patch \
   file://0014-Fix-claim-of-2D-register-resource.patch \
+# fix for lost touchscreen https://docs.openmoko.org/trac/ticket/2328
+  file://touchscreen_ignoreunexpectedintr29.patch \
 "
 
 SRC_URI[stablepatch.md5sum] = "ba6abb1ffee513a1d4f831599ddae490"

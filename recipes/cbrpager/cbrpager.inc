@@ -3,9 +3,9 @@ DESCRIPTION = "A no-nonsense, simple to use, small viewer for cbr and cbz (comic
 SECTION = "x11/applications"
 LICENSE = "GPL"
 DEPENDS = "gtk+ libgnomeui"
-RDEPENDS = "unzip"
+RDEPENDS_${PN} = "unzip"
 
-INC_PR = "r2"
+INC_PR = "r3"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${PN}/${P}.tar.gz"
 

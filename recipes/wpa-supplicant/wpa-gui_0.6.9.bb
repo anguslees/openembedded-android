@@ -6,9 +6,9 @@ SECTION = "network"
 LICENSE = "GPL BSD"
 HOMEPAGE = "http://hostap.epitest.fi/wpa_supplicant/"
 DEPENDS = "librsvg-native imagemagick-native"
-RDEPENDS = "wpa-supplicant"
-RRECOMMENDS = "${LIBC}-gconv-utf-16"
-PR = "r1"
+RDEPENDS_${PN} = "wpa-supplicant"
+RRECOMMENDS_${PN} = "${LIBC}-gconv-utf-16"
+PR = "r2"
 
 SRC_URI = "http://hostap.epitest.fi/releases/wpa_supplicant-${PV}.tar.gz;name=archive\
          file://icons.patch \

@@ -9,9 +9,9 @@ LICENSE = "GPLv2"
 SECTION = "console/utils"
 PRIORITY = "optional"
 DEPENDS = "libdaemon libg15"
-RDEPENDS = "libg15"
-RRECOMMENDS = "kernel-module-uinput"
-PR ="r2"
+RDEPENDS_${PN} = "libg15"
+RRECOMMENDS_${PN} = "kernel-module-uinput"
+PR = "r3"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/g15daemon/g15daemon-${PV}.tar.bz2"
 

@@ -2,8 +2,8 @@ DESCRIPTION = "GPE network connection checker"
 SECTION = "gpe"
 LICENSE = "GPL"
 DEPENDS = "libgpewidget gpe-icons gpe-conf"
-RRECOMMENDS = "gpe-conf"
-PR = "r0"
+RRECOMMENDS_${PN} = "gpe-conf"
+PR = "r1"
 PV = "0.7+svn-${SRCDATE}"
 
 inherit autotools pkgconfig

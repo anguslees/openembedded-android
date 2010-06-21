@@ -2,9 +2,9 @@ DESCRIPTION = "Gecko plugin for gnome-mplayer"
 HOMEPAGE = "http://dekorte.homeip.net/download/gecko-mediaplayer/"
 LICENSE = "GPL"
 DEPENDS = "firefox gtk+ gconf dbus-glib"
-RDEPENDS = "firefox gnome-mplayer"
+RDEPENDS_${PN} = "firefox gnome-mplayer"
 
-PR = "r8"
+PR = "r9"
 
 inherit autotools
 

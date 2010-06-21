@@ -3,9 +3,8 @@ HOMEPAGE = "http://cheeseshop.python.org/pypi/setuptools"
 SECTION = "devel/python"
 PRIORITY = "optional"
 LICENSE = "MIT"
-RDEPENDS = "python-distutils python-compression"
 SRCNAME = "setuptools"
-PR = "ml0"
+PR = "ml1"
 
 SRC_URI = "\
   http://cheeseshop.python.org/packages/source/s/setuptools/${SRCNAME}-${PV}.tar.gz\
@@ -19,7 +18,7 @@ do_install_prepend() {
     install -d ${D}/${libdir}/${PYTHON_DIR}/site-packages
 }
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   python-distutils \
   python-compression \
 "

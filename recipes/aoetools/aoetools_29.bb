@@ -1,7 +1,7 @@
 DESCRIPTION = "ATA over Ethernet Tools"
 SECTION = "console/network"
-RRECOMMENDS = "kernel-module-aoe"
-PR = "r0"
+RRECOMMENDS_${PN} = "kernel-module-aoe"
+PR = "r1"
 LICENSE = "GPL"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${PN}/${PN}-${PV}.tar.gz"

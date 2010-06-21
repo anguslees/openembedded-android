@@ -1,6 +1,6 @@
 require e2fsprogs.inc
 
-PR = "r0"
+PR = "r1"
 DEFAULT_PREFERENCE = "-1"
 
 SRC_URI += "file://no-hardlinks.patch"
@@ -30,7 +30,7 @@ do_stage () {
 }
 
 # blkid used to be part of e2fsprogs but is useful outside, add it
-# as an RDEPENDS so that anything relying on it being in e2fsprogs
+# as an RDEPENDS_${PN} so that anything relying on it being in e2fsprogs
 # still works
 RDEPENDS_e2fsprogs = "e2fsprogs-blkid e2fsprogs-uuidgen e2fsprogs-badblocks"
 

@@ -4,11 +4,11 @@ SECTION = "x11/network"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "fltk2 libpng openssl"
-RDEPENDS = "fltk2-images"
+RDEPENDS_${PN} = "fltk2-images"
 SRC_URI="http://www.dillo.org/download/dillo-${PV}.tar.bz2 \
          file://dillo.desktop \
          file://dillo.png"
-PR = "r3"
+PR = "r4"
 
 S = "${WORKDIR}/dillo-${PV}/"
 

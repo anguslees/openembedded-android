@@ -3,8 +3,8 @@ SECTION = "console/utils"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "libvncserver jpeg zlib"
-RDEPENDS = "fbvncserver-kmodule libvncserver-storepasswd libvncserver-javaapplet"
-PR = "r3"
+RDEPENDS_${PN} = "fbvncserver-kmodule libvncserver-storepasswd libvncserver-javaapplet"
+PR = "r4"
 
 SRC_URI = "http://sdgsystems.com/download/fbvncserver-${PV}.tar.gz \
            file://libvncs0.6.patch \

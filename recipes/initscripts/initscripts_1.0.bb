@@ -2,9 +2,9 @@ DESCRIPTION = "SysV init scripts"
 SECTION = "base"
 PRIORITY = "required"
 DEPENDS = "makedevs"
-RDEPENDS = "makedevs"
+RDEPENDS_${PN} = "makedevs"
 LICENSE = "GPL"
-PR = "r120"
+PR = "r121"
 
 SRC_URI = "file://functions \
            file://halt \

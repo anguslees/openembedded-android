@@ -2,13 +2,13 @@ DESCRIPTION = "Navit is a car navigation system with routing engine."
 LICENSE = "GPL"
 SECTION = "x11/applications"
 DEPENDS = "glib-2.0 gtk+ imagemagick-native librsvg-native"
-RRECOMMENDS = "gpsd espeak flite"
+RRECOMMENDS_${PN} = "gpsd espeak flite"
 
 #only icons present in the package
 PACKAGE_ARCH = "all"
 
 PV = "0.1.0+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 EXTRA_OECONF = "--disable-binding-python --disable-gui-sdl --disable-samplemap --enable-avoid-float --enable-avoid-unaligned  --enable-svg2png-scaling-flag=32 --disable-speech-speech-dispatcher"
 
@@ -18,7 +18,7 @@ inherit autotools
 
 FILES_${PN} = " /usr/share/navit/xpm/"
 
-SRCREV = "3276"
+SRCREV = "3357"
 
 #use different URL than navit_svn does, to prevent upgrade/downgrade cycle in downloads dir
 SRC_URI = "svn://anonymous@navit.svn.sourceforge.net/svnroot/navit/trunk/navit/navit;module=xpm;proto=https \

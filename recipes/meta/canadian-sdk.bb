@@ -1,7 +1,7 @@
 DESCRIPTION = "Meta package for building a installable toolchain"
 LICENSE = "MIT"
 DEPENDS = "opkg-native ipkg-utils-native fakeroot-native sed-native zip-native"
-PR = "r4"
+PR = "r5"
 
 # NOTE: We need to save and restore PACKAGE_ARCHS, because sdk.bbclass
 # will change HOST_ARCH, which can result in SITEINFO_ENDIANESS (which
@@ -32,7 +32,7 @@ FEED_ARCH ?= "${TARGET_ARCH}"
 SDK_SUFFIX = "toolchain"
 TOOLCHAIN_OUTPUTNAME ?= "${SDK_SYS}-${DISTRO}-${DISTRO_VERSION}-${FEED_ARCH}-${TARGET_OS}-${SDK_SUFFIX}"
 
-RDEPENDS = "${TOOLCHAIN_TARGET_TASK} ${TOOLCHAIN_CANADIAN_HOST_TASK}"
+RDEPENDS_${PN} = "${TOOLCHAIN_TARGET_TASK} ${TOOLCHAIN_CANADIAN_HOST_TASK}"
 
 TOOLCHAIN_FEED_URI ?= "${DISTRO_FEED_URI}"
 
@@ -169,5 +169,6 @@ do_populate_sdk() {
 }
 
 do_populate_sdk[nostamp] = "1"
+do_populate_sdk[lockfiles] = "${DEPLOY_DIR_IPK}.lock"
 addtask package_update_index_ipk before do_populate_sdk
 addtask populate_sdk before do_build after do_install

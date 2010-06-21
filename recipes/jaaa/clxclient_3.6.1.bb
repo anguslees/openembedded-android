@@ -2,10 +2,10 @@ DESCRIPTION = "clxclient library from http://www.kokkinizita.net/linuxaudio/"
 SECTION = "libs/multimedia"
 PRIORITY = "optional"
 LICENSE = "LGPL"
-PR = "r0"
+PR = "r1"
 
 DEPENDS = "libx11 clthreads freetype libxft"
-RDEPENDS = "libx11-locale"
+RDEPENDS_${PN} = "libx11-locale"
 
 SRC_URI = "http://www.kokkinizita.net/linuxaudio/downloads/clxclient-${PV}.tar.bz2 \
 	file://clxclient-Makefile.patch \

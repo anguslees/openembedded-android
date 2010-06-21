@@ -3,8 +3,8 @@ inherit gpe
 LICENSE = "GPL"
 DESCRIPTION = "Clipboard management application"
 DEPENDS = "virtual/libx11 libxpm"
-RDEPENDS = "gdk-pixbuf-loader-xpm"
-PR = "r2"
+RDEPENDS_${PN} = "gdk-pixbuf-loader-xpm"
+PR = "r3"
 
 SRC_URI += "file://miniclipboard.desktop \
             file://makefile.patch;striplevel=0"

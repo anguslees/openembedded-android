@@ -1,8 +1,8 @@
 DESCRIPTION = "Udev rules file to spawn getty in ttyUSB"
 SECTION = "utils"
 LICENSE = "GPL"
-RDEPENDS = "udev"
-PR = "r1"
+RDEPENDS_${PN} = "udev"
+PR = "r2"
 
 PACKAGES = "${PN}"
 

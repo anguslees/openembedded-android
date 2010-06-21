@@ -5,10 +5,10 @@ SECTION = "x11/applications"
 PRIORITY = "optional"
 LICENSE = "GPLv3"
 DEPENDS = "elementary libeflvala libical"
-RDEPENDS = "atd alsa-utils-amixer ttf-dejavu-sans libical"
-RSUGGESTS = "mplayer alsa-utils-aplay frameworkd"
+RDEPENDS_${PN} = "atd alsa-utils-amixer ttf-dejavu-sans libical"
+RSUGGESTS_${PN} = "mplayer alsa-utils-aplay frameworkd"
 PV = "0.4+gitr${SRCPV}"
-PR = "r1"
+PR = "r4"
 
 SRC_URI = "git://git.shr-project.org/repo/ffalarms.git;protocol=http;branch=master"
 

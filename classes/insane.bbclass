@@ -32,58 +32,57 @@ PACKAGEFUNCS += " do_package_qa "
 def package_qa_get_machine_dict():
     return {
             "darwin9" : { 
-                        "arm" :       (40,     0,    0,          True,          True),
+                        "arm" :       (   40,     0,    0,          True,          True),
                       },
             "linux" : { 
-                        "arm" :       (40,    97,    0,          True,          True),
-                        "armeb":      (40,    97,    0,          False,         True),
-                        "powerpc":    (20,     0,    0,          False,         True),
-                        "i386":       ( 3,     0,    0,          True,          True),
-                        "i486":       ( 3,     0,    0,          True,          True),
-                        "i586":       ( 3,     0,    0,          True,          True),
-                        "i686":       ( 3,     0,    0,          True,          True),
-                        "x86_64":     (62,     0,    0,          True,          False),
-                        "ia64":       (50,     0,    0,          True,          False),
-                        "alpha":      (36902,  0,    0,          True,          False),
-                        "hppa":       (15,     3,    0,          False,         True),
-                        "m68k":       ( 4,     0,    0,          False,         True),
-                        "mips":       ( 8,     0,    0,          False,         True),
-                        "mipsel":     ( 8,     0,    0,          True,          True),
-                        "s390":       (22,     0,    0,          False,         True),
-                        "sh4":        (42,     0,    0,          True,          True),
-                        "sparc":      ( 2,     0,    0,          False,         True),
+                        "arm" :       (   40,    97,    0,          True,          True),
+                        "armeb":      (   40,    97,    0,          False,         True),
+                        "i386":       (    3,     0,    0,          True,          True),
+                        "i486":       (    3,     0,    0,          True,          True),
+                        "i586":       (    3,     0,    0,          True,          True),
+                        "i686":       (    3,     0,    0,          True,          True),
+                        "x86_64":     (   62,     0,    0,          True,          False),
+                        "ia64":       (   50,     0,    0,          True,          False),
+                        "alpha":      (36902,     0,    0,          True,          False),
+                        "hppa":       (   15,     3,    0,          False,         True),
+                        "m68k":       (    4,     0,    0,          False,         True),
+                        "mips":       (    8,     0,    0,          False,         True),
+                        "mipsel":     (    8,     0,    0,          True,          True),
+                        "powerpc":    (   20,     0,    0,          False,         True),
+                        "s390":       (   22,     0,    0,          False,         True),
+                        "sh4":        (   42,     0,    0,          True,          True),
+                        "sparc":      (    2,     0,    0,          False,         True),
                       },
             "linux-uclibc" : { 
-                        "arm" :       (  40,    97,    0,          True,          True),
-                        "armeb":      (  40,    97,    0,          False,         True),
-                        "powerpc":    (  20,     0,    0,          False,         True),
-                        "i386":       (   3,     0,    0,          True,          True),
-                        "i486":       (   3,     0,    0,          True,          True),
-                        "i586":       (   3,     0,    0,          True,          True),
-                        "i686":       (   3,     0,    0,          True,          True),
-                        "x86_64":     (  62,     0,    0,          True,          False),
-                        "mips":       (   8,     0,    0,          False,         True),
-                        "mipsel":     (   8,     0,    0,          True,          True),
-                        "avr32":      (6317,     0,    0,          False,         True),
-			"sh4":        (42,	 0,    0,          True,          True),
-
+                        "arm" :       (   40,    97,    0,          True,          True),
+                        "armeb":      (   40,    97,    0,          False,         True),
+                        "avr32":      ( 6317,     0,    0,          False,         True),
+                        "i386":       (    3,     0,    0,          True,          True),
+                        "i486":       (    3,     0,    0,          True,          True),
+                        "i586":       (    3,     0,    0,          True,          True),
+                        "i686":       (    3,     0,    0,          True,          True),
+                        "x86_64":     (   62,     0,    0,          True,          False),
+                        "mips":       (    8,     0,    0,          False,         True),
+                        "mipsel":     (    8,     0,    0,          True,          True),
+                        "powerpc":    (   20,     0,    0,          False,         True),
+                        "sh4":        (   42,     0,    0,          True,          True),
                       },
             "uclinux-uclibc" : {
-                        "bfin":       ( 106,     0,    0,          True,         True),
+                        "bfin":       (  106,     0,    0,          True,         True),
                       }, 
             "linux-gnueabi" : {
-                        "arm" :       (40,     0,    0,          True,          True),
-                        "armeb" :     (40,     0,    0,          False,         True),
+                        "arm" :       (   40,     0,    0,          True,          True),
+                        "armeb" :     (   40,     0,    0,          False,         True),
                       },
             "linux-uclibceabi" : {
-                        "arm" :       (40,     0,    0,          True,          True),
-                        "armeb" :     (40,     0,    0,          False,         True),
+                        "arm" :       (   40,     0,    0,          True,          True),
+                        "armeb" :     (   40,     0,    0,          False,         True),
                       },
             "linux-gnuspe" : {
-                        "powerpc":    (20,     0,    0,          False,         True),
+                        "powerpc":    (   20,     0,    0,          False,         True),
                       },
             "linux-uclibcspe" : {
-                        "powerpc":    (20,     0,    0,          False,         True),
+                        "powerpc":    (   20,     0,    0,          False,         True),
                       },
 
        }
@@ -255,8 +254,10 @@ def package_qa_check_desktop(path, name, d, elf):
     Run all desktop files through desktop-file-validate.
     """
     sane = True
+    env_path = bb.data.getVar('PATH', d, True)
+
     if path.endswith(".desktop"):
-        output = os.popen("desktop-file-validate %s" % path)
+        output = os.popen("PATH=%s desktop-file-validate %s" % (env_path, path))
         # This only produces output on errors
         for l in output:
             sane = package_qa_handle_error(7, l.strip(), name, path, d)

@@ -2,8 +2,8 @@ DESCRIPTION = "The NTFS-3G driver is an open source, freely available NTFS drive
 HOMEPAGE = "http://www.ntfs-3g.org/"
 LICENSE = "GPLv2"
 DEPENDS = "fuse"
-RDEPENDS = "fuse"
-PR = "r0"
+RDEPENDS_${PN} = "fuse"
+PR = "r1"
 
 DEFAULT_PREFERENCE = "-1"
 

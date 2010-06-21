@@ -1,9 +1,9 @@
 DESCRIPTION = "Squeeze is an archive manager for the Xfce Desktop  Environment"
 DEPENDS = "pkgconfig dbus gtk+ thunar"
-RDEPENDS = "libxfce4util"
+RDEPENDS_${PN} = "libxfce4util"
 
 SECTION = "x11"
-PR = "r1"
+PR = "r2"
 
 inherit xfce46
 

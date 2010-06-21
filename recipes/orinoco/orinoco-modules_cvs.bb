@@ -1,9 +1,9 @@
 require orinoco-modules.inc
 
 DEPENDS = "orinoco-conf spectrum-fw"
-RDEPENDS += "orinoco-conf"
+RDEPENDS_${PN} += "orinoco-conf"
 RDEPENDS_orinoco-modules-cs = "orinoco-modules spectrum-fw"
-PR = "r3"
+PR = "r4"
 
 PARALLEL_MAKE = ""
 EXTRA_OEMAKE = 'KERNEL_SRC="${KERNEL_STAGING_DIR}"'

@@ -1,11 +1,11 @@
 DESCRIPTION = "Necessary packages for development at runtime environment"
 LICENSE = "MIT"
-PR = "r3"
+PR = "r4"
 ALLOW_EMPTY = "1"
 
 PACKAGES = "${PN}"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   task-mamona \
   gdb \
   strace \

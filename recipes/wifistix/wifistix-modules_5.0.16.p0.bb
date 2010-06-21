@@ -6,9 +6,9 @@ SECTION = "base"
 PRIORITY = "optional"
 HOMEPAGE = "http://www.gumstix.com"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION})"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION})"
 DEPENDS = "virtual/kernel"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://files.gumstix.com/cf8385-5.0.16.p0-26306.tbz \
 			file://wifistix.conf \

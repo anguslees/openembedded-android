@@ -8,7 +8,7 @@ DEPENDS = "zlib libtool classpath cacaoh-native virtual/javac-native"
 
 # Avoid version number here, otherwise dpkg will expect a package name
 # and cannot be satisfied with a package that provides classpath.
-RDEPENDS = "classpath"
+RDEPENDS_${PN} = "classpath"
 
 RPROVIDES_cacao = "java2-runtime"
 
@@ -27,7 +27,8 @@ EXTRA_OECONF = "\
     --with-java-runtime-library-libdir=${libdir_jni}:${libdir} \
     --with-jni_md_h=${STAGING_INCDIR}/classpath \
     --with-jni_h=${STAGING_INCDIR}/classpath \
-  "
+	--libdir=${libdir}/cacao \
+"
 
 PACKAGES = "${PN} ${PN}-doc ${PN}-dbg"
 

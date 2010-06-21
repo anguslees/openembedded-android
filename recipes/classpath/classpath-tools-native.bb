@@ -8,6 +8,6 @@ DEPENDS = "virtual/java-native classpath-native"
 
 inherit native
 
-do_stage () {
-	echo 1 /dev/null
+do_stage() {
+	:
 }

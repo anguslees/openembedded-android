@@ -1,11 +1,11 @@
 DESCRIPTION = "Python Bindings to the Enlightenment Foundation Libraries"
 LICENSE = "MIT"
 SECTION = "devel/python"
-PR = "ml4.1"
+PR = "ml5"
 
 ALLOW_EMPTY = "1"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   python-evas \
   python-ecore \
   python-edje \

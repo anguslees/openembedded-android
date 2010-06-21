@@ -3,10 +3,10 @@ SECTION = "gpe"
 LICENSE     = "GPL"
 
 DEPENDS     = "libgpewidget iptables virtual/kernel"
-RDEPENDS    = "iptables"
-RRECOMMENDS = "kernel-module-ipt-state"
+RDEPENDS_${PN}    = "iptables"
+RRECOMMENDS_${PN} = "kernel-module-ipt-state"
 
-PR          = "r1"
+PR          = "r2"
 
 inherit gpe pkgconfig
 

@@ -8,7 +8,7 @@ inherit autotools gettext
 
 DEFAULT_PREFERENCE = "-1"
 
-INC_PR = "r24"
+INC_PR = "r25"
 
 # allows for a release candidate
 RC ?= ""
@@ -25,7 +25,7 @@ PACKAGES_virtclass-native = ""
 
 PACKAGES_DYNAMIC = "libblkid* libuuid*"
 
-# Provide old util-linux names (several recipes still use DEPENDS or RDEPENDS = "util-linux"):
+# Provide old util-linux names (several recipes still use DEPENDS or RDEPENDS_${PN} = "util-linux"):
 PROVIDES = "util-linux"
 RPROVIDES_${PN} = "util-linux"
 RPROVIDES_util-linux-ng-fdisk = "util-linux-fdisk"

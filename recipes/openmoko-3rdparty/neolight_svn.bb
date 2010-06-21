@@ -7,6 +7,7 @@ PRIORITY = "optional"
 
 SRCREV = "16"
 PV = "1.4.0+svnr${SRCPV}"
+PR = "r1"
 
 PACKAGE_ARCH = "all"
 
@@ -17,7 +18,7 @@ inherit distutils
 
 FILES_${PN} += "${datadir}/neolight ${datadir}/applications/neolight.desktop ${datadir}/pixmaps/neolight.png"
 
-RDEPENDS += "python-edbus python-elementary"
+RDEPENDS_${PN} += "python-edbus python-elementary"
 
 do_compile_prepend() {
 	${STAGING_BINDIR_NATIVE}/edje_cc -id ${S}/data ${S}/data/neolight.edc

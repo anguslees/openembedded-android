@@ -1,10 +1,10 @@
 DESCRIPTION = "Daemon to mount/unmount devices, based on info from HAL"
 HOMEPAGE = "http://ivman.sf.net"
 LICENSE = "GPLv2"
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "hal libxml2"
-RDEPENDS = "hal pmount-hal"
+RDEPENDS_${PN} = "hal pmount-hal"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/ivman/${P}.tar.bz2 \
            file://ivman-0.6-hotpluggable.patch \

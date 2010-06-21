@@ -3,12 +3,12 @@ HOMEPAGE = "http://sablevm.org"
 LICENSE = "LGPL"
 PRIORITY = "optional"
 SECTION = "interpreters"
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "libffi libtool popt \
            sablevm-classpath"
 #          unzip"
-RRECOMMENDS = "sablevm-classpath (${PV})"
+RRECOMMENDS_${PN} = "sablevm-classpath (${PV})"
 
 SRC_URI = "http://sablevm.org/download/release/${PV}/${PN}-${PV}.tar.gz"
 

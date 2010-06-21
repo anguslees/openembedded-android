@@ -5,7 +5,7 @@ HOMEPAGE = "http://www.twistedmatrix.com"
 SECTION = "console/network"
 PRIORITY = "optional"
 LICENSE = "LGPL"
-PR = "r9"
+PR = "r11"
 
 SRC_URI = "http://tmrc.mit.edu/mirror/twisted/Twisted/2.5/Twisted-${PV}.tar.bz2 \
            file://remove-zope-check.patch"
@@ -29,7 +29,7 @@ PACKAGES += "\
   ${PN}-core \
 "
 
-RDEPENDS = "python-core python-zopeinterface"
+RDEPENDS_${PN} = "python-core python-zopeinterface"
 RDEPENDS_${PN} += "\
   ${PN}-bin \
   ${PN}-conch \

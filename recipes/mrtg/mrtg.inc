@@ -1,7 +1,7 @@
 DESCRIPTION = "The Multi Router Traffic Grapher"
 SECTION = "net"
 DEPENDS = "gd perl-native"
-RDEPENDS = " \
+RDEPENDS_${PN} = " \
 	 gd \
 	 net-snmp-server \
 	 perl \
@@ -19,7 +19,7 @@ RDEPENDS = " \
 	 "
 LICENSE = "GPL"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://oss.oetiker.ch/mrtg/pub/mrtg-${PV}.tar.gz;name=mrtg-${PV}"
 

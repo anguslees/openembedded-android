@@ -4,10 +4,10 @@ HOMEPAGE = "http://linuxadvocate.org/projects/roadster/"
 SECTION = "x11/navigation"
 SRCDATE = "20060814"
 PV = "0.0+cvs${SRCDATE}"
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "tcp-wrappers mysql gpsd gtk+ cairo libxml2 libgnomeui libglade"
-RDEPENDS = "gpsd gtk+ cairo libxml2"
+RDEPENDS_${PN} = "gpsd gtk+ cairo libxml2"
 
 SRC_URI = "cvs://anoncvs@cvs.cairographics.org/cvs/cairo;module=roadster"
 S = "${WORKDIR}/${PN}"

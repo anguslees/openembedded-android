@@ -1,9 +1,9 @@
 DESCRIPTION = "Date and time manipulation routines."
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
-PR = "r1"
+PR = "r2"
 
-RDEPENDS = "perl-module-test-more \
+RDEPENDS_${PN} = "perl-module-test-more \
             perl-module-io-file \
             perl-module-carp"
 

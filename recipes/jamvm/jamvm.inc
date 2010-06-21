@@ -3,7 +3,7 @@ HOMEPAGE = "http://jamvm.sourceforge.net/"
 LICENSE = "GPL"
 
 DEPENDS = "zlib classpath virtual/javac-native"
-RDEPENDS = "classpath"
+RDEPENDS_${PN} = "classpath"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/jamvm/jamvm-${PV}.tar.gz"
 
@@ -14,7 +14,7 @@ ARM_INSTRUCTION_SET = "arm"
 
 inherit java autotools update-alternatives
 
-EXTRA_OECONF = "--with-classpath-install-dir=${prefix}"
+EXTRA_OECONF = "--with-classpath-install-dir=${prefix} --libdir=${libdir}/jamvm"
 CFLAGS += "-DDEFAULT_MAX_HEAP=16*MB"
 
 ALTERNATIVE_NAME = "java"

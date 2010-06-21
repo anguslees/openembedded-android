@@ -3,7 +3,7 @@ SECTION = "net/misc"
 LICENSE = "GPL"
 PRIORITY = "optional"
 DEPENDS = "networkmanager libnl dbus dbus-glib hal wireless-tools policykit gnutls util-linux-ng ppp"
-RDEPENDS = "wpa-supplicant dhcp-client \
+RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            ${@base_contains('COMBINED_FEATURES', '3gmodem', 'ppp', '', d)} \
            "
 
@@ -14,7 +14,7 @@ EXTRA_OECONF = " \
 
 inherit autotools pkgconfig
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI += "http://ftp.gnome.org/pub/GNOME/sources/NetworkManager-openvpn/0.7/NetworkManager-openvpn-${PV}.tar.bz2 \
 "

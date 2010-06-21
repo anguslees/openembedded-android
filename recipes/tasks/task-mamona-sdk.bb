@@ -1,11 +1,11 @@
-PR = "r4"
+PR = "r5"
 
 include mamona-sdk.inc
 
-RCONFLICTS = "task-mamona-sdk-noemu"
-RREPLACES = "task-mamona-sdk-noemu"
+RCONFLICTS_${PN} = "task-mamona-sdk-noemu"
+RREPLACES_${PN} = "task-mamona-sdk-noemu"
 
-RDEPENDS += "\
+RDEPENDS_${PN} += "\
   bash \
   binutils \
   binutils-symlinks \

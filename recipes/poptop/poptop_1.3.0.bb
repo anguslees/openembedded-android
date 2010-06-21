@@ -9,9 +9,9 @@ LICENSE     = "GPL"
 SECTION = "network"
 PRIORITY    = "optional"
 DEPENDS     = "ppp"
-RDEPENDS    = "ppp"
+RDEPENDS_${PN}    = "ppp"
 
-PR = "r0"
+PR = "r1"
 
 inherit autotools
 

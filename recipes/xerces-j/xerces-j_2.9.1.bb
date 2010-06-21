@@ -3,6 +3,7 @@ LICENSES = "AL2.0"
 AUTHOR = "Apache Software Foundation"
 
 SRC_URI = "http://www.apache.org/dist/xerces/j/Xerces-J-src.${PV}.tar.gz"
+PR = "r1"
 
 S = "${WORKDIR}/xerces-2_9_1"
 
@@ -11,7 +12,7 @@ inherit java-library
 JPN = "libxerces2-java"
 
 DEPENDS = "fastjar-native jaxp1.3 xml-commons-resolver1.1"
-RDEPENDS = "libjaxp1.3-java libxml-commons-resolver1.1-java"
+RDEPENDS_${PN} = "libjaxp1.3-java libxml-commons-resolver1.1-java"
 
 do_unpackpost() {
   find src -exec \

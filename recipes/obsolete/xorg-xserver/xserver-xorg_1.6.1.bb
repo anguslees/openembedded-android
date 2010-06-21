@@ -2,9 +2,9 @@ require xorg-xserver-common.inc
 
 DESCRIPTION = "the X.Org X server"
 DEPENDS += "pixman libpciaccess openssl xineramaproto libxinerama"
-RDEPENDS += "hal"
+RDEPENDS_${PN} += "hal"
 PE = "2"
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 SRC_URI += "file://sysroot_fix.patch \
 	    file://dolt-fix.patch"

@@ -2,9 +2,9 @@ DESCRIPTION = "PCMCIA-cs configuration files for wireless LAN cards based on Int
 SECTION = "kernel/modules"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RDEPENDS = "update-modules"
+RDEPENDS_${PN} = "update-modules"
 PACKAGE_ARCH = "all"
-PR = "r9"
+PR = "r11"
 
 SRC_URI = "file://hostap_cs.conf \
            file://hostap_cs.modalias \

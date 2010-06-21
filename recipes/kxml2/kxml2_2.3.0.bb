@@ -3,12 +3,12 @@ HOMEPAGE = "http://kxml.sourceforge.net"
 PRIORITY = "optional"
 SECTION = "libs"
 LICENSE = "BSD CPL LGPL"
-PR = "r1"
+PR = "r2"
 
 inherit java-library
 
 DEPENDS = "xmlpull"
-RDEPENDS = "libxmlpull-java"
+RDEPENDS_${PN} = "libxmlpull-java"
 
 S = "${WORKDIR}"
 

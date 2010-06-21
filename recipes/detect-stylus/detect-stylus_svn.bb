@@ -2,9 +2,9 @@ DESCRIPTION = "Touchscreen detection utility"
 SECTION = "gpe"
 LICENSE = "GPL"
 DEPENDS = "virtual/libx11 xcursor-transparent-theme xrdb"
-RDEPENDS = "xrdb"
+RDEPENDS_${PN} = "xrdb"
 PV = "0.13+svnr${SRCPV}"
-PR = "r0"
+PR = "r1"
 
 inherit gpe pkgconfig
 

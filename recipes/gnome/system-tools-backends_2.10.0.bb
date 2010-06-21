@@ -5,7 +5,8 @@ DEPENDS = "dbus dbus-glib glib-2.0 policykit"
 
 # Shadow added so there is a full adduser/deluser
 # (Gnome images tend to pull in shadow anyway)
-RDEPENDS = "shadow"
+RDEPENDS_${PN} = "shadow"
+PR = "r1"
 
 inherit gnome pkgconfig update-rc.d
 

@@ -1,8 +1,8 @@
 DESCRIPTION = "openBmap logger and uploader of GPS/GSM data"
 SECTION = "x11/utils"
 DEPENDS = "python python-dbus python-pygobject python-pygtk libglade"
-RDEPENDS = "python-subprocess python-netclient python-math python-core python-io"
-PR = "r1"
+RDEPENDS_${PN} = "python-subprocess python-netclient python-math python-core python-io"
+PR = "r2"
 
 inherit python-dir
 

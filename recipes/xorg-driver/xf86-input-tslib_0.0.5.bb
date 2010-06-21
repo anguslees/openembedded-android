@@ -1,10 +1,8 @@
 require xorg-driver-input.inc
 
 DESCRIPTION = "X.Org X server -- tslib input driver"
-RRECOMMENDS += "hal tslib-calibrate"
+RRECOMMENDS_${PN} += "hal tslib-calibrate"
 DEPENDS += "tslib"
-
-PR = "r8"
 
 SRC_URI = "http://www.pengutronix.de/software/xf86-input-tslib/download/xf86-input-tslib-${PV}.tar.bz2;name=archive \
            file://use-hal-for-device.diff \
@@ -26,3 +24,4 @@ FILES_${PN} += "${datadir}/hal"
 
 SRC_URI[archive.md5sum] = "4231b517d216e9f80ba66f13a0f30afd"
 SRC_URI[archive.sha256sum] = "d70c64f3f4fe931e12d5af7f91ff04cd0d16dd7459061c50b3149f9e35de8091"
+PR = "${INC_PR}.0"

@@ -1,5 +1,5 @@
 LICENSE     = "LGPL"
-PR          = "r0"
+PR          = "r1"
 DESCRIPTION = "libgpewidget contains a collection of widgets and other common code shared by many GPE applications."
 SECTION = "gpe/libs"
 PRIORITY    = "optional"
@@ -20,8 +20,8 @@ do_stage () {
 	autotools_stage_includes
 }
 
-RDEPENDS = "sdk-default-icons"
-RPROVIDES = "libgpewidget"
+RDEPENDS_${PN} = "sdk-default-icons"
+RPROVIDES_${PN} = "libgpewidget"
 
 SRC_URI[md5sum] = "9eb90850adf65ec0d0ff26833f7cb8c6"
 SRC_URI[sha256sum] = "ac25c961899ac71b0df93b517ac12b7b3c3083397abe9053a77f1e763e573822"

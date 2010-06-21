@@ -3,8 +3,9 @@ HOMEPAGE = "http://gopher.quux.org:70/devel/offlineimap"
 LICENSE = "GPL"
 SECTION = "console/network"
 LICENSE = "GPL PSF"
-RDEPENDS = "python-re python-netclient python-lang \
+RDEPENDS_${PN} = "python-re python-netclient python-lang \
             python-threading python-stringold python-crypt python-mailbox"
+PR = "r1"
 
 SRC_URI = "${DEBIAN_MIRROR}/main/o/offlineimap/offlineimap_${PV}.tar.gz"
 S = "${WORKDIR}/offlineimap"

@@ -2,8 +2,8 @@ DESCRIPTION = "Ethernet/FDDI station activity monitor"
 HOMEPAGE = "http://www-nrg.ee.lbl.gov/"
 SECTION = "network"
 LICENSE = "BSD"
-RRECOMMENDS = "arpwatch-data"
-PR = "r2"
+RRECOMMENDS_${PN} = "arpwatch-data"
+PR = "r3"
 
 SRC_URI = "ftp://ftp.ee.lbl.gov/arpwatch-${PV}.tar.gz \
            file://05debian_fhs.patch \

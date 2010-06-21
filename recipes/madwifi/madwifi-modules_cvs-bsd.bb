@@ -2,10 +2,11 @@ DESCRIPTION = "Linux driver for 802.11a/b/g universal NIC cards using Atheros ch
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION})"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION})"
 DEPENDS = "virtual/kernel"
 PV = "1.0.0+cvs${SRCDATE}-bsd"
 DEFAULT_PREFERENCE = "-1"
+PR = "r1"
 
 SRC_URI = "cvs://anonymous@madwifi.cvs.sourceforge.net/cvsroot/madwifi;module=madwifi;tag=BSD;date=${SRCDATE}"
 

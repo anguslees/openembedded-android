@@ -1,7 +1,7 @@
 DESCRIPTION = "iSCSI Enterprise Target is for building an iSCSI storage system on Linux"
 HOMEPAGE = "http://iscsitarget.sourceforge.net/"
 LICENSE = "GPL"
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/iscsitarget/iscsitarget-${PV}.tar.gz \
            file://libs.patch \
@@ -11,7 +11,7 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/iscsitarget/iscsitarget-${PV}.tar.gz \
 S = "${WORKDIR}/iscsitarget-${PV}"
 
 DEPENDS = "openssl"
-RRECOMMENDS = "kernel-module-crc32c kernel-module-libcrc32c"
+RRECOMMENDS_${PN} = "kernel-module-crc32c kernel-module-libcrc32c"
 
 inherit module
 

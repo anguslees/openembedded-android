@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r56"
+PR = "r58"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -21,6 +21,7 @@ RDEPENDS_${PN} += "\
 		evopedia \
 		fbreader \
 		ffalarms \
+		foxtrotgps \
 		gpe-calendar \
 		gpe-todo \
 		gpe-scap \
@@ -38,6 +39,7 @@ RDEPENDS_${PN} += "\
 		mpd \
 		mplayer \
 		navit \
+		omhacks \
 		orrery \
 		python-elementary \
 		pythm \
@@ -47,8 +49,8 @@ RDEPENDS_${PN} += "\
 		pyphonelog \
 #		shr-config \
 		shr-today \
-                shr-theme-neo \
-                shr-theme-o2 \
+		shr-theme-neo \
+		shr-theme-o2 \
 		shr-theme-niebiee \
 		shr-theme-sixteen \
 # gry should be in image already
@@ -286,6 +288,7 @@ RDEPENDS_${PN} += "\
 		neolight \
 		spojegui \
 		dbus-daemon-proxy \
+		unixbench \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

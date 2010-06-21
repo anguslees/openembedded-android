@@ -57,6 +57,11 @@ do_install_append() {
 	for i in rcc uic moc ; do
 		install -m 0755 ${S}/bin/$i ${D}${bindir}/
 	done
+
+	#Append an E to the qtdemo file
+	if [ -n "${QT_LIBINFIX}" ] ; then
+		mv ${D}${bindir}/qtdemo ${D}${bindir}/qtdemo${QT_LIBINFIX}
+	fi
 }
 
 LICENSE = "LGPLv2.1 GPLv3"

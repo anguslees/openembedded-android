@@ -3,9 +3,9 @@ SECTION = "gpe"
 LICENSE = "GPL"
 
 DEPENDS = "libhandoff libsoup libeventdb libschedule libxsettings libxsettings-client libgpepimc libdisplaymigration libgpevtype"
-RDEPENDS = "gpe-icons"
+RDEPENDS_${PN} = "gpe-icons"
 
-PR = "r0"
+PR = "r1"
 
 GPE_TARBALL_SUFFIX = "bz2"
 

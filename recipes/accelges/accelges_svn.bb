@@ -5,12 +5,12 @@ LICENSE = "GPL"
 SECTION = "openmoko/utilities"
 
 PV = "0.2+svnr${SRCPV}"
-PR = "r2"
+PR = "r3"
 PE = "1"
 SRCREV = "206"
 
 DEPENDS = "dbus dbus-glib libxrandr libnotify notification-daemon curl gtk+"
-RDEPENDS = "dbus dbus-glib libxrandr libnotify notification-daemon libcurl gtk+"
+RDEPENDS_${PN} = "dbus dbus-glib libxrandr libnotify notification-daemon libcurl gtk+"
 
 SRC_URI = "svn://accelges.googlecode.com/svn/;module=trunk;proto=http"
 S = "${WORKDIR}/trunk"

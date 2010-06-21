@@ -2,12 +2,12 @@ DESCRIPTION = "gxine is a front-end for libxine."
 SECTION = "x11/multimedia"
 LICENSE = "GPL"
 DEPENDS = "gtk+ libxine"
-PR = "r2"
+PR = "r3"
 
 DEFAULT_PREFERENCE = "-1"
 
-# Long list of RDEPENDS required to playback mp3/ogg audio and mpeg/mpeg4 video
-RDEPENDS = "libxine-plugin-vo-out-xshm \
+# Long list of RDEPENDS_${PN} required to playback mp3/ogg audio and mpeg/mpeg4 video
+RDEPENDS_${PN} = "libxine-plugin-vo-out-xshm \
 	    libxine-plugin-vo-out-none \
 	    libxine-plugin-ao-out-esd \
 	    libxine-plugin-ao-out-none \

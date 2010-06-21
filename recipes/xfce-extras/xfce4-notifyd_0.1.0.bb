@@ -1,9 +1,9 @@
 DESCRIPTION = "Notification daemon for the Xfce desktop."
 DEPENDS = "pkgconfig dbus gtk+ libsexy"
-RDEPENDS = "libxfce4util libxfcegui4 libnotify xfconf"
+RDEPENDS_${PN} = "libxfce4util libxfcegui4 libnotify xfconf"
 
 SECTION = "x11"
-PR = "r1"
+PR = "r2"
 
 inherit xfce46
 

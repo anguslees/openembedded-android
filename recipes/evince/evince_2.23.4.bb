@@ -2,9 +2,9 @@ DESCRIPTION = "Evince is a document viewer for document formats like pdf, ps, dj
 LICENSE = "GPL"
 SECTION = "x11/office"
 DEPENDS = "gnome-icon-theme tiff libxt espgs gnome-doc-utils poppler libxml2 gtk+ gnome-vfs gconf libglade gnome-keyring "
-RDEPENDS = "espgs gnome-icon-theme"
-RRECOMMENDS = "gnome-vfs-plugin-file"
-PR = "r2"
+RDEPENDS_${PN} = "espgs gnome-icon-theme"
+RRECOMMENDS_${PN} = "gnome-vfs-plugin-file"
+PR = "r3"
 
 inherit gnome pkgconfig gtk-icon-cache
 

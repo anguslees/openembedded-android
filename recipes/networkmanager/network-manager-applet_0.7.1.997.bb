@@ -1,7 +1,8 @@
 DESCRIPTION = "GTK+ applet for NetworkManager" 
 LICENSE = "GPL"
 DEPENDS = "policykit-gnome libnotify networkmanager dbus-glib libglade gconf gnome-keyring"
-RDEPENDS = "networkmanager"
+RDEPENDS_${PN} = "networkmanager"
+PR = "r1"
 
 inherit gnome
 

@@ -1,8 +1,9 @@
 DESCRIPTION = "TI speech recognizer demo"
 LICENSE = "GPL"
 
-RDEPENDS = "julius"
+RDEPENDS_${PN} = "julius"
 PACKAGE_ARCH = "all"
+PR = "r1"
 
 SRC_URI = "http://dominion.thruhere.net/koen/OE/ecas-julius_acousticfiles.${PV}.tar.gz"
 

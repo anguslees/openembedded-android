@@ -3,13 +3,13 @@ SECTION = "gpe/multimedia"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "gtk+ gstreamer gst-plugins-good gst-plugins-bad ${@base_conditional('ENTERPRISE_DISTRO', '1', '', 'gst-plugins-ugly', d)} esound sqlite libsoup libhandoff"
-PR = "r1"
+PR = "r2"
 
 inherit gpe autotools
 
 SRC_URI = "http://gpe.linuxtogo.org/download/source/starling-${PV}.tar.bz2"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   esd \
   gst-plugin-audioconvert \
   gst-plugin-esd \
@@ -17,7 +17,7 @@ RDEPENDS = "\
   gst-plugin-decodebin \
   gst-plugin-volume \
 "
-RRECOMMENDS = "\
+RRECOMMENDS_${PN} = "\
   gst-plugin-mad \
   gst-plugin-modplug \
   gst-plugin-ivorbis \

@@ -1,8 +1,8 @@
 DESCRIPTION = "GPE terminal wrapper"
 SECTION = "gpe"
 LICENSE = "GPL"
-RRECOMMENDS = "rxvt-unicode"
-PR = "r1"
+RRECOMMENDS_${PN} = "rxvt-unicode"
+PR = "r2"
 PV = "1.1+svn-${SRCDATE}" 
 
 DEFAULT_PREFERENCE = "-1"

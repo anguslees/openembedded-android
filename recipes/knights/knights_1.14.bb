@@ -4,8 +4,8 @@ SECTION = "opie/games"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "phalanx"
-RDEPENDS = "phalanx"
-PR = "r2"
+RDEPENDS_${PN} = "phalanx"
+PR = "r3"
 
 SRC_URI = "http://www.openzaurus.org/mirror/knights.tar.gz \
            file://libqpe-opie.patch \

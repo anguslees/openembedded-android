@@ -1,7 +1,7 @@
 DESCRIPTION = "Fluendo Streaming Server"
 LICENSE = "GPL"
 DEPENDS = "gstreamer python-imaging python-gst python-twisted python-pygtk"
-RDEPENDS = "python-resource python-pprint python-threading \
+RDEPENDS_${PN} = "python-resource python-pprint python-threading \
             python-imaging python-xml python-curses \
             python-compression python-fcntl python-pygobject \
             python-pickle python-netclient python-datetime \
@@ -9,7 +9,7 @@ RDEPENDS = "python-resource python-pprint python-threading \
             python-lang python-zopeinterface  python-textutils \
             python-gst python-misc"
 RDEPENDS_${PN}-gui = "${PN} python-pygtk python-pycairo"
-PR = "r10"
+PR = "r11"
 
 SRC_URI = "http://www.flumotion.net/src/flumotion/flumotion-${PV}.tar.bz2 \
            file://python-path.patch \

@@ -3,12 +3,12 @@ SECTION = "e/utils"
 HOMEPAGE = "http://jmccloud.jm.funpic.de"
 AUTHOR = "Jesus McCloud <bernd.pruenster@gmail.com"
 DEPENDS = "edje-native"
-RRECOMMENDS = "e-wm-theme-illume-gry"
+RRECOMMENDS_${PN} = "e-wm-theme-illume-gry"
 LICENSE = "unknown"
 
 SRCREV = "722b0dcc2b1bf79515eaaddd9ebc7819c7f923d0"
 PV = "0.8-${EFL_SRCREV}+gitr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "git://git.shr-project.org/repo/shr-themes.git;protocol=http;branch=master \
           "

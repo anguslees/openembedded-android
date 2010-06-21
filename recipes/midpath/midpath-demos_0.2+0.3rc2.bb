@@ -1,13 +1,13 @@
 require midpath-common.inc
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/midpath/midpath-0.3rc2.tar.gz"
 
 S = "${WORKDIR}/midpath-0.3rc2"
 
 DEPENDS = "midpath-core midpath-location midpath-messaging midpath-svg midpath-opengles midpath-m3g"
-RDEPENDS = "midpath midpath-location midpath-messaging midpath-svg-midp midpath-opengles midpath-m3g"
+RDEPENDS_${PN} = "midpath midpath-location midpath-messaging midpath-svg-midp midpath-opengles midpath-m3g"
 
 DESCRIPTION = "Demonstration programs of the MIDPath library"
 

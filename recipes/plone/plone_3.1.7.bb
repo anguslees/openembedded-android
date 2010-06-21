@@ -2,7 +2,7 @@ DESCRIPTION = "Plone, a user friendly and powerful Content Management System bas
 SECTION = "network/cms"
 PRIORITY = "optional"
 LICENSE = "GPL"
-PR = "ml0"
+PR = "ml1"
 
 SRC_URI = "http://launchpadlibrarian.net/19393495/Plone-${PV}.tar.gz"
 S = "${WORKDIR}/Plone-${PV}"
@@ -12,7 +12,7 @@ do_install() {
 	cp -pPR ${S}/* ${D}${libdir}/python/Products/
 }
 
-RDEPENDS = "zope"
+RDEPENDS_${PN} = "zope"
 FILES_${PN} = "${libdir}/python/Products/"
 
 SRC_URI[md5sum] = "d2690e2c6d9f477ee0d3851388c0fef9"

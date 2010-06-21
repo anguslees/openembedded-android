@@ -1,8 +1,9 @@
 LICENSE = "GPL"
 DEPENDS = "virtual/kernel"
-RRECOMMENDS = "kernel-module-mip6 kernel-module-ipv6"
+RRECOMMENDS_${PN} = "kernel-module-mip6 kernel-module-ipv6"
 
 SRC_URI = "http://www.mobile-ipv6.org/software/download/mipv6-${PV}.tar.gz"
+PR = "r1"
 
 inherit autotools module-base
 

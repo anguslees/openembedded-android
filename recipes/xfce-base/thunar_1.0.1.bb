@@ -1,10 +1,10 @@
 DESCRIPTION = "File manager for the Xfce Desktop Environment"
 HOMEPAGE="http://thunar.xfce.org"
 DEPENDS = "exo dbus-glib libexif xfce4-panel libice libsm gamin"
-RDEPENDS = "libxfcegui4 exo dbus-glib libexif xfce4-panel libice libsm gamin"
-RRECOMMENDS = "shared-mime-info"
+RDEPENDS_${PN} = "libxfcegui4 exo dbus-glib libexif xfce4-panel libice libsm gamin"
+RRECOMMENDS_${PN} = "shared-mime-info"
 SECTION = "x11"
-PR = "r2"
+PR = "r3"
 
 inherit xfce46
 

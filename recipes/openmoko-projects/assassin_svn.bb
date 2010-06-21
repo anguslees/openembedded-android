@@ -2,10 +2,10 @@ DESCRIPTION = "Action GUI for Installer"
 HOMEPAGE = "http://assassin.projects.openmoko.org/"
 LICENSE = "GPL"
 DEPENDS = "dbus (>= 1.1.1) glib-2.0 e-wm packagekit etk edbus eet"
-RDEPENDS = "etk-theme-ninja"
+RDEPENDS_${PN} = "etk-theme-ninja"
 SRCREV = "268"
 PV = "0.2+svnr${SRCPV}"
-PR = "r6.04"
+PR = "r7"
 
 SRC_URI = "svn://om-assassin.googlecode.com/svn/;module=trunk;proto=http"
 

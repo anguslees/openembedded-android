@@ -5,7 +5,7 @@
 #
 DESCRIPTION = "Packages that are required for the SlugOS native build environment"
 LICENSE = "MIT"
-PR = "r7"
+PR = "r8"
 
 INHIBIT_DEFAULT_DEPS = "1"
 EXCLUDE_FROM_WORLD = "1"
@@ -98,5 +98,5 @@ SLUGOS_NATIVE_DP = "\
 	python \
 	"
 
-RDEPENDS = '${SLUGOS_NATIVE_RT} ${SLUGOS_NATIVE}'
+RDEPENDS_${PN} = '${SLUGOS_NATIVE_RT} ${SLUGOS_NATIVE}'
 DEPENDS  = '${SLUGOS_NATIVE_DP} ${SLUGOS_NATIVE}'

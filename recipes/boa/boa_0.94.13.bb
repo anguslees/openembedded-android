@@ -1,9 +1,9 @@
 DESCRIPTION = "Lightweight and High Performance WebServer"
 SECTION = "console/network"
 LICENSE = "GPL"
-RDEPENDS = "mime-support"
-RPROVIDES = "httpd"
-PR = "r3"
+RDEPENDS_${PN} = "mime-support"
+RPROVIDES_${PN} = "httpd"
+PR = "r4"
 
 SRC_URI = "http://www.boa.org/boa-${PV}.tar.gz \
            file://cgi.patch;striplevel=2 \

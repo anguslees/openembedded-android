@@ -1,9 +1,9 @@
 SECTION = "unknown"
-PR = "r4"
+PR = "r5"
 LICENSE = "GPL"
 PACKAGE_STRIP = "no"
 
-RRECOMMENDS = "kernel-module-serport"
+RRECOMMENDS_${PN} = "kernel-module-serport"
 
 SRC_URI = "${HANDHELDS_CVS};module=gpe/games/snes232 \
 	file://snes232-2.6.patch;striplevel=0 \

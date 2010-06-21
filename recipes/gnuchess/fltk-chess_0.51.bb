@@ -4,7 +4,8 @@ SECTION = "x11/games"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "fltk"
-RDEPENDS = "gnuchess"
+RDEPENDS_${PN} = "gnuchess"
+PR = "r1"
 
 
 SRC_URI = "http://members.cheese.at/woody/zaurus/src/fltk-chess-${PV}.tgz"

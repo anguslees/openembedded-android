@@ -1,6 +1,6 @@
 DESCRIPTION = "openBmap logger and uploader of GPS/GSM data"
 SECTION = "x11/utils"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "\
 ${SOURCEFORGE_MIRROR}/myposition/openbmap-logger-${PV}.tar.gz \
@@ -9,7 +9,7 @@ file://fsogsmd-fix.patch \
 
 inherit distutils
 
-RDEPENDS = "python python-dbus python-pygobject python-pygtk libglade \
+RDEPENDS_${PN} = "python python-dbus python-pygobject python-pygtk libglade \
 	python-subprocess python-netclient python-math python-core python-io frameworkd"
 
 FILES_${PN} += "${datadir}"

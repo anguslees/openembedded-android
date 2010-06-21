@@ -3,15 +3,15 @@ include mesa-common-old.inc
 # suppress mklib-rpath-link patch from mesa-common
 SRC_URI = "${SOURCEFORGE_MIRROR}/mesa3d/MesaLib-${PV}.tar.bz2 file://mklib-cross.patch"
 
-FILESPATH = "${FILE_DIRNAME}/mesa-${PV}:${FILE_DIRNAME}/files:${FILE_DIRNAME}"
+FILESPATHPKG =. "mesa-${PV}:"
 
 PACKAGES_DYNAMIC = "mesa-dri-driver-*"
 
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 DEPENDS += "libdrm"
 # DRI is useless without the kernel drivers
-RRECOMMENDS += " kernel-module-drm kernel-module-radeon "
+RRECOMMENDS_${PN} += " kernel-module-drm kernel-module-radeon "
 
 do_configure() {
 	cd configs

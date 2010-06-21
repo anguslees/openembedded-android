@@ -1,6 +1,6 @@
 DESCRIPTION = "Meta package to enable zeroconf audio with pulseaudio"
 DEPENDS = "avahi pulseaudio"
-RDEPENDS = " \
+RDEPENDS_${PN} = " \
   avahi-daemon \
   pulseaudio-server \
   pulseaudio-module-alsa-sink \
@@ -13,7 +13,7 @@ RDEPENDS = " \
   pulseaudio-module-zeroconf-publish \
 "
 
-PR = "r3"
+PR = "r4"
 
 S = "${WORKDIR}"
 

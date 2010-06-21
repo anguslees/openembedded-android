@@ -1,10 +1,10 @@
 DESCRIPTION = "GPS navigation/map display software"
 LICENSE = "GPL"
 DEPENDS = "sqlite3 gtk+ gnome-vfs dbus bluez-libs"
-RDEPENDS = "bluez-utils"
+RDEPENDS_${PN} = "bluez-utils"
 SRCDATE = "20061114"
 PV = "1.2.4+svn${SRCDATE}"
-PR = "r1"
+PR = "r2"
 
 # Only works with SRCDATE_maemo-mapper-nohildon = "20061114"
 SRC_URI = "svn://garage.maemo.org/svn/maemo-mapper;proto=https;module=trunk \

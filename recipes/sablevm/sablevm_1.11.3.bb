@@ -7,7 +7,8 @@ SECTION = "interpreters"
 DEPENDS = "libffi libtool popt \
            sablevm-classpath"
 #          unzip"
-RRECOMMENDS = "sablevm-classpath (>= ${PV})"
+RRECOMMENDS_${PN} = "sablevm-classpath (>= ${PV})"
+PR = "r1"
 
 SRC_URI = "http://sablevm.org/download/release/${PV}/${PN}-${PV}.tar.gz"
 

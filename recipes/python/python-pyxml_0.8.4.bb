@@ -3,14 +3,14 @@ SECTION = "devel/python"
 PRIORITY = "optional"
 LICENSE = "PSF"
 SRCNAME = "pyxml"
-PR = "ml1"
+PR = "ml2"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/pyxml/PyXML-${PV}.tar.gz"
 S = "${WORKDIR}/PyXML-${PV}"
 
 inherit distutils
 
-RDEPENDS = "python-xml python-netclient"
+RDEPENDS_${PN} = "python-xml python-netclient"
 
 
 SRC_URI[md5sum] = "1f7655050cebbb664db976405fdba209"

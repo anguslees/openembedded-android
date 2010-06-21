@@ -4,7 +4,7 @@ PRIORITY = "optional"
 HOMEPAGE = "http://www.mplayerhq.hu/"
 DEPENDS = "virtual/libsdl zlib libpng jpeg freetype fontconfig alsa-lib lzo ncurses libxv virtual/libx11 \
            ${@base_conditional('ENTERPRISE_DISTRO', '1', '', 'libmad liba52 lame', d)}"
-RDEPENDS = "mplayer-common"
+RDEPENDS_${PN} = "mplayer-common"
 LICENSE = "GPL"
 SRC_URI = "http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc1.tar.bz2;name=archive \
            file://vo_w100.c \
@@ -41,7 +41,7 @@ ARM_INSTRUCTION_SET = "ARM"
 
 RCONFLICTS_${PN} = "mplayer-atty"
 RREPLACES_${PN} = "mplayer-atty"
-PR = "r18"
+PR = "r19"
 
 PARALLEL_MAKE = ""
 

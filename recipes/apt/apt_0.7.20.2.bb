@@ -1,12 +1,12 @@
 DEPENDS = "curl db"
-RDEPENDS = "dpkg"
+RDEPENDS_${PN} = "dpkg"
 
 require apt.inc
 
 SRC_URI += "file://no-doxygen.patch \
             file://no-ko-translation.patch \
             file://use-host.patch "
-PR = "r1"
+PR = "r2"
 
 require apt-package.inc
 

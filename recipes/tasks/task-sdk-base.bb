@@ -1,11 +1,11 @@
 DESCRIPTION = "Basic SDK development packages"
-PR = "r2"
+PR = "r5"
 LICENSE = "MIT"
 ALLOW_EMPTY = "1"
 
 DEPENDS = "task-sdk-bare"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
     task-sdk-bare \
     glibc \
     virtual-libc-dev \
@@ -20,7 +20,6 @@ RDEPENDS = "\
     glib-2.0-dev \
     gstreamer-dev \
     libice-dev \
-    ipkg-dev \
     jpeg-dev \
     libapm-dev \
     alsa-lib-dev \

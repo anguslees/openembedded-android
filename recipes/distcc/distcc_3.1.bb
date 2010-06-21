@@ -3,10 +3,10 @@ compilation of C/C++/ObjC code across machines on a network."
 SECTION = "devel"
 LICENSE = "GPLv2"
 
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "avahi gtk+"
-RRECOMMENDS = "avahi-daemon"
+RRECOMMENDS_${PN} = "avahi-daemon"
 
 SRC_URI = "http://distcc.googlecode.com/files/distcc-${PV}.tar.bz2 \
            file://default \

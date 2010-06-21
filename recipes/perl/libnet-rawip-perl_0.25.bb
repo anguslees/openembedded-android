@@ -2,7 +2,7 @@ DESCRIPTION = "Perl extension to manipulate raw IP packets with interface to lib
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
 DEPENDS = "libpcap"
-RDEPENDS = " \
+RDEPENDS_${PN} = " \
 	 perl-module-class-struct \
 	 perl-module-data-dumper \
 	 perl-module-english \
@@ -10,6 +10,7 @@ RDEPENDS = " \
 	 perl-module-subs \
 	 perl-module-test-more \
 	 "
+PR = "r1"
 
 SRC_URI = " \
 	http://search.cpan.org/CPAN/authors/id/S/SA/SAPER/Net-RawIP-${PV}.tar.gz;name=net-rawip-perl-${PV} \

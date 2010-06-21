@@ -1,7 +1,8 @@
 DESCRIPTION = "GTK+ applet for NetworkManager" 
 LICENSE = "GPL"
 DEPENDS = "libnotify networkmanager dbus-glib libglade gconf gnome-keyring"
-RDEPENDS = "networkmanager"
+RDEPENDS_${PN} = "networkmanager"
+PR = "r1"
 
 DEFAULT_PREFERENCE = "-1"
 

@@ -4,7 +4,7 @@ PARALLEL_MAKE = ""
 SRC_URI="http://downloads.sourceforge.net/xmltv/xmltv-${PV}.tar.bz2 \
          file://Makefile.PL.patch"
 
-RDEPENDS = "perl \
+RDEPENDS_${PN} = "perl \
             libarchive-zip-perl \
             libdate-manip-perl \
             libdatetime-format-strptime-perl \
@@ -58,7 +58,7 @@ DEPENDS = "perl \
            libxml-writer-perl-native \
            "
 
-PR = "r4"
+PR = "r5"
 
 # cpan does not work, it installs things in the perl work dir iso the xmltv work dir
 # root cause are bad definitions in perl/config.sh, but I don't know what they should be

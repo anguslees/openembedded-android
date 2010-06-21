@@ -1,9 +1,9 @@
 SECTION = "console/network"
 DEPENDS = "liblockfile"
-RRECOMMENDS = "ssmtp"
+RRECOMMENDS_${PN} = "ssmtp"
 DESCRIPTION = "mailx is the traditional command-line-mode \
 mail user agent."
-PR = "r0"
+PR = "r1"
 LICENSE = "GPL"
 SRC_URI = "${DEBIAN_MIRROR}/main/m/mailx/mailx_${PV}.orig.tar.gz;name=archive \
 	   ${DEBIAN_MIRROR}/main/m/mailx/mailx_${PV}-1.diff.gz;name=patch \

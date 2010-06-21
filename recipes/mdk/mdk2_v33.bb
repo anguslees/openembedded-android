@@ -3,8 +3,8 @@ DESCRIPTION = "ASPj is drunk"
 HOMEPAGE = "http://homepages.tu-darmstadt.de/~p_larbig/wlan/"
 LICENSE = "GPLv2"
 DEPENDS = ""
-RDEPENDS = ""
-PR ="r1"
+RDEPENDS_${PN} = ""
+PR = "r2"
 
 SRC_URI = "http://homepages.tu-darmstadt.de/~p_larbig/wlan/mdk2-${PV}.tar.bz2 \
 	   file://mdk2-ppcfix.patch"

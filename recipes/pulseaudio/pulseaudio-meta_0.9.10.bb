@@ -1,6 +1,6 @@
 DESCRIPTION = "Pulseaudio Meta package w/ initscript et. al."
 SECTION = "audio"
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   pulseaudio-server \
   pulseaudio-module-alsa-sink \
   pulseaudio-module-alsa-source \
@@ -18,7 +18,7 @@ RDEPENDS = "\
   libasound-module-ctl-pulse \
   libasound-module-pcm-pulse \
 "
-PR = "r3"
+PR = "r4"
 
 inherit update-rc.d
 

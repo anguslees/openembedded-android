@@ -1,9 +1,9 @@
-PR = "r1"
+PR = "r2"
 SECTION = "base"
 DESCRIPTION = "D-BUS glue for hotplug system"
 # DEPENDS = "dbus hotplug"
 DEPENDS = "dbus"
-RDEPENDS = "hotplug"
+RDEPENDS_${PN} = "hotplug"
 LICENSE = "GPL"
 
 inherit gpe

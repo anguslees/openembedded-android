@@ -2,10 +2,10 @@ DESCRIPTION = "Matchbox Window Manager Desktop"
 LICENSE = "GPL"
 SECTION = "x11/panels"
 DEPENDS = "gtk+ startup-notification"
-RDEPENDS = "matchbox-common"
+RDEPENDS_${PN} = "matchbox-common"
 SRCREV = "2096"
 PV = "2.0+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 inherit autotools_stage pkgconfig
 

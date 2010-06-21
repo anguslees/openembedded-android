@@ -2,10 +2,10 @@ DESCRIPTION = "Robostix programs"
 PRIORITY = "optional"
 SECTION = "base"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION})"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION})"
 DEPENDS = "virtual/kernel"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "svn://svn.gumstix.com/gumstix-buildroot/branches/projects;module=robostix;rev=1588;proto=http \
    file://makefile-rules.patch \

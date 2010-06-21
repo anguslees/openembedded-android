@@ -1,8 +1,8 @@
 LICENSE     = "GPL"
-PR          = "r0"
+PR          = "r1"
 DESCRIPTION = "GPE to-do list"
 DEPENDS     = "libgpewidget-hildon libgpepimc-hildon libtododb sdk-default-icons libosso"
-RDEPENDS    = "sdk-default-icons"
+RDEPENDS_${PN}    = "sdk-default-icons"
 SECTION = "gpe"
 PRIORITY    = "optional"
 

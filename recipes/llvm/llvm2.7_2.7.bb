@@ -1,6 +1,6 @@
 require llvm.inc
 
-PR = "r0"
+PR = "r2"
 
 DEPENDS = "llvm-common llvm2.7-native"
 
@@ -13,6 +13,7 @@ EXTRA_OECMAKE += "\
         -DLLVM_TARGET_ARCH:STRING=${LLVM_ARCH} \
         -DLLVM_ENABLE_ASSERTIONS:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+		-DBUILD_SHARED_LIBS:BOOL=ON \
 	"
 
 LLVM_RELEASE = "2.7"

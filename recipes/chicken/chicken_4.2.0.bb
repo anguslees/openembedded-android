@@ -1,8 +1,8 @@
 require chicken.inc
 
 DEPENDS = "gcc-cross-sdk"
-RDEPENDS = "gcc-cross-sdk"
-PR = "${INC_PR}.1"
+RDEPENDS_${PN} = "gcc-cross-sdk"
+PR = "${INC_PR}.2"
 
 do_compile() {
     make PLATFORM="linux" DESTDIR="${D}" PREFIX="${prefix}" HOSTSYSTEM="${TARGET_SYS}" ARCH=${CHICKEN_ARCH}

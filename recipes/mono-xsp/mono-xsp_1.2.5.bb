@@ -8,10 +8,10 @@ SECTION = "devel/mono"
 #
 
 
-PR = "r4"
+PR = "r5"
 
 DEPENDS = "mono"
-RDEPENDS = "mono"
+RDEPENDS_${PN} = "mono"
 
 inherit autotools mono
 

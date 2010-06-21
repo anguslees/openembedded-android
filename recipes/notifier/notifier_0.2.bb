@@ -2,9 +2,9 @@ DESCRIPTION = "A notifier for new calls and messages"
 HOMEPAGE = "http://www.telefoninux.org"
 AUTHOR = "Pietro Montorfano"
 LICENSE = "GPLv3"
-RDEPENDS = "python-elementary python python-edbus"
+RDEPENDS_${PN} = "python-elementary python python-edbus"
 SECTION = "x11/application"
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "http://monto.homelinux.org/notifier;name=archive \
 http://monto.homelinux.org/89notifier;name=init"

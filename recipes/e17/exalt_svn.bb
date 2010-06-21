@@ -3,10 +3,11 @@ HOMEPAGE = "http://watchwolf.fr/wiki/doku.php?id=exalt"
 
 LICENSE = "LGPLv2"
 DEPENDS = "elementary vpnc wpa-supplicant ecore eet edbus"
-RDEPENDS = "vpnc wpa-supplicant"
+RDEPENDS_${PN} = "vpnc wpa-supplicant"
 
 PV = "0.9+svnr${SRCPV}"
 SRCREV = "${EFL_SRCREV}"
+PR = "r1"
 
 inherit e
 

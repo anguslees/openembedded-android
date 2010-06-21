@@ -13,11 +13,9 @@ python () {
         bb.data.setVar('EXTRA_OECONF', ' --with-ipc=tcp --program-prefix= ', d)
 }
 
-do_stage_append () {
-    oe_libinstall -so libfakeroot ${STAGING_LIBDIR}/libfakeroot/
-}
+NATIVE_INSTALL_WORKS = "1"
 
-RDEPENDS = "util-linux-native"
+RDEPENDS_${PN} = "util-linux-native"
 
 SRC_URI[md5sum] = "aaefede2405a40c87438e7e833d69b70"
 SRC_URI[sha256sum] = "dbcab1f495b857e67feff882e018ca59958b8d189ff1f76684d28e35463ec29d"

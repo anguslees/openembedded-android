@@ -2,11 +2,11 @@ DESCRIPTION = "Linux kernel for MTX-1 (MeshCube)"
 HOMEPAGE = "http://meshcube.org/meshwiki/"
 LICENSE = "GPLv2"
 KV = "${PV}"
-PR = "r11"
+PR = "r12"
 inherit module-base kernel
 
 PROVIDES = "virtual/kernel"
-RDEPENDS = "mtd-utils"
+RDEPENDS_${PN} = "mtd-utils"
 
 SRC_URI = "cvs://cvs:cvs@ftp.linux-mips.org/home/cvs;module=linux;tag=linux_2_4_27 \
 	file://01-mtd-2004-01-27.diff \

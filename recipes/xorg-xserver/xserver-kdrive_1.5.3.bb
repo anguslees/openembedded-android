@@ -1,12 +1,12 @@
 require xserver-kdrive-common.inc
 
 DEPENDS += "hal libxkbfile libxcalibrate pixman"
-RDEPENDS += "hal"
+RDEPENDS_${PN} += "hal"
 
 DEFAULT_PREFERENCE = "-99" 
 
 PE = "1"
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 SRC_URI = "${XORG_MIRROR}/individual/xserver/xorg-server-${PV}.tar.bz2 \
 	${KDRIVE_COMMON_PATCHES} \
@@ -17,8 +17,10 @@ SRC_URI = "${XORG_MIRROR}/individual/xserver/xorg-server-${PV}.tar.bz2 \
 	file://tslib-default-device.patch \
 	file://keyboard-resume-workaround.patch \
 	file://xorg-avr32-support.diff \
-    file://sysroot_fix.patch \
-    file://drmfix.patch \
+	file://sysroot_fix.patch \
+	file://drmfix.patch \
+	file://no_xkb.patch \
+	file://keyboard_device.patch \
         "
 
 S = "${WORKDIR}/xorg-server-${PV}"

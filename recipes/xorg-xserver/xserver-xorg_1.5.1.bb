@@ -2,9 +2,9 @@ require xorg-xserver-common.inc
 
 DESCRIPTION = "the X.Org X server"
 DEPENDS += "pixman libpciaccess openssl"
-RDEPENDS += "hal"
+RDEPENDS_${PN} += "hal"
 PE = "1"
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 SRC_URI += "file://drmfix.patch \
             file://sysroot_fix.patch"

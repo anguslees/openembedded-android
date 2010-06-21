@@ -6,9 +6,9 @@ HOMEPAGE = "http://www.enlightenment.org"
 # we need to build pyrex otherwise cython doesn't get called to build
 # the extension modules.
 DEPENDS = "python-cython-native python-pyrex-native python-numeric eina"
-RDEPENDS += "python-lang"
+RDEPENDS_${PN} += "python-lang"
 PV = "0.3.1+svnr${SRCPV}"
-PR = "ml0"
+PR = "ml1"
 
 inherit setuptools
 

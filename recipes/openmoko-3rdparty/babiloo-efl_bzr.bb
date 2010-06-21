@@ -4,13 +4,14 @@ PRIORITY = "optional"
 LICENSE = "GPL"
 AUTHOR = "Luca Vaudano <vaudano@gmail.com>"
 HOMEPAGE = "http://babiloo-project.org"
-RDEPENDS = "python-elementary python-compression python-misc python-netclient"
+RDEPENDS_${PN} = "python-elementary python-compression python-misc python-netclient"
 
 PACKAGE_ARCH = "all"
 
 DEFAULT_PREFERENCE = "-1"
 SRCREV = "296"
 PV = "2.0.9-bzrr${SRCPV}"
+PR = "r1"
 
 SRC_URI = "bzr://bazaar.launchpad.net/~vaudano/babiloo/efl"
 

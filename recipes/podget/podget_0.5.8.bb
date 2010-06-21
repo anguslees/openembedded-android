@@ -3,8 +3,8 @@ HOMEPAGE = "http://podget.sourceforge.net/"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS += "virtual/libiconv"
-RDEPENDS = "bash sed wget"
-PR = "r2"
+RDEPENDS_${PN} = "bash sed wget"
+PR = "r3"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/podget/podget_${PV}.tar.gz \
            file://busybox_df.patch"

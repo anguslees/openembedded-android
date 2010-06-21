@@ -1,9 +1,9 @@
 DESCRIPTION = "HTML Parser bits."
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
-PR = "r1"
+PR = "r2"
 
-RDEPENDS = "perl-module-test-more \
+RDEPENDS_${PN} = "perl-module-test-more \
             perl-module-xsloader \
             perl-module-test-simple \
             libhtml-tagset-perl"

@@ -3,9 +3,10 @@ SECTION = "gpe"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "gtk+ libgpewidget gpe-ownerinfo xkbd"
-RDEPENDS = "xkbd"
+RDEPENDS_${PN} = "xkbd"
 RPROVIDES_${PN} = "gpe-session-starter"
 PV = "0.93+svn${SRCDATE}"
+PR = "r1"
 
 inherit autotools
 

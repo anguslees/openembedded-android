@@ -4,10 +4,10 @@ AUTHOR = "Benjamin 'blindcoder' Schieder'
 LICENSE = "GPLv2"
 SECTION = "x11/tool"
 DEPENDS = "fltk"
-RDEPENDS = "curl"
+RDEPENDS_${PN} = "curl"
 SRCREV = "67"
 PV = "1.0+svnr${SRCPV}"
-PR = "r0"
+PR = "r1"
 S = "${WORKDIR}/trunk"
 
 inherit autotools

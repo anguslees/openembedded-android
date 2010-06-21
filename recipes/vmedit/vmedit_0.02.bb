@@ -3,7 +3,8 @@ HOMEPAGE = "http://194.213.43.198/"
 AUTHOR = "Vladimir Martinek <vm@sykora.cz>"
 SECTION = "gpe"
 LICENSE = "GPL"
-RDEPENDS = "gpe-icons"
+RDEPENDS_${PN} = "gpe-icons"
+PR = "r1"
 
 inherit gpe autotools
 

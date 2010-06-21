@@ -1,9 +1,9 @@
 DESCRIPTION = "Meta-package for QPE stuff"
 SECTION = "opie/base"
 LICENSE = "MIT"
-PR = "r3"
+PR = "r4"
 
-RDEPENDS = " \
+RDEPENDS_${PN} = " \
     task-qpe-applets \
     task-qpe-games \
     task-qpe-inputmethods \

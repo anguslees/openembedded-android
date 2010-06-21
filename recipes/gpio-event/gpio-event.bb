@@ -5,10 +5,10 @@ DESCRIPTION = "gpio-event driver and userspace program"
 PRIORITY = "optional"
 SECTION = "base"
 LICENSE = "GPL"
-RDEPENDS = "kernel (${KERNEL_VERSION})"
+RDEPENDS_${PN} = "kernel (${KERNEL_VERSION})"
 DEPENDS = "virtual/kernel"
 
-PR = "r4"
+PR = "r5"
 
 SRC_URI = "http://davehylands.com/gumstix-wiki/gpio-event/gpio-event-2.6.21-1444-select.tar.gz \
    file://makefile.patch \

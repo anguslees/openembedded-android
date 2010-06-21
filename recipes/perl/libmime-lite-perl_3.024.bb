@@ -1,9 +1,9 @@
 DESCRIPTION = "Simple standalone module for generating MIME messages."
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
-PR = "r1"
+PR = "r2"
 
-RDEPENDS = "perl-module-file-spec \
+RDEPENDS_${PN} = "perl-module-file-spec \
             libemail-date-format-perl \
             perl-module-test-more \
             perl-module-time-local"

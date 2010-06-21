@@ -2,7 +2,7 @@
 # Released under the MIT license (see packages/COPYING)
 
 DEPENDS = "unzip-native"
-RDEPENDS = "firefox"
+RDEPENDS_${PN} = "firefox"
 
 S = "${WORKDIR}"
 FIREFOX_VERSION = "3.0.4"
@@ -11,7 +11,7 @@ do_configure() {
 	unzip -o -q -d xpi *.xpi
 }
 
-INC_PR = "r1"
+INC_PR = "r2"
 
 do_install() {
 	cd ${S}/xpi

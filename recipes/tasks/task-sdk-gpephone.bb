@@ -1,9 +1,9 @@
 DESCRIPTION = "SDK task for GPE Phone Edition"
-PR = "r0"
+PR = "r1"
 LICENSE = "MIT"
 ALLOW_EMPTY = "1"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
     libidn-dev \
     libim-dev \
     gloox-dev \

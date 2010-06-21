@@ -1,10 +1,10 @@
 DESCRIPTION = "Task mamona: Python Applicattions"
 LICENSE = "MIT"
-PR = "r0"
+PR = "r1"
 
 PACKAGES = "${PN}"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
     python-ao \
     python-cheetah \
     python-constraint \

@@ -3,15 +3,15 @@ HOMEPAGE = "http://www.devbase.at/voip/"
 LICENSE = "GPLv2"
 PRIORITY = "optional"
 DEPENDS = "liblinphone"
-RDEPENDS = "liblinphone"
-RRECOMMENDS = "\
+RDEPENDS_${PN} = "liblinphone"
+RRECOMMENDS_${PN} = "\
 	linphonec \
 	kernel-module-yealink \
 	kernel-module-usbhid \
 	kernel-module-snd-usb-audio \
 	"
 
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "http://download.devbase.at/voip/yeaphone-${PV}.tar.gz"
 

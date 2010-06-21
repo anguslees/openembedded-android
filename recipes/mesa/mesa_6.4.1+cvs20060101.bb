@@ -3,6 +3,7 @@ SECTION = "unknown"
 SRCDATE = "20060101"
 PV = "6.4.1+cvs${SRCDATE}"
 PE = "2"
+PR = "r1"
 
 SRC_URI = "${FREEDESKTOP_CVS}/mesa;module=Mesa;method=pserver;date=${SRCDATE} \
 	file://mklib-rpath-link.patch"
@@ -10,7 +11,7 @@ S = "${WORKDIR}/Mesa"
 
 LICENSE = "LGPL"
 
-RDEPENDS = "expat"
+RDEPENDS_${PN} = "expat"
 DEPENDS = "makedepend-native xf86vidmodeproto glproto virtual/libx11 libxext libxxf86vm libxi libxmu libice"
 
 # gcc-3.4 blows up in gtktext with -frename-registers on arm-linux

@@ -1,9 +1,9 @@
 DESCRIPTION = "blackbox configuration for xqtlauncher which integrates X/Qt2 nicely into opie."
 HOMEPAGE = "http://angstrom-distribution.org/"
 LICENSE = "GPL"
-PR = "r0"
+PR = "r1"
 
-RDEPENDS = "blackbox xqtlauncher"
+RDEPENDS_${PN} = "blackbox xqtlauncher"
 
 SRC_URI = "file://blackboxrc \
            file://defaultwm"

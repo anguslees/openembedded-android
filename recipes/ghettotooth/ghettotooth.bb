@@ -1,7 +1,8 @@
 SECTION = "network/misc"
 DESCRIPTION = "Bluetooth scanner"
 LICENSE = "GPL"
-RDEPENDS = "perl"
+RDEPENDS_${PN} = "perl"
+PR = "r1"
 
 SRC_URI = "http://www.wardriving.ch/hpneu/blue/perl/ghettotooth.pl"
 

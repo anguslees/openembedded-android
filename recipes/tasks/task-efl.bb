@@ -1,7 +1,7 @@
 DESCRIPTION = "Task package: Enlightenment Foundation Libraries"
 LICENSE = "MIT"
 SECTION = "devel/efl"
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   eet \
   evas \
   ecore \
@@ -14,6 +14,6 @@ RDEPENDS = "\
   ewl \
   epdf \
 "
-PR = "r1"
+PR = "r2"
 
 ALLOW_EMPTY = "1"

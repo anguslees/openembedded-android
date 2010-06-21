@@ -86,7 +86,7 @@ Mail:       fransmeulenbroeks@gmail.com
 Machines:   sheevaplug, openrd-client, eeepc 701
 Distros:    Ångström
 Interests:  content sharing, media center,
-Recipes:    myth*
+Recipes:    myth*, lirc*, python-coherence, tgt
 
 Person:     Graeme Gregory
 Mail:       dp@xora.org.uk
@@ -203,8 +203,6 @@ Recipes:    mini-httpd,dmidecode,mktemp
 Person:     Marcin Juszkiewicz
 Mail:       marcin@juszkiewicz.com.pl
 Website:    http://marcin.juszkiewicz.com.pl/
-Machines:   bug, progear, alix, at91sam9263ek
-Distros:    Poky, Ångström
 
 Person:     Marco Cavallini
 Mail:       m.cavallini@koansoftware.com
@@ -343,7 +341,7 @@ Recipes:    directfb, php
 Person:     Stefan Schmidt
 Mail:       stefan@datenfreihafen.org
 Website:    http://www.datenfreihafen.org/
-Machines:   om-gta02, a1200, a780, rokre2, sgh-i900, palmpre, imote2
+Machines:   om-gta02, a1200, a780, rokre2, sgh-i900, palmpre, imote2, bug20
 Interest:   Linux mobile phones
 
 Person:     Steffen Sledz

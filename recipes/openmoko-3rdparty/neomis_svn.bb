@@ -8,7 +8,7 @@ DEPENDS = "python-native"
 
 SRCREV = "6"
 PV = "1.1.0+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 S = "${WORKDIR}/trunk"
 
@@ -24,4 +24,4 @@ do_configure_prepend_shr() {
 
 FILES_${PN} += "${datadir}/neomis ${datadir}/applications/neomis.desktop ${datadir}/pixmaps"
 
-RDEPENDS += "python-audio python-pyalsaaudio python-elementary" 
+RDEPENDS_${PN} += "python-audio python-pyalsaaudio python-elementary" 

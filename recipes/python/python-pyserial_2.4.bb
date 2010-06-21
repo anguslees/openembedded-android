@@ -3,7 +3,7 @@ SECTION = "devel/python"
 PRIORITY = "optional"
 LICENSE = "PSF"
 SRCNAME = "pyserial"
-PR = "ml1"
+PR = "ml2"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${SRCNAME}/${SRCNAME}-${PV}.tar.gz"
 S = "${WORKDIR}/${SRCNAME}-${PV}"
@@ -12,7 +12,7 @@ inherit setuptools
 
 # FIXME might stop packaging serialwin32 and serialjava files
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   python-fcntl \
   python-io \
   python-stringold \

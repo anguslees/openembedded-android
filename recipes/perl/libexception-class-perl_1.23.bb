@@ -2,8 +2,8 @@ DESCRIPTION = "Exception::Class - A module that allows you to declare real excep
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
 DEPENDS = "libclass-data-inheritable-perl-native libdevel-stacktrace-perl-native"
-RDEPENDS = "libclass-data-inheritable-perl libdevel-stacktrace-perl"
-PR = "r8"
+RDEPENDS_${PN} = "libclass-data-inheritable-perl libdevel-stacktrace-perl"
+PR = "r9"
 
 SRC_URI = "http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Exception-Class-${PV}.tar.gz"
 

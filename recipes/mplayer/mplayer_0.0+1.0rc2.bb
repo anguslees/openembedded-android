@@ -9,7 +9,7 @@ DEPENDS_append_hx4700 = " libw100 "
 
 DEFAULT_PREFERENCE_avr32 = "1"
 
-RDEPENDS = "mplayer-common"
+RDEPENDS_${PN} = "mplayer-common"
 LICENSE = "GPL"
 SRC_URI = "http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc2.tar.bz2 \
            file://vo_w100.c \
@@ -46,7 +46,7 @@ ARM_INSTRUCTION_SET = "ARM"
 RCONFLICTS_${PN} = "mplayer-atty"
 RREPLACES_${PN} = "mplayer-atty"
 
-PR = "r14"
+PR = "r15"
 
 PARALLEL_MAKE = ""
 

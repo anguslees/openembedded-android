@@ -21,7 +21,7 @@ TOOLCHAIN_OUTPUTNAME ?= "${DISTRO}-${DISTRO_VERSION}-${SDK_SYS}-${FEED_ARCH}-${T
 
 DISTRO_FEED_CONFIGS ?= " "
 
-RDEPENDS = "${DISTRO_FEED_CONFIGS} ${TOOLCHAIN_TARGET_TASK} ${TOOLCHAIN_HOST_TASK}"
+RDEPENDS_${PN} = "${DISTRO_FEED_CONFIGS} ${TOOLCHAIN_TARGET_TASK} ${TOOLCHAIN_HOST_TASK}"
 
 TOOLCHAIN_FEED_URI ?= "${DISTRO_FEED_URI}"
 
@@ -177,5 +177,6 @@ do_populate_sdk() {
 }
 
 do_populate_sdk[nostamp] = "1"
+do_populate_sdk[lockfiles] = "${DEPLOY_DIR_IPK}.lock"
 addtask package_update_index_ipk before do_populate_sdk
 addtask populate_sdk before do_build after do_install

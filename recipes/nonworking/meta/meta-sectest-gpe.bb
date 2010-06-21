@@ -1,8 +1,8 @@
 DESCRIPTION = "Meta-package for GPE Security Testing Image"
 LICENSE = "MIT"
-PR = "r6"
+PR = "r7"
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
     gpe-task-base \
     gpe-base-depends \
     gpe-task-base \

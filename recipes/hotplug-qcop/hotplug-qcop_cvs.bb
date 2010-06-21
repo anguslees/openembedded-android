@@ -1,8 +1,8 @@
 DESCRIPTION = "HotPlug -> QCOP Event Bridge"
 SECTION = "opie/base"
-RDEPENDS = "opie-qcop hotplug"
+RDEPENDS_${PN} = "opie-qcop hotplug"
 LICENSE = "GPL"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "${HANDHELDS_CVS};module=opie/core/tools/hotplug-qcop"
 S = "${WORKDIR}/hotplug-qcop"

@@ -3,11 +3,11 @@ PRIORITY    = "optional"
 SECTION = "libs"
 
 DEPENDS     = "aspell"
-RDEPENDS    = "aspell"
+RDEPENDS_${PN}    = "aspell"
 
 inherit autotools pkgconfig
 
-PR = "r0"
+PR = "r1"
 
 S = "${WORKDIR}/enchant-${PV}"
 

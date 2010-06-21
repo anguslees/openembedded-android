@@ -1,13 +1,13 @@
 
 inherit gpe
 
-PR          = "r0"
+PR          = "r1"
 LICENSE     = "GPL"
 DESCRIPTION = "GPE file manager"
 DEPENDS     = "libgpewidget gnome-vfs dbus-glib"
 SECTION = "gpe"
-RDEPENDS    = "gpe-icons"
-RRECOMMENDS = "gnome-vfs-plugin-file"
+RDEPENDS_${PN}    = "gpe-icons"
+RRECOMMENDS_${PN} = "gnome-vfs-plugin-file"
 
 FILES_${PN} += " ${datadir}/gpe"
 

@@ -1,7 +1,7 @@
 SECTION = "console/network"
 DESCRIPTION = "netkit-tftpd includes a tftp server."
 DEPENDS = "netkit-base"
-RDEPENDS = "netkit-base"
+RDEPENDS_${PN} = "netkit-base"
 LICENSE = "BSD"
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/netkit-tftp-${PV}"
 
@@ -12,7 +12,7 @@ SRC_URI = "ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-tftp-${PV}.
 
 S = "${WORKDIR}/netkit-tftp-${PV}"
 
-PR = "r7"
+PR = "r8"
 
 EXTRA_OEMAKE = ""
 do_compile () {

@@ -1,11 +1,11 @@
 LICENSE = "GPL"
 inherit gpe autotools
 
-PR = "r0"
+PR = "r1"
 
 DEPENDS = "libcontactsdb libgpewidget libgpepimc libdisplaymigration libgpevtype dbus-glib"
 SECTION = "gpe"
-RDEPENDS = "gpe-icons"
+RDEPENDS_${PN} = "gpe-icons"
 DESCRIPTION = "GPE contacts manager"
 SRC_URI = "${GPE_MIRROR}/${PN}-${PV}.tar.bz2"
 

@@ -1,10 +1,10 @@
 DESCRIPTION = "Sugar etoys"
 LICENSE = "GPLv2"
 
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "sugar"
-RDEPENDS = "sugar shared-mime-info"
+RDEPENDS_${PN} = "sugar shared-mime-info"
 
 SRC_URI = "http://dev.laptop.org/pub/sugar/sources/etoys/etoys-${PV}.tar.gz \
            file://etoys.diff"

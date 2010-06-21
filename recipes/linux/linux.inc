@@ -32,6 +32,7 @@ KERNEL_DEVICETREE_boc01 = "${WORKDIR}/boc01.dts"
 KERNEL_DEVICETREE_calamari = "arch/${ARCH}/boot/dts/mpc8536ds.dts"
 KERNEL_DEVICETREE_canyonlands = "arch/${ARCH}/boot/dts/canyonlands.dts"
 KERNEL_DEVICETREE_kilauea = "arch/${ARCH}/boot/dts/kilauea.dts"
+KERNEL_DEVICETREE_lite5200 = "arch/${ARCH}/boot/dts/lite5200.dts"
 KERNEL_DEVICETREE_lsppchd = "arch/${ARCH}/boot/dts/kuroboxHD.dts"
 KERNEL_DEVICETREE_lsppchg = "arch/${ARCH}/boot/dts/kuroboxHG.dts"
 KERNEL_DEVICETREE_mpc8313e-rdb = "arch/${ARCH}/boot/dts/mpc8313erdb.dts"
@@ -163,6 +164,23 @@ do_configure_prepend() {
             echo 'CONFIG_DEVTMPFS_MOUNT=y' >> ${S}/.config
         fi
 
+        # Newer inits like systemd need cgroup support
+        if [ "${KERNEL_ENABLE_CGROUPS}" = "1" ] ; then
+            sed -e /CONFIG_CGROUP_SCHED/d \
+                -e /CONFIG_CGROUPS/d \
+                -i '${S}/.config'
+            
+            echo 'CONFIG_CGROUP_SCHED=y' >> ${S}/.config
+            echo 'CONFIG_CGROUPS=y' >> ${S}/.config
+            echo 'CONFIG_CGROUP_NS=y' >> ${S}/.config
+            echo 'CONFIG_CGROUP_FREEZER=y' >> ${S}/.config
+            echo 'CONFIG_CGROUP_DEVICE=y' >> ${S}/.config
+            echo 'CONFIG_CPUSETS=y' >> ${S}/.config
+            echo 'CONFIG_PROC_PID_CPUSET=y' >> ${S}/.config
+            echo 'CONFIG_CGROUP_CPUACCT=y' >> ${S}/.config
+            echo 'CONFIG_RESOURCE_COUNTERS=y' >> ${S}/.config
+        fi
+
         #
         # root-over-nfs-over-usb-eth support. Limited, but should cover some cases.
         # Enable this by setting a proper CMDLINE_NFSROOT_USB.
@@ -188,10 +206,6 @@ do_configure_prepend() {
                 echo "CONFIG_CMDLINE=\"${CMDLINE_NFSROOT_USB}\"" >> ${S}/.config
         fi
 		yes '' | oe_runmake oldconfig
-}
-
-do_configure_append_avr32() {
-        sed -i -e s:-mno-pic::g arch/avr32/Makefile
 }
 
 do_configure_append() {

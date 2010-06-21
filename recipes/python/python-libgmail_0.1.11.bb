@@ -4,7 +4,7 @@ HOMEPAGE = "http://libgmail.sourceforge.net/"
 PRIORITY = "optional"
 LICENSE = "GPL"
 SRCNAME = "libgmail"
-PR = "ml0"
+PR = "ml1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${SRCNAME}/${SRCNAME}-${PV}.tar.gz"
 S = "${WORKDIR}/${SRCNAME}-${PV}"
@@ -19,7 +19,7 @@ do_install() {
 	done
 }
 
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   python-core \
   python-netclient \
   python-email \

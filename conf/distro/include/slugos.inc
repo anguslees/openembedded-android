@@ -16,7 +16,7 @@
 #TARGET_OS "linux" or "linux-uclibc"
 
 # The following may be overridden to make sub-versions
-SLUGOS_VERSION = "5.4"
+SLUGOS_VERSION = "5.5"
 DISTRO_REVISION ?= ""
 DISTRO_VERSION ?= "${SLUGOS_VERSION}${DISTRO_REVISION}-${DISTRO_TYPE}"
 # For release (only):
@@ -163,13 +163,15 @@ PREFERRED_PROVIDER_gdk-pixbuf-loader-xbm	?= "gtk+"
 PREFERRED_PROVIDER_gdk-pixbuf-loader-xpm	?= "gtk+"
 
 PREFERRED_PROVIDER_avahi			?= "avahi"
+PREFERRED_PROVIDER_ifupdown			?= "ifupdown"
 PREFERRED_PROVIDER_gconf			?= "gconf"
+PREFERRED_PROVIDER_virtual/libqte2		?= "qte"
 PREFERRED_PROVIDER_virtual/libusb0		?= "libusb-compat"
 
 # we use bluez4 instead of the older bluez3
 DISTRO_BLUETOOTH_MANAGER			= "bluez4"
-PREFERRED_PROVIDER_bluez-utils-dbus		= "bluez-utils"
-PREFERRED_PROVIDER_bluez-libs			= "bluez4"
+PREFERRED_PROVIDER_bluez-utils-dbus		= "bluez4"
+PREFERRED_PROVIDER_bluez-libs			= "bluez-libs"
 PREFERRED_PROVIDER_bluez-utils			= "bluez4"
 
 # Include any package preferred versions and srcrevs:

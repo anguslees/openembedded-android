@@ -1,6 +1,6 @@
 DESCRIPTION = "Openmoko Sound System"
 SECTION = "openmoko/base"
-RDEPENDS = "\
+RDEPENDS_${PN} = "\
   pulseaudio-server \
   pulseaudio-module-alsa-sink \
   pulseaudio-module-alsa-source \
@@ -10,7 +10,7 @@ RDEPENDS = "\
   pulseaudio-module-native-protocol-unix \
   pulseaudio-module-cli-protocol-unix \
 "
-PR = "r6"
+PR = "r7"
 
 inherit openmoko-base update-rc.d
 

@@ -3,12 +3,11 @@ HOMEPAGE = "http://www.gnu.org/software/ncurses/ncurses.html"
 LICENSE = "MIT"
 SECTION = "libs"
 DEPENDS = "ncurses-native"
+INC_PR = "r20"
 
 inherit autotools
 
 PARALLEL_MAKE=""
-
-FILESPATH = "${FILE_DIRNAME}/local:${FILE_DIRNAME}/ncurses-${PV}-${PR}:${FILE_DIRNAME}/ncurses-${PV}:${FILE_DIRNAME}/ncurses:${FILE_DIRNAME}"
 
 EXTRA_OECONF = "\
   --enable-static \
@@ -29,6 +28,12 @@ EXTRA_OECONF = "\
 export BUILD_CCFLAGS = "-I${S}/ncurses -I${S}/include ${BUILD_CFLAGS}"
 export BUILD_LDFLAGS = ""
 export EXTRA_OEMAKE = '"BUILD_LDFLAGS=" "BUILD_CCFLAGS=${BUILD_CCFLAGS}"'
+
+# Below option is added to overcome the GCC bug on ARM
+# see http://gcc.gnu.org/PR42981 for further details.
+# We could potentially take it off when its fixed in gcc 4.5
+
+CFLAGS_append_arm = " -fforward-propagate "
 
 # This is necessary so that the "tic" command executed during the install can
 # link with the correct libary in staging.
@@ -70,16 +75,12 @@ do_install() {
 		mv ${D}${bindir}/reset ${D}${bindir}/reset.${PN}
 	fi
 }
-		
-		
 pkg_postinst_ncurses-tools () {
 	if [ "${PN}" = "ncurses" ]; then
 		update-alternatives --install ${bindir}/clear clear clear.${PN} 100
 		update-alternatives --install ${bindir}/reset reset reset.${PN} 100
 	fi
 }
-				
-			
 pkg_prerm_ncurses-tools () {
 	if [ "${PN}" = "ncurses" ]; then
 		update-alternatives --remove clear clear.${PN}
@@ -110,9 +111,7 @@ FILES_${PN}-tools = "\
 FILES_${PN}-terminfo = "\
   ${datadir}/terminfo \
 "
-  
-RSUGGESTS_${PN} = "ncurses-terminfo"
+RSUGGESTS_${PN} = "${PN}-terminfo"
 RPROVIDES_${PN} = "libncurses5"
 RCONFLICTS_${PN} = "libncurses5"
 RREPLACES_${PN} = "libncurses5"
-

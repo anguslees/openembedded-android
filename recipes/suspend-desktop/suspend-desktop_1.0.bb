@@ -3,11 +3,11 @@ PRIORITY    = "optional"
 DESCRIPTION = "Suspend feature for the application launcher menu."
 LICENSE     = "GPL"
 
-PR          = "r2"
+PR          = "r3"
 
 DISTRO_APM ?= "apm"
-RDEPENDS    = "gpe-conf"
-RRECOMMENDS = "${DISTRO_APM}"
+RDEPENDS_${PN}    = "gpe-conf"
+RRECOMMENDS_${PN} = "${DISTRO_APM}"
 
 PACKAGES    = "${PN}"
 PACKAGE_ARCH = "all"

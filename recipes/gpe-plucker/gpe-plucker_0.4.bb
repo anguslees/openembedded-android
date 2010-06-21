@@ -2,10 +2,10 @@ inherit gpe pkgconfig
 LICENSE = "GPL"
 DESCRIPTION = "Plucker ebook reader"
 DEPENDS = "gtk+ libgpewidget gpe-icons"
-RDEPENDS = "gpe-icons"
+RDEPENDS_${PN} = "gpe-icons"
 SECTION = "gpe"
 PRIORITY = "optional"
-PR = "r3"
+PR = "r4"
 
 SRC_URI += " \
            file://plucker-no-host-includes.patch \

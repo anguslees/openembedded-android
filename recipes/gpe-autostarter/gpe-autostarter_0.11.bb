@@ -1,7 +1,8 @@
 SECTION = "gpe"
 DEPENDS = "glib-2.0 dbus-glib hotplug-dbus virtual/libx11"
-RDEPENDS = "hotplug-dbus"
+RDEPENDS_${PN} = "hotplug-dbus"
 LICENSE = "GPL"
+PR = "r1"
 
 inherit gpe
 

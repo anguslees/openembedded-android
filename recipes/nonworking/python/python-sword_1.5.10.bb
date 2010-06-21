@@ -2,10 +2,10 @@ DESCRIPTION = "Python bindings for the sword library"
 SECTION = "devel/python"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RDEPENDS = "python-core sword"
+RDEPENDS_${PN} = "python-core sword"
 DEPENDS = "sword-${PV} swig-native"
 SRCNAME = "sword"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://crosswire.org/ftpmirror/pub/sword/source/v1.5/sword-${PV}.tar.gz"
 

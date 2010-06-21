@@ -3,14 +3,14 @@ HOMEPAGE = "http://www.stsci.edu/resources/software_hardware/pyraf"
 AUTHOR = "Space Telescope Science Institute"
 SECTION = "devel/python"
 LICENSE = "AURA"
-PR = "ml0"
+PR = "ml1"
 
 SRC_URI = "ftp://ra.stsci.edu/pub/pyraf/release/pyraf-${PV}.tar.gz"
 S = "${WORKDIR}/pyraf-${PV}"
 
 inherit distutils
 
-RDEPENDS = "python-numarray"
+RDEPENDS_${PN} = "python-numarray"
 
 
 SRC_URI[md5sum] = "9a728aef7bebcd54abc103b00e2e1de6"

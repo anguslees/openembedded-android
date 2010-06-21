@@ -4,12 +4,12 @@ PRIORITY = "optional"
 LICENSE = "GPL"
 AUTHOR = "Luca Vaudano <vaudano@gmail.com>"
 HOMEPAGE = "http://babiloo-project.org"
-RDEPENDS = "python-elementary python-compression python-misc python-netclient"
+RDEPENDS_${PN} = "python-elementary python-compression python-misc python-netclient"
 
 PACKAGE_ARCH = "all"
 
 PV = "2.0.9-10"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://www.vaudano.eu/projects/babiloo/babiloo_2.0.9-10.tar.gz;name=tarball"
 SRC_URI[tarball.md5sum] = "2a66cc5863aca83c4b3120b8ca974676"

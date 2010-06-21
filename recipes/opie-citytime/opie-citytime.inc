@@ -2,8 +2,8 @@ DESCRIPTION = "Opie Time-zone / world clock settings"
 SECTION = "opie/applications"
 PRIORITY = "optional"
 LICENSE = "GPL"
-RRECOMMENDS = "tzdata"
-PR = "r1"
+RRECOMMENDS_${PN} = "tzdata"
+PR = "r2"
 
 APPNAME = "citytime"
 

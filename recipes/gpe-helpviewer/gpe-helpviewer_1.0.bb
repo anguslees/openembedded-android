@@ -1,8 +1,8 @@
 DESCRIPTION = "A helpviewer based on gtk+webcore"
 LICENSE = "GPL"
 DEPENDS = "osb-nrcit"
-RDEPENDS = "gpe-helpviewer-doc"
-PR = "r2"
+RDEPENDS_${PN} = "gpe-helpviewer-doc"
+PR = "r3"
 
 SRC_URI = "http://stag.mind.be/gpe-helpviewer-${PV}.tar.bz2"
 

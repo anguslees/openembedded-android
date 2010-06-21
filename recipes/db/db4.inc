@@ -17,7 +17,7 @@ LICENSE = "BSD"
 VIRTUAL_NAME ?= "virtual/db"
 CONFLICTS = "db3"
 
-SRC_URI = "http://download.oracle.com/berkeley-db/db-${PV}.tar.gz"
+SRC_URI = "ftp://ftp.freebsd.org/pub/FreeBSD/distfiles/bdb/db-${PV}.tar.gz"
 
 inherit autotools
 
@@ -80,17 +80,4 @@ do_install_append() {
 		test ! -d "${D}/${docdir}" || rm -rf "${D}/${docdir}"
 		mv "${D}/${prefix}/docs" "${D}/${docdir}"
 	fi
-}
-
-do_stage() {
-	# The .h files get installed read-only, the autostage
-	# function just uses cp -pPR, so do this by hand
-	rm -rf ${STAGE_TEMP}
-	mkdir -p ${STAGE_TEMP}
-	oe_runmake DESTDIR="${STAGE_TEMP}" install_include
-	cp -pPRf ${STAGE_TEMP}/${includedir}/* ${STAGING_INCDIR}/.
-	rm -rf ${STAGE_TEMP}
-	oe_libinstall -so -C .libs libdb-${PVM} ${STAGING_LIBDIR}
-	ln -sf libdb-${PVM}.so ${STAGING_LIBDIR}/libdb.so
-	ln -sf libdb-${PVM}.a ${STAGING_LIBDIR}/libdb.a
 }

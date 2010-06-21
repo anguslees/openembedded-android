@@ -1,11 +1,11 @@
 SECTION = "console/network"
 DEPENDS = "virtual/db"
-RDEPENDS = "glibc-gconv glibc-gconv-iso8859-1"
+RDEPENDS_${PN} = "glibc-gconv glibc-gconv-iso8859-1"
 DESCRIPTION = "Bogofilter is a mail filter that classifies mail as spam or ham (non-spam) \
 by a statistical analysis of the message's header and content (body). \
 The program is able to learn from the user's classifications and corrections."
 LICENSE = "GPL"
-PR = "r8"
+PR = "r9"
 PRIORITY = "optional"
 
 SRC_URI = "http://launchpad.net/bogofilter/main/0.96.6/+download/bogofilter-0.96.6.tar.gz;name=src \

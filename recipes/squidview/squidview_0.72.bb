@@ -3,7 +3,8 @@ SECTION = "console/network"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "ncurses"
-RDEPENDS = "squid"
+RDEPENDS_${PN} = "squid"
+PR = "r1"
 
 S = "${WORKDIR}/squidview-${PV}"
 

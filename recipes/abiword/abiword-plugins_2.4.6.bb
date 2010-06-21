@@ -3,9 +3,9 @@ HOMEPAGE = "http://www.abiword.org"
 SECTION = "x11/office"
 LICENSE = "GPLv2"
 DEPENDS = "libwpd librsvg goffice poppler"
-RDEPENDS = "abiword"
+RDEPENDS_${PN} = "abiword"
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://www.abiword.org/downloads/abiword/${PV}/source/abiword-${PV}.tar.gz \
            file://abiword-plugin-pdf-poppler.patch;striplevel=2"

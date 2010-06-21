@@ -4,10 +4,10 @@ SECTION = "libs"
 PRIORITY = "optional"
 LICENSE = "GPLv2"
 
-PR = "r2"
+PR = "r3"
 
 DEPENDS = "libtool swig swig-native python jpeg zlib libpng tiff glib-2.0"
-#RDEPENDS = "python jpeg zlib libpng tiff glib-2.0"
+#RDEPENDS_${PN} = "python jpeg zlib libpng tiff glib-2.0"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/opencvlibrary/opencv-${PV}.tar.gz \
           file://debian/010_enable_static.diff \

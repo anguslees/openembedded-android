@@ -1,8 +1,8 @@
 require python-urlgrabber_${PV}.bb
 inherit native
 DEPENDS = "python-native"
-RDEPENDS = ""
-PR = "r1"
+RDEPENDS_${PN} = ""
+PR = "r2"
 
 do_stage() {
 	distutils_stage_all

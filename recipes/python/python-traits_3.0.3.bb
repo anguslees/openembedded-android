@@ -2,7 +2,7 @@ DESCRIPTION = "Explicitly typed attributes for Python"
 SECTION = "devel/python"
 PRIORITY = "optional"
 LICENSE = "BSD"
-PR = "ml0"
+PR = "ml1"
 
 inherit setuptools
 
@@ -12,7 +12,7 @@ SRC_URI = "\
 "
 S = "${WORKDIR}/Traits-${PV}"
 
-RDEPENDS = "python-netclient"
+RDEPENDS_${PN} = "python-netclient"
 
 FILES_${PN}-dbg += "${libdir}/${PYTHON_DIR}/site-packages/enthought/traits/.debug"
 FILES_${PN}-dbg += "${libdir}/${PYTHON_DIR}/site-packages/enthought/traits/protocols/.debug"

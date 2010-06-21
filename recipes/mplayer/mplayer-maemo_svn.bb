@@ -9,10 +9,11 @@ DEFAULT_PREFERENCE_avr32 = "-1"
 SRCREV = "6952"
 PV = "0.0+1.0rc1+svnr${SRCPV}"
 PE = "1"
+PR = "r1"
 
 RCONFLICTS_${PN} = "mplayer"
 
-RDEPENDS = "mplayer-common"
+RDEPENDS_${PN} = "mplayer-common"
 LICENSE = "GPL"
 SRC_URI = "svn://garage.maemo.org/svn/mplayer/;module=trunk;proto=https \
            file://Makefile-codec-cfg.patch \

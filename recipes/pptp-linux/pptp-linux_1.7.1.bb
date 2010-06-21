@@ -6,8 +6,8 @@ cable and ADSL internet service providers."
 HOMEPAGE = "http://pptpclient.sourceforge.net"
 SECTION = "network"
 LICENSE = "GPL"
-RDEPENDS = "ppp"
-PR = "r0"
+RDEPENDS_${PN} = "ppp"
+PR = "r1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/sourceforge/pptpclient/pptp-${PV}.tar.gz \
            file://options.pptp"

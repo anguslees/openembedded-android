@@ -1,8 +1,9 @@
 DEPENDS = "icon-naming-utils-native glib-2.0 intltool-native"
 
 LICENSE = "CC-BY-SA"
-RDEPENDS = "hicolor-icon-theme"
-RRECOMMENDS = "librsvg-gtk"
+RDEPENDS_${PN} = "hicolor-icon-theme"
+RRECOMMENDS_${PN} = "librsvg-gtk"
+PR = "r1"
 
 inherit gnome
 

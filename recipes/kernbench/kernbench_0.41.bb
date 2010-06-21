@@ -1,7 +1,8 @@
 DESCRIPTION = "cpu throughput benchmark"
 HOMEPAGE = "http://kernbench.kolivas.org/"
 LICENSE = "GPL"
-RDEPENDS = "time"
+RDEPENDS_${PN} = "time"
+PR = "r1"
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/kernel/people/ck/apps/kernbench/kernbench-${PV}.tar.bz2"
 

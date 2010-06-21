@@ -1,12 +1,12 @@
 LICENSE = "GPL"
-PR = "r7"
+PR = "r8"
 
 inherit autotools pkgconfig gconf
 
 PROVIDES = "galculator"
 DESCRIPTION = "GTK Advanced Calculator"
 DEPENDS = "virtual/libc gtk+ libglade gnome-desktop"
-RDEPENDS = "gnome-desktop"
+RDEPENDS_${PN} = "gnome-desktop"
 SECTION = "gpe"
 PRIORITY = "optional"
 

@@ -9,7 +9,8 @@ S = "${WORKDIR}/apache-tomcat-${PV}-src/servletapi/jsr152"
 inherit java-library
 
 DEPENDS = "fastjar-native servlet2.4"
-RDEPENDS = "libservlet2.4-java"
+RDEPENDS_${PN} = "libservlet2.4-java"
+PR = "r1"
 
 # Value of implementation.revision in build.xml
 IMPL_REVISION = "public_draft"

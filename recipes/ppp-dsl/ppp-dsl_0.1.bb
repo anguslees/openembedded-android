@@ -2,9 +2,9 @@ SECTION = "console/network"
 DESCRIPTION = "Enables PPP dial-in through a DSL connection"
 LICENSE = "PD"
 DEPENDS = "ppp rp-pppoe"
-RDEPENDS = "ppp rp-pppoe"
-RRECOMMENDS = "kernel-module-ppp-async kernel-module-ppp-generic kernel-module-slhc"
-PR = "r5"
+RDEPENDS_${PN} = "ppp rp-pppoe"
+RRECOMMENDS_${PN} = "kernel-module-ppp-async kernel-module-ppp-generic kernel-module-slhc"
+PR = "r6"
 
 SRC_URI = "file://dsl-provider \
 	file://ppp_on_boot.dsl"
