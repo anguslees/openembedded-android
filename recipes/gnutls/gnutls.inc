@@ -30,3 +30,6 @@ FILES_${PN}-openssl = "${libdir}/libgnutls-openssl.so.*"
 FILES_${PN}-xx = "${libdir}/libgnutlsxx.so.*"
 
 BBCLASSEXTEND = "native"
+
+# autoreconf is unable to find the GETTEXT macros used by lib/configure.ac
+USE_NLS = yes
