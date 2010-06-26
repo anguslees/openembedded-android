@@ -13,6 +13,8 @@ RRECOMMENDS_gdb_append_linux-uclibc = " uclibc-thread-db "
 RRECOMMENDS_gdb_append_linux-uclibceabi = " uclibc-thread-db "
 RRECOMMENDS_gdb_append_linux-spe = " uclibc-thread-db "
 
+RRECOMMENDS_gdb_append_android = " bionic-thread-db "
+
 inherit gettext
 
 FILESPATHPKG =. "gdb-${PV}:"
@@ -33,7 +35,7 @@ export CFLAGS_append=" -L${STAGING_LIBDIR}"
 do_configure () {
     # override this function to avoid the autoconf/automake/aclocal/autoheader
     # calls for now
-    (cd ${S}/gdb/gdbserver && gnu-configize) || die "failure in running gnu-configize"
+    (cd ${S} && gnu-configize) || die "failure in running gnu-configize"
         CPPFLAGS="" oe_rungdbserverconf
 }
 

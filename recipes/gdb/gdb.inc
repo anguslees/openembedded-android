@@ -14,6 +14,8 @@ RRECOMMENDS_gdb_append_linux-uclibc = " uclibc-thread-db "
 RRECOMMENDS_gdb_append_linux-uclibceabi = " uclibc-thread-db "
 RRECOMMENDS_gdb_append_linux-spe = " uclibc-thread-db "
 
+RRECOMMENDS_gdb_append_android = " bionic-thread-db "
+
 inherit gettext
 
 SRC_URI += "file://kill_arm_map_symbols.patch \
