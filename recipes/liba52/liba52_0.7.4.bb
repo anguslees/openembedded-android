@@ -12,6 +12,8 @@ S = "${WORKDIR}/a52dec-${PV}"
 
 EXTRA_OECONF = " --enable-shared "
 
+EXTRA_OECONF_append_android = " --disable-oss "
+
 PACKAGES =+ "a52dec a52dec-dbg a52dec-doc"
 
 FILES_${PN} = " ${libdir}/liba52.so.0 ${libdir}/liba52.so.0.0.0 " 
