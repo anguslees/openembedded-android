@@ -28,7 +28,7 @@ TOOLCHAIN_FEED_URI ?= "${DISTRO_FEED_URI}"
 modify_opkg_conf () {
         OUTPUT_OPKGCONF_TARGET="${SDK_OUTPUT}/${SDKPATH}/${TARGET_SYS}/${sysconfdir}/opkg.conf"
         OUTPUT_OPKGCONF_HOST="${SDK_OUTPUT}/${SDKPATH}/${TARGET_SYS}/${sysconfdir}/opkg-sdk.conf"
-        OUTPUT_OPKGCONF_SDK="${SDK_OUTPUT}/${sysconfdir}/opkg-sdk.conf"
+        OUTPUT_OPKGCONF_SDK="${SDK_OUTPUT}/${SDKPATH}/${sysconfdir}/opkg-sdk.conf"
         rm -f ${OUTPUT_OPKGCONF_TARGET}
         rm -f ${OUTPUT_OPKGCONF_HOST}
         rm -f ${OUTPUT_OPKGCONF_SDK}
