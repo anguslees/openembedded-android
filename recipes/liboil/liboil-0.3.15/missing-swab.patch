@@ -1,0 +1,30 @@
+--- liboil-0.3.15/configure.ac~	Sat Jun 26 21:27:50 2010
++++ liboil-0.3.15/configure.ac	Sat Jun 26 23:04:23 2010
+@@ -143,6 +143,8 @@
+ AC_CHECK_FUNCS([sigaction])
+ AC_CHECK_FUNCS([sigsetjmp])
+ 
++AC_CHECK_FUNCS([swab])
++
+ AC_CHECK_LIBM
+ AC_SUBST(LIBM)
+ 
+
+--- liboil-0.3.15/liboil/c/swab.c~	Tue Jun 10 12:06:44 2008
++++ liboil-0.3.15/liboil/c/swab.c	Sat Jun 26 23:05:21 2010
+@@ -39,12 +39,14 @@
+ #include <string.h>
+ 
+ 
++#ifdef HAVE_SWAB
+ static void
+ swab_u16_libc (uint16_t *d, const uint16_t *s, int n)
+ {
+   swab ((void *)s, (void *)d, n*2);
+ }
+ OIL_DEFINE_IMPL (swab_u16_libc, swab_u16);
++#endif
+ 
+ static void
+ swab_u16_ptr (uint16_t *d, const uint16_t *s, int n)
+
