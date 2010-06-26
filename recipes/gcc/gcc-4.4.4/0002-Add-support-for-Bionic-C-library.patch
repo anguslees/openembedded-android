@@ -1,0 +1,290 @@
+This was:
+
+>From 13a59e1e70923a7bd17de58b742290cb78cd2b88 Mon Sep 17 00:00:00 2001
+From: Maxim Kuvyrkov <maxim@codesourcery.com>
+Date: Wed, 19 May 2010 06:04:06 -0700
+Subject: [PATCH 2/7] Add support for Bionic C library
+
+but has been rebased onto gcc-4.4.4.
+
+--- gcc-4.4.4/gcc/config.gcc~	Thu Jun 24 10:13:26 2010
++++ gcc-4.4.4/gcc/config.gcc	Thu Jun 24 18:18:44 2010
+@@ -496,23 +496,29 @@
+     *-*-gnu*)
+       tmake_file="$tmake_file t-gnu";;
+   esac
+-  # glibc / uclibc switch.  uclibc isn't usable for GNU/Hurd and neither for
+-  # GNU/k*BSD.
++  # Common C libraries.
++  tm_defines="$tm_defines LIBC_GLIBC=1 LIBC_UCLIBC=2 LIBC_BIONIC=3"
++  # glibc / uclibc / bionic switch.
++  # uclibc and bionic aren't usable for GNU/Hurd and neither for GNU/k*BSD.
+   case $target in
+     *linux*)
+       extra_options="$extra_options linux.opt";;
+     *)
+       tm_defines="$tm_defines OPTION_GLIBC=1";;
+   esac
+-  case ${target} in
++  case $target in
++    *-*-*android*)
++      tm_defines="$tm_defines DEFAULT_LIBC=LIBC_BIONIC"
++      ;;
+     *-*-*uclibc*)
+-      tm_defines="${tm_defines} UCLIBC_DEFAULT=1"
++      tm_defines="$tm_defines DEFAULT_LIBC=LIBC_UCLIBC"
+       ;;
+     *)
+-      tm_defines="${tm_defines} UCLIBC_DEFAULT=0"
++      tm_defines="$tm_defines DEFAULT_LIBC=LIBC_GLIBC"
+       ;;
+   esac
+-  # Assume that glibc or uClibc are being used and so __cxa_atexit is provided.
++  # Assume that glibc or uClibc or Bionic are being used and so __cxa_atexit
++  # is provided.
+   default_use_cxa_atexit=yes
+   use_gcc_tgmath=no
+   ;;
+@@ -812,7 +818,7 @@
+ bfin*-uclinux*)
+ 	tm_file="${tm_file} dbxelf.h elfos.h bfin/elf.h linux.h bfin/uclinux.h"
+ 	tmake_file=bfin/t-bfin-uclinux
+-	tm_defines="${tm_defines} UCLIBC_DEFAULT=1"
++	tm_defines="${tm_defines} DEFAULT_LIBC=LIBC_UCLIBC"
+ 	extra_options="${extra_options} linux.opt"
+ 	use_collect2=no
+ 	;;
+@@ -1487,7 +1493,7 @@
+ 	default_m68k_cpu=68020
+ 	default_cf_cpu=5206
+ 	tm_file="${tm_file} dbxelf.h elfos.h svr4.h linux.h flat.h m68k/linux.h m68k/uclinux.h ./sysroot-suffix.h"
+- 	tm_defines="${tm_defines} MOTOROLA=1 UCLIBC_DEFAULT=1"
++ 	tm_defines="${tm_defines} MOTOROLA=1 DEFAULT_LIBC=LIBC_UCLIBC"
+ 	extra_options="${extra_options} linux.opt"
+ 	tmake_file="m68k/t-floatlib m68k/t-uclinux m68k/t-mlibs"
+ 	;;
+
+diff --git a/gcc/config/alpha/linux-elf.h b/gcc/config/alpha/linux-elf.h
+index c48fc93..262404b 100644
+--- a/gcc/config/alpha/linux-elf.h
++++ b/gcc/config/alpha/linux-elf.h
+@@ -29,10 +29,12 @@ along with GCC; see the file COPYING3.  If not see
+ 
+ #define GLIBC_DYNAMIC_LINKER	"/lib/ld-linux.so.2"
+ #define UCLIBC_DYNAMIC_LINKER "/lib/ld-uClibc.so.0"
+-#if UCLIBC_DEFAULT
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:%{muclibc:%e-mglibc and -muclibc used together}" G ";:" U "}"
++#if DEFAULT_LIBC == LIBC_UCLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:" G ";:" U "}"
++#elif DEFAULT_LIBC == LIBC_GLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:" U ";:" G "}"
+ #else
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:%{mglibc:%e-mglibc and -muclibc used together}" U ";:" G "}"
++#error "Unsupported DEFAULT_LIBC"
+ #endif
+ #define LINUX_DYNAMIC_LINKER \
+   CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER, UCLIBC_DYNAMIC_LINKER)
+diff --git a/gcc/config/linux.h b/gcc/config/linux.h
+index e567e9a..f86cc7b 100644
+--- a/gcc/config/linux.h
++++ b/gcc/config/linux.h
+@@ -1,6 +1,6 @@
+ /* Definitions for Linux-based GNU systems with ELF format
+    Copyright (C) 1995, 1996, 1997, 1998, 1999, 2000, 2003, 2004, 2005, 2006,
+-   2007, 2009 Free Software Foundation, Inc.
++   2007, 2009, 2010 Free Software Foundation, Inc.
+    Contributed by Eric Youngdale.
+    Modified for stabs-in-ELF by H.J. Lu (hjl@lucon.org).
+ 
+@@ -78,9 +78,15 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+    %{shared:-lc} \
+    %{!shared:%{mieee-fp:-lieee} %{profile:-lc_p}%{!profile:-lc}}"
+ 
++/* C libraries supported on Linux.  */
++#define OPTION_GLIBC  (linux_libc == LIBC_GLIBC)
++#define OPTION_UCLIBC (linux_libc == LIBC_UCLIBC)
++#define OPTION_BIONIC (linux_libc == LIBC_BIONIC)
++
+ #define LINUX_TARGET_OS_CPP_BUILTINS()				\
+     do {							\
+-	builtin_define ("__gnu_linux__");			\
++	if (OPTION_GLIBC)					\
++	  builtin_define ("__gnu_linux__");			\
+ 	builtin_define_std ("linux");				\
+ 	builtin_define_std ("unix");				\
+ 	builtin_assert ("system=linux");			\
+@@ -105,13 +111,24 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+ #endif
+ 
+ /* Determine which dynamic linker to use depending on whether GLIBC or
+-   uClibc is the default C library and whether -muclibc or -mglibc has
+-   been passed to change the default.  */
+-#if UCLIBC_DEFAULT
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:%{muclibc:%e-mglibc and -muclibc used together}" G ";:" U "}"
++   uClibc or Bionic is the default C library and whether
++   -muclibc or -mglibc or -mbionic has been passed to change the default.  */
++
++#define CHOOSE_DYNAMIC_LINKER1(LIBC1, LIBC2, LIBC3, LD1, LD2, LD3)	\
++  "%{" LIBC2 ":" LD2 ";:%{" LIBC3 ":" LD3 ";:" LD1 "}}"
++
++#if DEFAULT_LIBC == LIBC_GLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U, B) \
++  CHOOSE_DYNAMIC_LINKER1 ("mglibc", "muclibc", "mbionic", G, U, B)
++#elif DEFAULT_LIBC == LIBC_UCLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U, B) \
++  CHOOSE_DYNAMIC_LINKER1 ("muclibc", "mglibc", "mbionic", U, G, B)
++#elif DEFAULT_LIBC == LIBC_BIONIC
++#define CHOOSE_DYNAMIC_LINKER(G, U, B) \
++  CHOOSE_DYNAMIC_LINKER1 ("mbionic", "mglibc", "muclibc", B, G, U)
+ #else
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:%{mglibc:%e-mglibc and -muclibc used together}" U ";:" G "}"
+-#endif
++#error "Unsupported DEFAULT_LIBC"
++#endif /* DEFAULT_LIBC */
+ 
+ /* For most targets the following definitions suffice;
+    GLIBC_DYNAMIC_LINKER must be defined for each target using them, or
+@@ -120,14 +137,21 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+ #define UCLIBC_DYNAMIC_LINKER "/lib/ld-uClibc.so.0"
+ #define UCLIBC_DYNAMIC_LINKER32 "/lib/ld-uClibc.so.0"
+ #define UCLIBC_DYNAMIC_LINKER64 "/lib/ld64-uClibc.so.0"
+-#define LINUX_DYNAMIC_LINKER \
+-  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER, UCLIBC_DYNAMIC_LINKER)
+-#define LINUX_DYNAMIC_LINKER32 \
+-  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER32, UCLIBC_DYNAMIC_LINKER32)
+-#define LINUX_DYNAMIC_LINKER64 \
+-  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER64, UCLIBC_DYNAMIC_LINKER64)
++#define BIONIC_DYNAMIC_LINKER "/system/bin/linker"
++#define BIONIC_DYNAMIC_LINKER32 "/system/bin/linker"
++#define BIONIC_DYNAMIC_LINKER64 "/system/bin/linker64"
++
++#define LINUX_DYNAMIC_LINKER						\
++  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER, UCLIBC_DYNAMIC_LINKER,	\
++			 BIONIC_DYNAMIC_LINKER)
++#define LINUX_DYNAMIC_LINKER32						\
++  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER32, UCLIBC_DYNAMIC_LINKER32, \
++			 BIONIC_DYNAMIC_LINKER32)
++#define LINUX_DYNAMIC_LINKER64						\
++  CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER64, UCLIBC_DYNAMIC_LINKER64, \
++			 BIONIC_DYNAMIC_LINKER64)
+ 
+ /* Determine whether the entire c99 runtime
+    is present in the runtime library.  */
+ #define TARGET_C99_FUNCTIONS (OPTION_GLIBC)
+ 
+diff -c /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-oe-linux-androideabi/gcc-cross-sdk-4.4.4-r2.1/gcc-4.4.4/gcc/config/linux.opt\~ /home/alees/src/android-oe/build/tmp/work/i686-armv5te-sdk-oe-linux-androideabi/gcc-cross-sdk-4.4.4-r2.1/gcc-4.4.4/gcc/config/linux.opt
+--- gcc-4.4.4/gcc/config/linux.opt~	Thu Aug  2 20:49:31 2007
++++ gcc-4.4.4/gcc/config/linux.opt	Thu Jun 24 18:22:24 2010
+@@ -19,10 +19,14 @@
+ ; along with GCC; see the file COPYING3.  If not see
+ ; <http://www.gnu.org/licenses/>.
+ 
++mbionic
++Target Report RejectNegative Var(linux_libc,LIBC_BIONIC) Init(DEFAULT_LIBC) Negative(mglibc)
++Use Bionic C library
++
+ muclibc
+-Target RejectNegative Report Mask(UCLIBC) Var(linux_uclibc) Init(UCLIBC_DEFAULT ? OPTION_MASK_UCLIBC : 0)
+-Use uClibc instead of GNU libc
++Target Report RejectNegative Var(linux_libc,LIBC_UCLIBC) VarExists Negative(mbionic)
++Use uClibc C library
+ 
+ mglibc
+-Target RejectNegative Report InverseMask(UCLIBC, GLIBC) Var(linux_uclibc) VarExists
+-Use GNU libc instead of uClibc
++Target Report RejectNegative Var(linux_libc,LIBC_GLIBC) VarExists Negative(muclibc)
++Use GNU C library
+
+diff --git a/gcc/config/rs6000/linux64.h b/gcc/config/rs6000/linux64.h
+index da7bca3..502342c 100644
+--- a/gcc/config/rs6000/linux64.h
++++ b/gcc/config/rs6000/linux64.h
+@@ -352,10 +352,12 @@ extern int dot_symbols;
+ #define GLIBC_DYNAMIC_LINKER64 "/lib64/ld64.so.1"
+ #define UCLIBC_DYNAMIC_LINKER32 "/lib/ld-uClibc.so.0"
+ #define UCLIBC_DYNAMIC_LINKER64 "/lib/ld64-uClibc.so.0"
+-#if UCLIBC_DEFAULT
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:%{muclibc:%e-mglibc and -muclibc used together}" G ";:" U "}"
++#if DEFAULT_LIBC == LIBC_UCLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:" G ";:" U "}"
++#elif DEFAULT_LIBC == LIBC_GLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:" U ";:" G "}"
+ #else
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:%{mglibc:%e-mglibc and -muclibc used together}" U ";:" G "}"
++#error "Unsupported DEFAULT_LIBC"
+ #endif
+ #define LINUX_DYNAMIC_LINKER32 \
+   CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER32, UCLIBC_DYNAMIC_LINKER32)
+diff --git a/gcc/config/rs6000/sysv4.h b/gcc/config/rs6000/sysv4.h
+index 8d19ad7..2e6fbc7 100644
+--- a/gcc/config/rs6000/sysv4.h
++++ b/gcc/config/rs6000/sysv4.h
+@@ -903,10 +903,12 @@ SVR4_ASM_SPEC \
+ 
+ #define GLIBC_DYNAMIC_LINKER "/lib/ld.so.1"
+ #define UCLIBC_DYNAMIC_LINKER "/lib/ld-uClibc.so.0"
+-#if UCLIBC_DEFAULT
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:%{muclibc:%e-mglibc and -muclibc used together}" G ";:" U "}"
++#if DEFAULT_LIBC == LIBC_UCLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{mglibc:" G ";:" U "}"
++#elif DEFAULT_LIBC == LIBC_GLIBC
++#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:" U ";:" G "}"
+ #else
+-#define CHOOSE_DYNAMIC_LINKER(G, U) "%{muclibc:%{mglibc:%e-mglibc and -muclibc used together}" U ";:" G "}"
++#error "Unsupported DEFAULT_LIBC"
+ #endif
+ #define LINUX_DYNAMIC_LINKER \
+   CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKER, UCLIBC_DYNAMIC_LINKER)
+diff --git a/gcc/doc/invoke.texi b/gcc/doc/invoke.texi
+index 6afc713..a75196e 100644
+--- a/gcc/doc/invoke.texi
++++ b/gcc/doc/invoke.texi
+@@ -11462,13 +11462,18 @@ These @samp{-m} options are defined for GNU/Linux targets:
+ @table @gcctabopt
+ @item -mglibc
+ @opindex mglibc
+-Use the GNU C library instead of uClibc.  This is the default except
+-on @samp{*-*-linux-*uclibc*} targets.
++Use the GNU C library.  This is the default except
++on @samp{*-*-linux-*uclibc*} and @samp{*-*-linux-*android*} targets.
+ 
+ @item -muclibc
+ @opindex muclibc
+-Use uClibc instead of the GNU C library.  This is the default on
++Use uClibc C library.  This is the default on
+ @samp{*-*-linux-*uclibc*} targets.
++
++@item -mbionic
++@opindex mbionic
++Use Bionic C library.  This is the default on
++@samp{*-*-linux-*android*} targets.
+ @end table
+ 
+ @node H8/300 Options
+diff --git a/gcc/testsuite/gcc.dg/glibc-uclibc-1.c b/gcc/testsuite/gcc.dg/glibc-uclibc-1.c
+deleted file mode 100644
+index a376404..0000000
+--- a/gcc/testsuite/gcc.dg/glibc-uclibc-1.c
++++ /dev/null
+@@ -1,6 +0,0 @@
+-/* Test -mglibc and -muclibc not allowed together.  */
+-/* Origin: Joseph Myers <joseph@codesourcery.com> */
+-/* { dg-do link { target *-*-linux* } } */
+-/* { dg-options "-mglibc -muclibc" } */
+-
+-/* { dg-message "-mglibc and -muclibc used together" "" { target *-*-* } 0 } */
+diff --git a/gcc/testsuite/gcc.dg/glibc-uclibc-2.c b/gcc/testsuite/gcc.dg/glibc-uclibc-2.c
+deleted file mode 100644
+index cb52260..0000000
+--- a/gcc/testsuite/gcc.dg/glibc-uclibc-2.c
++++ /dev/null
+@@ -1,6 +0,0 @@
+-/* Test -mglibc and -muclibc not allowed together.  */
+-/* Origin: Joseph Myers <joseph@codesourcery.com> */
+-/* { dg-do link { target *-*-linux* } } */
+-/* { dg-options "-muclibc -mglibc" } */
+-
+-/* { dg-message "-mglibc and -muclibc used together" "" { target *-*-* } 0 } */
+-- 
+1.6.2.4
+

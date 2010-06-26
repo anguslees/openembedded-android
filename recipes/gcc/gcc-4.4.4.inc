@@ -26,6 +26,13 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=gcc444tarbz2 \
 	file://gcc-pr41175.patch \
 	file://gcc-armv4-pass-fix-v4bx-to-ld.patch \
 	file://gcc-add-t-slibgcc-libgcc.patch \
+	file://android-getpagesize.patch \
+	file://0002-Add-support-for-Bionic-C-library.patch \
+	file://0003-Support-compilation-for-Android-platform.patch \
+	file://0004-Add-multilib-configuration-for-arm-linux-androideabi.patch \
+	file://0005-Fix-gthr-posix.h-to-support-Bionic.patch \
+	file://0006-Add-untested-support-for-Bionic-to-libstdc.patch \
+	file://android-disable-stdc++.patch \
 	"
 SRC_URI[gcc444tarbz2.md5sum] = "7ff5ce9e5f0b088ab48720bbd7203530"
 SRC_URI[gcc444tarbz2.sha256sum] = "e1c13696b45752ad3f652304fab5120a43a8a5c0f438d3bda78cf16b620c0c58"

@@ -1,0 +1,49 @@
+>From bd34d1214d98c8bcba632b5e629e90a154974384 Mon Sep 17 00:00:00 2001
+From: Maxim Kuvyrkov <maxim@codesourcery.com>
+Date: Wed, 19 May 2010 02:16:25 -0700
+Subject: [PATCH 4/7] Add multilib configuration for arm-linux-androideabi
+
+
+Signed-off-by: Maxim Kuvyrkov <maxim@codesourcery.com>
+---
+ gcc/config.gcc                     |    6 ++++++
+ gcc/config/arm/t-linux-androideabi |   10 ++++++++++
+ 2 files changed, 16 insertions(+), 0 deletions(-)
+ create mode 100644 gcc/config/arm/t-linux-androideabi
+
+diff --git a/gcc/config.gcc b/gcc/config.gcc
+index d799caa..d50107b 100644
+--- a/gcc/config.gcc
++++ b/gcc/config.gcc
+@@ -744,6 +744,12 @@ arm*-*-linux*)			# ARM GNU/Linux with ELF
+ 	arm*-*-linux-*eabi)
+ 	    tm_file="$tm_file arm/bpabi.h arm/linux-eabi.h"
+ 	    tmake_file="$tmake_file arm/t-arm-elf arm/t-bpabi arm/t-linux-eabi t-slibgcc-libgcc"
++	    # Define multilib configuration for arm-linux-androideabi.
++	    case ${target} in
++	    *-androideabi)
++		tmake_file="$tmake_file arm/t-linux-androideabi"
++		;;
++	    esac
+   	    # The BPABI long long divmod functions return a 128-bit value in
+ 	    # registers r0-r3.  Correctly modeling that requires the use of
+ 	    # TImode.
+diff --git a/gcc/config/arm/t-linux-androideabi b/gcc/config/arm/t-linux-androideabi
+new file mode 100644
+index 0000000..8f1307c
+--- /dev/null
++++ b/gcc/config/arm/t-linux-androideabi
+@@ -0,0 +1,10 @@
++MULTILIB_OPTIONS     = march=armv7-a mthumb
++MULTILIB_DIRNAMES    = armv7-a thumb
++MULTILIB_EXCEPTIONS  =
++MULTILIB_MATCHES     =
++MULTILIB_OSDIRNAMES  =
++
++# The "special" multilib can be used to build native applications for Android,
++# as opposed to native shared libraries that are then called via JNI.
++#MULTILIB_OPTIONS    += tno-android-cc
++#MULTILIB_DIRNAMES   += special
+-- 
+1.6.2.4
+

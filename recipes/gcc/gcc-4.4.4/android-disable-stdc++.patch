@@ -1,0 +1,15 @@
+--- gcc-4.4.4/configure~	Fri Jun 25 08:30:30 2010
++++ gcc-4.4.4/configure	Fri Jun 25 08:31:33 2010
+@@ -2208,6 +2208,11 @@
+ libgloss_dir="$target_cpu"
+ 
+ case "${target}" in
++  *-*-android*)
++  # The Android C++ environment does not support exceptions or rtti,
++  # and so building libstdc++-v3 tends not to always work.
++    noconfigdirs="$noconfigdirs target-newlib target-libstdc++-v3 ${libgcj}"
++    ;;
+   *-*-chorusos)
+     noconfigdirs="$noconfigdirs target-newlib target-libgloss ${libgcj}"
+     ;;
+

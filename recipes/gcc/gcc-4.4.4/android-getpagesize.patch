@@ -1,0 +1,32 @@
+--- gcc-4.4.2/libiberty/configure.ac	Thu Apr  9 00:18:33 2009
++++ gcc-4.4.2/libiberty/configure.ac	Sun Feb 21 22:41:26 2010
+@@ -4,6 +4,12 @@
+ AC_INIT
+ AC_CONFIG_SRCDIR([xmalloc.c])
+ 
++# Android's getpagesize is a static __inline__ which confuses
++# the autoconf test.
++case ${host} in
++*-android*) ac_cv_func_getpagesize=yes ;;
++esac
++
+ # This works around the fact that libtool configuration may change LD
+ # for this particular configuration, but some shells, instead of
+ # keeping the changes in LD private, export them just because LD is
+
+--- gcc-4.4.2/libiberty/configure	Thu Apr  9 00:18:33 2009
++++ gcc-4.4.2/libiberty/configure	Sun Feb 21 22:37:51 2010
+@@ -1318,7 +1318,11 @@
+ 
+ 
+ 
+-
++# Android's getpagesize is a static __inline__ which confuses
++# the autoconf test.
++case ${host} in
++*-android*) ac_cv_func_getpagesize=yes ;;
++esac
+ 
+ 
+ 
+

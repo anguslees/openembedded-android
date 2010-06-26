@@ -1,0 +1,383 @@
+This was:
+
+>From 3f8980a5aa4cf3d2d5e6f5cc138246adadf905d0 Mon Sep 17 00:00:00 2001
+From: Maxim Kuvyrkov <maxim@codesourcery.com>
+Date: Wed, 5 May 2010 10:46:10 -0700
+Subject: [PATCH 6/7] Add [untested] support for Bionic to libstdc++
+
+but has been rebased to gcc-4.4.4
+
+diff --git a/libstdc++-v3/acinclude.m4 b/libstdc++-v3/acinclude.m4
+index f54517f..1ccde58 100644
+--- a/libstdc++-v3/acinclude.m4
++++ b/libstdc++-v3/acinclude.m4
+@@ -95,7 +95,7 @@ AC_DEFUN([GLIBCXX_CONFIGURE], [
+   ## (Right now, this only matters for enable_wchar_t, but nothing prevents
+   ## other macros from doing the same.  This should be automated.)  -pme
+ 
+-  # Check for uClibc since Linux platforms use different configuration
++  # Check for C library flavor since Linux platforms use different configuration
+   # directories depending on the C library in use.
+   AC_EGREP_CPP([_using_uclibc], [
+   #include <stdio.h>
+@@ -104,6 +104,13 @@ AC_DEFUN([GLIBCXX_CONFIGURE], [
+   #endif
+   ], uclibc=yes, uclibc=no)
+ 
++  AC_EGREP_CPP([_using_bionic], [
++  #include <stdio.h>
++  #if __BIONIC__
++    _using_bionic
++  #endif
++  ], bionic=yes, bionic=no)
++
+   # Find platform-specific directories containing configuration info.
+   # Also possibly modify flags used elsewhere, as needed by the platform.
+   GLIBCXX_CHECK_HOST
+@@ -2752,7 +2759,7 @@ void foo()
+ }
+ EOF
+     old_CXXFLAGS="$CXXFLAGS"
+-    CXXFLAGS=-S
++    CXXFLAGS="-S -fexceptions"
+     if AC_TRY_EVAL(ac_compile); then
+       if grep _Unwind_SjLj_Resume conftest.s >/dev/null 2>&1 ; then
+         enable_sjlj_exceptions=yes
+diff --git a/libstdc++-v3/config/os/bionic/ctype_base.h b/libstdc++-v3/config/os/bionic/ctype_base.h
+new file mode 100644
+index 0000000..15f0063
+--- /dev/null
++++ b/libstdc++-v3/config/os/bionic/ctype_base.h
+@@ -0,0 +1,57 @@
++// Locale support -*- C++ -*-
++
++// Copyright (C) 2010 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// Under Section 7 of GPL version 3, you are granted additional
++// permissions described in the GCC Runtime Library Exception, version
++// 3.1, as published by the Free Software Foundation.
++
++// You should have received a copy of the GNU General Public License and
++// a copy of the GCC Runtime Library Exception along with this program;
++// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
++// <http://www.gnu.org/licenses/>.
++
++//
++// ISO C++ 14882: 22.1  Locales
++//
++
++// Information as gleaned from /usr/include/ctype.h, for solaris2.5.1
++
++// Support for Solaris 2.5.1
++
++_GLIBCXX_BEGIN_NAMESPACE(std)
++
++  /// @brief  Base class for ctype.
++  struct ctype_base
++  {
++    // Non-standard typedefs.
++    typedef const int* 		__to_type;
++
++    // NB: Offsets into ctype<char>::_M_table force a particular size
++    // on the mask type. Because of this, we don't use an enum.
++    typedef char 		mask;
++    static const mask upper    	= _U;
++    static const mask lower 	= _L;
++    static const mask alpha 	= _U | _L;
++    static const mask digit 	= _N;
++    static const mask xdigit 	= _X | _N;
++    static const mask space 	= _S;
++    static const mask print 	= _P | _U | _L | _N | _B;
++    static const mask graph 	= _P | _U | _L | _N;
++    static const mask cntrl 	= _C;
++    static const mask punct 	= _P;
++    static const mask alnum 	= _U | _L | _N;
++  };
++
++_GLIBCXX_END_NAMESPACE
+diff --git a/libstdc++-v3/config/os/bionic/ctype_inline.h b/libstdc++-v3/config/os/bionic/ctype_inline.h
+new file mode 100644
+index 0000000..2c88eb6
+--- /dev/null
++++ b/libstdc++-v3/config/os/bionic/ctype_inline.h
+@@ -0,0 +1,71 @@
++// Locale support -*- C++ -*-
++
++// Copyright (C) 2010 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// Under Section 7 of GPL version 3, you are granted additional
++// permissions described in the GCC Runtime Library Exception, version
++// 3.1, as published by the Free Software Foundation.
++
++// You should have received a copy of the GNU General Public License and
++// a copy of the GCC Runtime Library Exception along with this program;
++// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
++// <http://www.gnu.org/licenses/>.
++
++/** @file ctype_inline.h
++ *  This is an internal header file, included by other library headers.
++ *  You should not attempt to use it directly.
++ */
++
++//
++// ISO C++ 14882: 22.1  Locales
++//
++
++// ctype bits to be inlined go here. Non-inlinable (ie virtual do_*)
++// functions go in ctype.cc
++
++_GLIBCXX_BEGIN_NAMESPACE(std)
++
++  bool
++  ctype<char>::
++  is(mask __m, char __c) const
++  { return _M_table[static_cast<unsigned char>(__c)] & __m; }
++
++  const char*
++  ctype<char>::
++  is(const char* __low, const char* __high, mask* __vec) const
++  {
++    while (__low < __high)
++      *__vec++ = _M_table[static_cast<unsigned char>(*__low++)];
++    return __high;
++  }
++
++  const char*
++  ctype<char>::
++  scan_is(mask __m, const char* __low, const char* __high) const
++  {
++    while (__low < __high && !this->is(__m, *__low))
++      ++__low;
++    return __low;
++  }
++
++  const char*
++  ctype<char>::
++  scan_not(mask __m, const char* __low, const char* __high) const
++  {
++    while (__low < __high && this->is(__m, *__low) != 0)
++      ++__low;
++    return __low;
++  }
++
++_GLIBCXX_END_NAMESPACE
+diff --git a/libstdc++-v3/config/os/bionic/ctype_noninline.h b/libstdc++-v3/config/os/bionic/ctype_noninline.h
+new file mode 100644
+index 0000000..55eecd8
+--- /dev/null
++++ b/libstdc++-v3/config/os/bionic/ctype_noninline.h
+@@ -0,0 +1,98 @@
++// Locale support -*- C++ -*-
++
++// Copyright (C) 2010 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// Under Section 7 of GPL version 3, you are granted additional
++// permissions described in the GCC Runtime Library Exception, version
++// 3.1, as published by the Free Software Foundation.
++
++// You should have received a copy of the GNU General Public License and
++// a copy of the GCC Runtime Library Exception along with this program;
++// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
++// <http://www.gnu.org/licenses/>.
++
++/** @file ctype_noninline.h
++ *  This is an internal header file, included by other library headers.
++ *  You should not attempt to use it directly.
++ */
++
++//
++// ISO C++ 14882: 22.1  Locales
++//
++
++// Information as gleaned from /usr/include/ctype.h
++
++  const ctype_base::mask*
++  ctype<char>::classic_table() throw()
++  { return _ctype_ + 1; }
++
++  ctype<char>::ctype(__c_locale, const mask* __table, bool __del,
++		     size_t __refs)
++  : facet(__refs), _M_del(__table != 0 && __del),
++  _M_toupper(NULL), _M_tolower(NULL),
++  _M_table(__table ? __table : classic_table())
++  {
++    memset(_M_widen, 0, sizeof(_M_widen));
++    _M_widen_ok = 0;
++    memset(_M_narrow, 0, sizeof(_M_narrow));
++    _M_narrow_ok = 0;
++  }
++
++  ctype<char>::ctype(const mask* __table, bool __del, size_t __refs)
++  : facet(__refs), _M_del(__table != 0 && __del),
++  _M_toupper(NULL), _M_tolower(NULL),
++  _M_table(__table ? __table : classic_table())
++  {
++    memset(_M_widen, 0, sizeof(_M_widen));
++    _M_widen_ok = 0;
++    memset(_M_narrow, 0, sizeof(_M_narrow));
++    _M_narrow_ok = 0;
++  }
++
++  char
++  ctype<char>::do_toupper(char __c) const
++  {
++    int __x = __c;
++    return (this->is(ctype_base::lower, __c) ? (__x - 'a' + 'A') : __x);
++  }
++
++  const char*
++  ctype<char>::do_toupper(char* __low, const char* __high) const
++  {
++    while (__low < __high)
++      {
++	*__low = this->do_toupper(*__low);
++	++__low;
++      }
++    return __high;
++  }
++
++  char
++  ctype<char>::do_tolower(char __c) const
++  {
++    int __x = __c;
++    return (this->is(ctype_base::upper, __c) ? (__x - 'A' + 'a') : __x);
++  }
++
++  const char*
++  ctype<char>::do_tolower(char* __low, const char* __high) const
++  {
++    while (__low < __high)
++      {
++	*__low = this->do_tolower(*__low);
++	++__low;
++      }
++    return __high;
++  }
++
+diff --git a/libstdc++-v3/config/os/bionic/os_defines.h b/libstdc++-v3/config/os/bionic/os_defines.h
+new file mode 100644
+index 0000000..832592a
+--- /dev/null
++++ b/libstdc++-v3/config/os/bionic/os_defines.h
+@@ -0,0 +1,36 @@
++// Specific definitions for Bionic  -*- C++ -*-
++
++// Copyright (C) 2010 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// Under Section 7 of GPL version 3, you are granted additional
++// permissions described in the GCC Runtime Library Exception, version
++// 3.1, as published by the Free Software Foundation.
++
++// You should have received a copy of the GNU General Public License and
++// a copy of the GCC Runtime Library Exception along with this program;
++// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
++// <http://www.gnu.org/licenses/>.
++
++/** @file os_defines.h
++ *  This is an internal header file, included by other library headers.
++ *  You should not attempt to use it directly.
++ */
++
++#ifndef _GLIBCXX_OS_DEFINES
++#define _GLIBCXX_OS_DEFINES 1
++
++// System-specific #define, typedefs, corrections, etc, go here.  This
++// file will come before all others.
++
++#endif
+--- gcc-4.4.4/libstdc++-v3/configure~	Thu Jun 24 20:34:28 2010
++++ gcc-4.4.4/libstdc++-v3/configure	Thu Jun 24 20:49:46 2010
+@@ -4154,6 +4154,23 @@
+ fi
+ rm -f conftest*
+ 
++  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++
++  #include <stdio.h>
++  #if __BIONIC__
++    _using_bionic
++  #endif
++
++_ACEOF
++if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
++  $EGREP "_using_bionic" >/dev/null 2>&1; then :
++  bionic=yes
++else
++  bionic=no
++fi
++rm -f conftest*
++
+ 
+   # Find platform-specific directories containing configuration info.
+   # Also possibly modify flags used elsewhere, as needed by the platform.
+@@ -14602,7 +14619,7 @@
+ }
+ EOF
+     old_CXXFLAGS="$CXXFLAGS"
+-    CXXFLAGS=-S
++    CXXFLAGS="-S -fexceptions -frtti"
+     if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+   (eval $ac_compile) 2>&5
+   ac_status=$?
+
+diff --git a/libstdc++-v3/configure.host b/libstdc++-v3/configure.host
+index c1f2736..5cd2a21 100644
+--- a/libstdc++-v3/configure.host
++++ b/libstdc++-v3/configure.host
+@@ -238,6 +238,8 @@ case "${host_os}" in
+   gnu* | linux* | kfreebsd*-gnu | knetbsd*-gnu)
+     if [ "$uclibc" = "yes" ]; then
+       os_include_dir="os/uclibc"
++    elif [ "$bionic" = "yes" ]; then
++      os_include_dir="os/bionic"
+     else
+       os_include_dir="os/gnu-linux"
+     fi
+-- 
+1.6.2.4
+
