@@ -22,6 +22,7 @@ SRC_URI = "\
   file://60_wait-longer-for-threads-to-die.patch \
   file://struct_checks.patch \
   file://avoid-setpwent.patch \
+  file://android-gthread.patch \
 "
 
 SRC_URI_append_android = "file://android-hacks.patch"
