@@ -4,9 +4,8 @@
  AC_SUBST(THREAD_IMPL)
  
  if test "x${with_thread}" = "xpthread" ; then
--  case "$host_os" in 
-+  case "$host_os:$host_vendor" in 
-+    *:android)
+   case "$host_os" in 
++    *android*)
 +      PTHREAD_CFLAGS=
 +      PTHREAD_LIBS=
 +      ;;
