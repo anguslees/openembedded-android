@@ -41,8 +41,10 @@ modify_opkg_conf () {
             priority=1
             for arch in ${opkgarchs}; do
                     echo "arch ${arch} ${priority}" >> ${OUTPUT_OPKGCONF_TARGET};
+                    echo "arch ${BUILD_ARCH}-${arch}-sdk ${priority}" >> ${OUTPUT_OPKGCONF_SDK};
                     if [ -n "${TOOLCHAIN_FEED_URI}" ] ; then
                         echo "src/gz ${arch} ${TOOLCHAIN_FEED_URI}/${arch}" >> ${OUTPUT_OPKGCONF_TARGET};
+                        echo "src/gz ${BUILD_ARCH}-${arch}-sdk ${TOOLCHAIN_FEED_URI}/${BUILD_ARCH}-${arch}-sdk" >> ${OUTPUT_OPKGCONF_SDK};
                     fi
                     priority=$(expr ${priority} + 5);
             done
