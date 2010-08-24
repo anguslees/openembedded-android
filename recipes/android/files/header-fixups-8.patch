@@ -42,46 +42,42 @@
  typedef struct { int  dummy; }  mbstate_t;
  
 
-***************
-*** 71,78 ****
---- 71,82 ----
-      WC_TYPE_MAX
-  } wctype_t;
-  
-+ #ifndef WCHAR_MAX
-  #define  WCHAR_MAX   255
-+ #endif
-+ #ifndef WCHAR_MIN
-  #define  WCHAR_MIN   0
-+ #endif
-  #define  WEOF        (-1)
-  
-  extern wint_t            btowc(int);
+@@ -71,8 +71,12 @@
+     WC_TYPE_MAX
+ } wctype_t;
+ 
++#ifndef WCHAR_MAX
+ #define  WCHAR_MAX   255
++#endif
++#ifndef WCHAR_MIN
+ #define  WCHAR_MIN   0
++#endif
+ #define  WEOF        (-1)
+ 
+ extern wint_t            btowc(int);
 
-*** android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Fri Jan  8 10:14:48 2010
---- android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Wed Apr 14 08:46:20 2010
-***************
-*** 251,256 ****
---- 251,263 ----
-  
-  #endif /* !__STDC_INT64__ */
-  
-+ /* Also defined in wchar.h */
-+ #ifndef WCHAR_MAX
-+ #define  WCHAR_MAX   255
-+ #endif
-+ #ifndef WCHAR_MIN
-+ #define  WCHAR_MIN   0
-+ #endif
-  
-  /* size_t is defined by the GCC-specific <stddef.h> */
-  #ifndef _SSIZE_T_DEFINED_
+--- android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Fri Jan  8 10:14:48 2010
++++ android-ndk-r3/build/platforms/android-8/arch-arm/usr/include/stdint.h	Wed Apr 14 08:46:20 2010
+@@ -251,6 +251,13 @@
+ 
+ #endif /* !__STDC_INT64__ */
+ 
++/* Also defined in wchar.h */
++#ifndef WCHAR_MAX
++#define  WCHAR_MAX   255
++#endif
++#ifndef WCHAR_MIN
++#define  WCHAR_MIN   0
++#endif
+ 
+ /* size_t is defined by the GCC-specific <stddef.h> */
+ #ifndef _SSIZE_T_DEFINED_
 
-*** android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Wed Jul 29 10:26:01 2009
---- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Fri Apr 16 08:46:38 2010
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Wed Jul 29 10:26:01 2009
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/cstddef	Fri Apr 16 08:46:38 2010
 ***************
-*** 0 ****
---- 1,15 ----
+--- 0 ****
++++ 1,15 ----
 + #ifndef __CSTDDEF__
 + #define __CSTDDEF__
 + 
@@ -123,27 +119,23 @@
 +
  #endif // __NEW__
 
-*** android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Wed Jul 29 10:26:01 2009
---- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Fri Apr 16 08:48:50 2010
-***************
-*** 1,6 ****
---- 1,7 ----
-  #ifndef _TYPEINFO_HEADER_GAURD
-  #define _TYPEINFO_HEADER_GAURD
-  
-+ extern "C++" {
-  
-  namespace std {
-      class type_info;
-***************
-*** 25,28 ****
---- 26,31 ----
-      type_info & operator=(type_info const & right);
-  };
-  
-+ }
-+ 
-  #endif
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Wed Jul 29 10:26:01 2009
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/typeinfo	Fri Apr 16 08:48:50 2010
+@@ -1,6 +1,7 @@
+ #ifndef _TYPEINFO_HEADER_GAURD
+ #define _TYPEINFO_HEADER_GAURD
+ 
++extern "C++" {
+ 
+ namespace std {
+     class type_info;
+@@ -25,4 +26,6 @@
+     type_info & operator=(type_info const & right);
+ };
+ 
++}
++
+ #endif
 
 --- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/netinet/in6.h	2010-05-15 05:18:31.000000000 +1000
 +++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/netinet/in6.h	2010-05-27 08:44:08.000000000 +1000
@@ -207,3 +199,14 @@
  
  #define GL_APIENTRY KHRONOS_APIENTRY
  
+--- android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/asm/byteorder.h
++++ android-ndk-r4/build/platforms/android-8/arch-arm/usr/include/asm/byteorder.h
+@@ -22,7 +22,7 @@ static inline __attribute_const__ __u32 ___arch__swab32(__u32 x)
+ #ifndef __thumb__
+  if (!__builtin_constant_p(x)) {
+ 
+- asm ("eor\t%0, %1, %1, ror #16" : "=r" (t) : "r" (x));
++ __asm__ ("eor\t%0, %1, %1, ror #16" : "=r" (t) : "r" (x));
+  } else
+ #endif
+  t = x ^ ((x << 16) | (x >> 16));
