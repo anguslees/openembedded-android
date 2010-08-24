@@ -31,6 +31,11 @@ python sys_path_eh () {
         inject("sys", sys)
         inject("time", time)
         inject("oe", oe)
+
+	# Hack - better done inside bitbake itself
+	import sys
+	from bb_fetch import repo
+	sys.modules['bb.fetch'].methods.append(repo.Repo())
 }
 
 addhandler sys_path_eh
@@ -401,6 +406,11 @@ python () {
         depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
         depends = depends + " git-native:do_populate_sysroot"
         bb.data.setVarFlag('do_fetch', 'depends', depends, d)
+
+    if "repo://" in srcuri:
+        depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
+	depends = depends + " repo-native:do_populate_sysroot"
+	bb.data.setVarFlag('do_fetch', 'depends', depends, d)
 
     # unzip-native should already be staged before unpacking ZIP recipes
     need_unzip = bb.data.getVar('NEED_UNZIP_FOR_UNPACK', d, 1)

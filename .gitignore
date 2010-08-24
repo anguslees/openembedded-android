@@ -1,4 +1,5 @@
 *.sw?
 *~
 lib/oe/*.pyc
+lib/bb_fetch/*.pyc
 contrib/oeaudit/*.pyc
