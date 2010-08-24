@@ -6,6 +6,8 @@ PR = "r1"
 
 inherit autotools
 
+BBCLASSEXTEND = "native sdk"
+
 SRC_URI = "https://fedorahosted.org/releases/e/l/elfutils/elfutils-${PV}.tar.bz2;name=archive \
            http://ftp.de.debian.org/debian/pool/main/e/elfutils/elfutils_0.143-1.diff.gz;name=patch \
            file://i386_dis.h \
