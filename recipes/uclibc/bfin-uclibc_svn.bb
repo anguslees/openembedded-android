@@ -9,7 +9,7 @@
 UCLIBC_BASE ?= "0.9.29"
 PV = "${UCLIBC_BASE}+svnr${SRCPV}"
 
-require uclibc.inc
+require uclibc-old.inc
 PR = "${INC_PR}.0"
 SRCREV = "1857"
 PROVIDES_append_bfin = " virtual/${TARGET_PREFIX}libc-for-gcc "
@@ -20,7 +20,7 @@ COMPATIBLE_HOST = "bfin.*-uclinux"
 
 #as stated above, uclibc needs real kernel-headers
 #however: we can't depend on virtual/kernel when nptl hits due to depends deadlocking ....
-KERNEL_SOURCE = "${CROSS_DIR}/${TARGET_SYS}"
+KERNEL_SOURCE = "${TOOLCHAIN_PATH}/${TARGET_SYS}"
 
 SRC_URI = "svn://sources.blackfin.uclinux.org/toolchain/trunk;module=uClibc "
 SRC_URI += "file://uClibc.machine file://uClibc.distro"

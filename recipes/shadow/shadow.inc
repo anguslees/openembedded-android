@@ -13,7 +13,7 @@ DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam', '', d)}"
 
 PACKAGE_ARCH_${PN} = "${MACHINE_ARCH}"
 
-INC_PR = "r14"
+INC_PR = "r17"
 
 # Additional Policy files for PAM
 PAM_SRC_URI = " \
@@ -42,7 +42,22 @@ EXTRA_OECONF += "\
     ${@base_contains('DISTRO_FEATURES', 'pam', '--with-libpam', '--without-libpam', d)} \
 "
 
+EXTRA_OECONF_libc-uclibc += "\
+    --disable-account-tools-setuid \
+    --disable-shadowgrp \
+    --without-audit \
+    --without-selinux \
+    --without-libcrack \
+    --without-nscd \
+    ${@base_contains('DISTRO_FEATURES', 'pam', '--with-libpam', '--without-libpam', d)} \
+"
+
 CFLAGS += "-I../include"
+
+PACKAGES =+ "${PN}-group"
+RDEPENDS_${PN} += "${PN}-group"
+
+FILES_${PN}-group = "${bindir}/gpasswd ${bindir}/newgrp.shadow ${bindir}/sg ${bindir}/groups"
 
 do_configure_prepend () {
     export CONFIG_SITE="${CONFIG_SITE} ${B}/cachedpaths"
@@ -81,6 +96,9 @@ do_install_append() {
   sed -i 's/MAIL_DIR/#MAIL_DIR/g' ${D}${sysconfdir}/login.defs
   sed -i 's/#MAIL_FILE/MAIL_FILE/g' ${D}${sysconfdir}/login.defs
 
+  # disable checking emails at all
+  sed -i 's/MAIL_CHECK_ENAB/#MAIL_CHECK_ENAB/g' ${D}${sysconfdir}/login.defs
+
   install -d ${D}${sbindir} ${D}${base_sbindir} ${D}${base_bindir} 
   for i in passwd chfn newgrp chsh ; do
     mv ${D}${bindir}/$i ${D}${bindir}/$i.${PN}
@@ -107,7 +125,6 @@ pkg_postinst_${PN} () {
     update-alternatives --install ${bindir}/passwd passwd passwd.${PN} 200
     update-alternatives --install ${sbindir}/chpasswd chpasswd chpasswd.${PN} 200
     update-alternatives --install ${bindir}/chfn chfn chfn.${PN} 200
-    update-alternatives --install ${bindir}/newgrp newgrp newgrp.${PN} 200
     update-alternatives --install ${bindir}/chsh chsh chsh.${PN} 200
     update-alternatives --install ${base_bindir}/login login login.${PN} 200
     update-alternatives --install ${base_sbindir}/vipw vipw vipw.${PN} 200
@@ -120,7 +137,17 @@ pkg_postinst_${PN} () {
 }
 
 pkg_prerm_${PN} () {
-    for i in passwd chpasswd chfn newgrp chsh login vipw vigr ; do
+    for i in passwd chpasswd chfn chsh login vipw vigr ; do
         update-alternatives --remove $i $i.${PN}
     done
 }
+
+pkg_postinst_${PN}-group () {
+   touch /etc/login.defs
+   update-alternatives --install ${bindir}/newgrp newgrp newgrp.${PN} 200
+}
+
+pkg_prerm_${PN}-group () {
+    update-alternatives --remove newgrp newgrp.${PN}
+}
+

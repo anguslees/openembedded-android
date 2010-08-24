@@ -3,6 +3,8 @@ LICENSE = "GPLv3"
 
 PR = "${INC_PR}.1"
 
+#COMPATIBLE_TARGET_SYS = "."
+
 SRC_URI = "\
      ${GNU_MIRROR}/binutils/binutils-${PV}.tar.bz2;name=tarball \
      file://binutils-uclibc-100-uclibc-conf.patch \
@@ -14,6 +16,11 @@ SRC_URI = "\
      file://binutils-x86_64_i386_biarch.patch \
      file://libtool-update.patch \
      "
+
+SRC_URI_append_nios2 =" \
+	file://binutils-nios2-files.patch \
+	file://binutils-nios2.patch \
+	"
 
 SRC_URI[tarball.sha256sum] = "228b84722d87e88e7fdd36869e590e649ab523a0800a7d53df906498afe6f6f8"
 SRC_URI[tarball.md5sum] = "9cdfb9d6ec0578c166d3beae5e15c4e5"

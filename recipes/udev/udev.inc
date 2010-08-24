@@ -11,9 +11,10 @@ SRC_URI = "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
 	   file://mount.sh \
 	   file://network.sh \
 	   file://local.rules \
-           file://init"
+           file://init \
+	   file://udev-compat-wrapper-patch"
 
-INC_PR = "r27"
+INC_PR = "r28"
 
 inherit update-rc.d autotools pkgconfig
 
@@ -42,6 +43,35 @@ EXTRA_OEMAKE = "-e \
 		'EXTRAS=${UDEV_EXTRAS}' \
 		'STRIP=echo'"
 
+RPROVIDES_udev_spitz += "udev-compat-wrapper"
+RDEPENDS_udev_spitz += "udev-compat"
+do_unpack_append_spitz() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_akita += "udev-compat-wrapper"
+RDEPENDS_udev_akita += "udev-compat"
+do_unpack_append_akita() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_c7x0 += "udev-compat-wrapper"
+RDEPENDS_udev_c7x0 += "udev-compat"
+do_unpack_append_c7x0() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_poodle += "udev-compat-wrapper"
+RDEPENDS_udev_poodle += "udev-compat"
+do_unpack_append_poodle() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+
+# Modify init script on platforms that need to boot old kernels:
+do_apply_compat_wrapper() {
+	cd ${WORKDIR}
+	sed -i "s:/sbin/udevd:\$UDEVD:g;s:/sbin/udevadm:\$UDEVADM:g" init
+	patch <udev-compat-wrapper-patch
+	cd -
+}
+
 do_install () {
 	install -d ${D}${usrsbindir} \
 		   ${D}${sbindir}
@@ -63,7 +93,7 @@ do_install () {
 	install -m 0755 ${WORKDIR}/mount.sh ${D}${sysconfdir}/udev/scripts/mount.sh
 	install -m 0755 ${WORKDIR}/network.sh ${D}${sysconfdir}/udev/scripts
         install -m 0644 ${S}/extras/volume_id/lib/libvolume_id.h ${D}${includedir}
-        oe_libinstall -C extras/volume_id/lib -so libvolume_id ${D}${libdir}
+        oe_libinstall -C extras/volume_id/lib libvolume_id ${D}${libdir}
 }
 
 PACKAGES =+ "udev-utils libvolume-id libvolume-id-dev"

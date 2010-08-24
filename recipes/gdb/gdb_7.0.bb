@@ -1,6 +1,8 @@
 require gdb.inc
 LICENSE = "GPLv3"
 
+PR = "r2"
+
 SRC_URI += "\
             file://gdb-6.8-fix-compile-karmic.patch"
 

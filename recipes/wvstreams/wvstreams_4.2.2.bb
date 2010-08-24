@@ -12,7 +12,7 @@ SRC_URI = "http://ftp.de.debian.org/debian/pool/main/w/wvstreams/${PN}_${PV}.ori
 
 inherit autotools pkgconfig
 
-LDFLAGS_append = " -Wl,-rpath-link,${CROSS_DIR}/${TARGET_SYS}/lib"
+LDFLAGS_append = " -Wl,-rpath-link,${TOOLCHAIN_PATH}/${TARGET_SYS}/lib"
 
 EXTRA_AUTORECONF += " -I${S}/gnulib/m4"
 EXTRA_OECONF = " --without-tcl --without-qt --without-pam"
@@ -33,11 +33,6 @@ FILES_libwvstreams-base-dbg = "${libdir}/.debug/libwvutils.so.*"
 
 FILES_libwvstreams-extras     = "${libdir}/libwvbase.so.* ${libdir}/libwvstreams.so.*"
 FILES_libwvstreams-extras-dbg = "${libdir}/.debug/libwvbase.so.* ${libdir}/.debug/libwvstreams.so.*"
-
-
-do_stage() {
-    autotools_stage_all
-}
 
 SRC_URI[archive.md5sum] = "103230cb9926cb8f3f4d8dc8584f3b9c"
 SRC_URI[archive.sha256sum] = "8fa45a6bfe4d6ac3d9a457543844873090d0c7da817991ac0cd547732f475a14"

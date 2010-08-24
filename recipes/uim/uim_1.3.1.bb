@@ -1,7 +1,7 @@
 require uim.inc
-DEPENDS = "gtk+ uim-native anthy fontconfig libxft xt glib-2.0 ncurses"
+DEPENDS = "gtk+ uim-native anthy fontconfig libxft libxt glib-2.0 ncurses"
 SECTION_uim-gtk2.0 = "x11/inputmethods"
-PR = "r3"
+PR = "r4"
 
 SRC_URI += "file://uim-module-manager.patch"
 
@@ -138,10 +138,6 @@ if [ -f /usr/bin/uim-module-manager ]; then
 	/usr/bin/uim-module-manager --path /etc/uim --register \
 		tutcode tcode hangul viqr ipa-x-sampa latin byeoru
 fi
-}
-
-do_stage() {
-	autotools_stage_all
 }
 
 SRC_URI[md5sum] = "2832e23d4778bbacbfa4b49bf642d667"

@@ -132,6 +132,9 @@ package_generate_ipkg_conf () {
 		        echo "src oe-${SDK_SYS}-sdk-$arch file:${DEPLOY_DIR_IPK}/${SDK_SYS}-sdk-$arch" >> ${IPKGCONF_CANSDK}
 		fi
 	done
+	echo "lists_dir ext /var/lib/opkg" >> ${IPKGCONF_TARGET}
+	echo "lists_dir ext /var/lib/opkg" >> ${IPKGCONF_SDK}
+	echo "lists_dir ext /var/lib/opkg" >> ${IPKGCONF_CANSDK}
 }
 
 python do_package_ipk () {
@@ -196,7 +199,7 @@ python do_package_ipk () {
 		except ValueError:
 			pass
 		if not g and bb.data.getVar('ALLOW_EMPTY', localdata) != "1":
-			bb.note("Not creating empty archive for %s-%s" % (pkg, bb.data.expand('${PV}-${PR}${DISTRO_PR}', localdata, True)))
+			bb.note("Not creating empty archive for %s-%s" % (pkg, bb.data.expand('${PV}-${PR}${DISTRO_PR}', localdata)))
 			bb.utils.unlockfile(lf)
 			continue
 

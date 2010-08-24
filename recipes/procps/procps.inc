@@ -7,8 +7,9 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "ncurses"
+RDEPENDS_${PN} = "ncurses-terminfo"
 
-INC_PR = "r10"
+INC_PR = "r12"
 
 SRC_URI = "http://procps.sourceforge.net/procps-${PV}.tar.gz;name=tarball \
 	   file://sysctl.conf \

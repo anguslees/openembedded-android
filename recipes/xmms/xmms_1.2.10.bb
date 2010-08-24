@@ -10,7 +10,7 @@ SRC_URI = "http://www.xmms.org/files/1.2.x/xmms-${PV}.tar.bz2 \
            file://xmms-config-dequote.patch \
 	   file://acinclude.m4 \
            file://xmms.sh"
-PR = "r5"
+PR = "r6"
 
 RRECOMMENDS_${PN} = "xmms-plugin-output-oss xmms-plugin-output-alsa \
                     xmms-mad xmms-tremor"
@@ -67,10 +67,6 @@ python populate_packages_prepend () {
 	do_split_packages(d, input_root, '^lib(.*)\.so$', 'xmms-plugin-input-%s', 'XMMS Input plugin for %s')
 	do_split_packages(d, output_root, '^lib(.*)\.so$', 'xmms-plugin-output-%s', 'XMMS Output plugin for %s')
 	do_split_packages(d, visualisation_root, '^lib(.*)\.so$', 'xmms-plugin-visualization-%s', 'XMMS Visualization plugin for %s')
-}
-
-do_stage() {
-	autotools_stage_all
 }
 
 FILES_${PN} = "${bindir}/xmms ${bindir}/xmms.sh ${libdir}/libxmms*.so.* \

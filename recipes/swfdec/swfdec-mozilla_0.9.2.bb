@@ -1,6 +1,6 @@
 DESCRIPTION = "Swfdec plugin for browsers using NPAPI. Swfdec is a decoder/renderer for Macromedia Flash animations."
 LICENSE = "LGPL"
-PR = "r2"
+PR = "r3"
 DEPENDS = "swfdec glib-2.0"
 RDEPENDS_${PN} = "gst-ffmpeg"
 
@@ -13,10 +13,6 @@ EXTRA_OECONF = "--disable-static"
 
 do_install_append() {
 	rm ${D}${libdir}/mozilla/plugins/*.la
-}
-
-do_stage() {
-	autotools_stage_all
 }
 
 FILES_${PN} += "${libdir}/mozilla/plugins/*.so"

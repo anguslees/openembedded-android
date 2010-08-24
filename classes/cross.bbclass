@@ -1,5 +1,5 @@
-# Disabled for now since the relocation paths are too long
-#inherit relocatable
+# We want cross packages to be relocatable
+inherit relocatable
 
 # Cross packages are built indirectly via dependency,
 # no need for them to be a direct target of 'world'
@@ -44,18 +44,18 @@ target_base_libdir := "${base_libdir}"
 target_prefix := "${prefix}"
 
 # Overrides for paths
-prefix = "${CROSS_DIR}"
-base_prefix = "${prefix}"
+base_prefix = "${STAGING_DIR_NATIVE}"
+prefix = "${base_prefix}${prefix_native}/${BASE_PACKAGE_ARCH}"
 exec_prefix = "${prefix}"
 base_sbindir = "${base_prefix}/bin"
 sbindir = "${exec_prefix}/bin"
 
+# staging should be special for cross
+STAGING_DIR_HOST = ""
+SHLIBSDIR = "${STAGING_DIR_NATIVE}/shlibs"
+
 do_install () {
 	oe_runmake 'DESTDIR=${D}' install
-}
-
-do_stage () {
-	autotools_stage_all
 }
 
 #

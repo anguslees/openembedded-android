@@ -11,7 +11,7 @@ SRC_URI = "svn://ogre.svn.sourceforge.net/svnroot/ogre;module=trunk;proto=https 
            file://ogre-egl-update.diff;striplevel=0 \
           "
 
-inherit autotools_stage siteinfo
+inherit autotools siteinfo
 
 # This is the EGL version
 EXTRA_OECONF = " --with-gui=gtk --disable-freetypetest --enable-ogre-demos --with-allocator=std --enable-threading=no --disable-cg --enable-gles "
@@ -19,7 +19,7 @@ EXTRA_OECONF = " --with-gui=gtk --disable-freetypetest --enable-ogre-demos --wit
 S = "${WORKDIR}/trunk"
 
 
-EXTRA_OEMAKE = " ZZIPLIB_CFLAGS=\"${@base_conditional('SITEINFO_ENDIANESS', 'le', '-DOGRE_CONFIG_LITTLE_ENDIAN', '-DOGRE_CONFIG_BIG_ENDIAN', d)}\" "
+EXTRA_OEMAKE = " ZZIPLIB_CFLAGS=\"${@base_conditional('SITEINFO_ENDIANNESS', 'le', '-DOGRE_CONFIG_LITTLE_ENDIAN', '-DOGRE_CONFIG_BIG_ENDIAN', d)}\" "
 
 do_configure_prepend() {
 	sed -i -e /OGRE_DETECT_ENDIAN/d ${S}/configure.in

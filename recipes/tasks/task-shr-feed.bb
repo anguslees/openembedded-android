@@ -1,9 +1,11 @@
 DESCRIPTION = "SHR Feed"
-PR = "r58"
+PR = "r72"
 PV = "1.0"
 LICENSE = "GPL"
 
 inherit task
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RDEPENDS_${PN} += "\
 		babiloo-efl \
@@ -17,6 +19,7 @@ RDEPENDS_${PN} += "\
 		dosbox \
 		enotes \
 		epdfview \
+		mupdf \
 		estardict \
 		evopedia \
 		fbreader \
@@ -59,6 +62,8 @@ RDEPENDS_${PN} += "\
 		shr-splash-theme-simple \
 		shr-splash-theme-dontpanic \
 		shr-splash-theme-handy \
+		shr-splash-theme-tux \
+		shr-splash-theme-logo \
 		vagalume \
 		wireshark \
 		x11vnc \
@@ -66,7 +71,6 @@ RDEPENDS_${PN} += "\
 		pingus \
 		openmoocow \
 		python-pygame \
-#		exhibit \
 		obexpush \
 		obexftp \
 		obex-data-server \
@@ -141,6 +145,7 @@ RDEPENDS_${PN} += "\
 		x11vnc \
 #		libswt3.4-gtk-java \
 		cacao \
+		openjdk-6-jre \
 #		jamvm \
 		dbus-x11 \
 #		bluez-utils-alsa \
@@ -240,8 +245,8 @@ RDEPENDS_${PN} += "\
 		aceofpenguins-launcher \
 		om-neon \
 		ipython \
-#		phoneme-advanced-foundation \
-#		eve was killed in svnr45979
+ 		phoneme-advanced-foundation \
+		eve \
 		python-pybluez \
 		x11perf \
 		pyring \
@@ -263,6 +268,7 @@ RDEPENDS_${PN} += "\
 		fltkwwpointcal \
 		transmission \
 		xf86-input-tslib \
+		xf86-video-fbdev \
 		fltkcocktailbar \
 		fltkcurrency \
 		fltkspacetrader \
@@ -289,6 +295,17 @@ RDEPENDS_${PN} += "\
 		spojegui \
 		dbus-daemon-proxy \
 		unixbench \
+		maxima \
+		xfsprogs \
+		xfsdump \
+		numberx \
+		neomis \
+		supertux-qvga \
+		wesnoth \
+		mokosuite2 \
+		mokowm-imf-ecore \
+		atrack \
+		minneo \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

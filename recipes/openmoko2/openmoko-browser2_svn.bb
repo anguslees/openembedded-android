@@ -6,7 +6,7 @@ PV = "0.0.1+svnr${SRCPV}"
 PR = "r2"
 
 inherit openmoko2
-LDFLAGS_append = " -Wl,-rpath-link,${CROSS_DIR}/${TARGET_SYS}/lib"
+LDFLAGS_append = " -Wl,-rpath-link,${TOOLCHAIN_PATH}/${TARGET_SYS}/lib"
 
 SRC_URI += "file://webkit-update.patch;minrev=3646;maxrev=4171"
 

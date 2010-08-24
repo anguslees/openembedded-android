@@ -5,7 +5,7 @@ PATH="/usr/local/bin:/usr/bin:/bin"
 EDITOR="/bin/vi"			# needed for packages like cron
 test -z "$TERM" && TERM="vt100"	# Basic terminal capab. For screen etc.
 
-if [ ! -e /etc/localtime ]; then
+if [ ! -e /etc/localtime -a ! -e /etc/TZ ]; then
 	TZ="UTC"		# Time Zone. Look at http://theory.uwinnipeg.ca/gnu/glibc/libc_303.html 
 				# for an explanation of how to set this to your local timezone.
 	export TZ
@@ -37,7 +37,7 @@ alias fso='cd /local/pkg/fso'
 alias ipkg='opkg'
 export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \\$\[\033[00m\] "
 if [ "$DISPLAY" = "" ] ; then
-    export DISPLAY=localhost:0
+    export DISPLAY=:0
 fi
 if [ "$HOME" = "" -o "$HOME" = "/" ] ; then
     export HOME=/home/root

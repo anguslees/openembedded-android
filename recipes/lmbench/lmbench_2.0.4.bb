@@ -2,7 +2,10 @@ SECTION = "console/utils"
 DESCRIPTION = "Tools for performance analysis."
 LICENSE = "GPL"
 RDEPENDS_${PN} = "debianutils"
-PR = "r2"
+
+PR = "r3"
+
+inherit autotools
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/lmbench/lmbench-${PV}.tgz \
 	   file://debian.patch \
@@ -21,6 +24,10 @@ python do_unpack () {
 
 byebk_do_unpack () {
 	find ${S}/.. -name BitKeeper -o -name SCCS | xargs rm -rf
+}
+
+do_configure() {
+	:
 }
 
 do_compile () {

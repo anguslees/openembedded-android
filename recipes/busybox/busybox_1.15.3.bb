@@ -1,8 +1,9 @@
 require busybox.inc
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.4"
 
 SRC_URI = "\
   http://www.busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
+  file://fdisk_nios2.patch \
   \
   file://udhcpscript.patch \
   file://udhcpc-fix-nfsroot.patch \
@@ -10,13 +11,13 @@ SRC_URI = "\
   file://get_header_tar.patch \
   file://busybox-appletlib-dependency.patch \
   file://0000-wget-no-check-certificate.patch \
-  file://run-parts.in.usr-bin.patch \
   file://find-touchscreen.sh \
   file://busybox-cron \
   file://busybox-httpd \
   file://busybox-udhcpd \
   file://default.script file://simple.script \
   file://hwclock.sh \
+  file://hwclock-default \
   file://mount.busybox \
   file://mountall \
   file://syslog \

@@ -3,14 +3,15 @@ HOMEPAGE = "http://www.gnu.org/software/bison/"
 LICENSE = "GPL"
 SECTION = "devel"
 PRIORITY = "optional"
-DEPENDS = "virtual/libintl"
+DEPENDS = "virtual/libintl flex-native"
 
 SRC_URI = "${GNU_MIRROR}/bison/bison-${PV}.tar.gz \
 	   file://m4.patch"
 
-INC_PR = "r5"
+INC_PR = "r8"
 
-inherit autotools
+inherit autotools gettext
 
 NATIVE_INSTALL_WORKS = "1"
 BBCLASSEXTEND = "native"
+PSTAGING_DISABLED_virtclass-native = "1"

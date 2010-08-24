@@ -1,20 +1,22 @@
 require llvm.inc
 
-PR = "r2"
+PR = "r8"
 
 DEPENDS = "llvm-common llvm2.7-native"
 
+# Force arm mode for armv4t until http://llvm.org/bugs/show_bug.cgi?id=6065 is resolved somehow
+ARM_INSTRUCTION_SET_armv4t = "ARM"
+
 SRC_URI = "\
   http://llvm.org/releases/${PV}/llvm-${PV}.tgz \
-  file://BX_to_BLX.patch \
+  file://arm_ppc.patch \
+  file://r97745-llvmPR6480.patch \
+  file://r104558-VFPmisc.patch \
+  file://r104587-MOVimm32.patch \
+  file://r104652-VFPLoadStoreMultiple.patch \
+  file://r104653-BFC-BFI.patch \
+  file://rawMOVLRPC.patch \
   "
-
-EXTRA_OECMAKE += "\
-        -DLLVM_TARGET_ARCH:STRING=${LLVM_ARCH} \
-        -DLLVM_ENABLE_ASSERTIONS:BOOL=ON \
-        -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-		-DBUILD_SHARED_LIBS:BOOL=ON \
-	"
 
 LLVM_RELEASE = "2.7"
 

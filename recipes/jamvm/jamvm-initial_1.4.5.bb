@@ -2,9 +2,9 @@ SUMMARY = "A compact Java Virtual Machine which conforms to the JVM specificatio
 HOMEPAGE = "http://jamvm.sourceforge.net/"
 LICENSE = "GPL"
 
-DEPENDS = "zlib-native classpath-initial jikes-initial"
+DEPENDS = "zlib-native classpath-initial jikes-initial libffi-native"
 
-PR = "r1"
+PR = "r3"
 
 PROVIDES = "virtual/java-initial"
 

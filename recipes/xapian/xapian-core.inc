@@ -7,9 +7,7 @@ DEPENDS = "zlib"
 
 SRC_URI = "http://www.oligarchy.co.uk/xapian/${PV}/xapian-core-${PV}.tar.gz"
 
-inherit autotools pkgconfig
+BBCLASSEXTEND = "native"
 
-do_stage () {
-     autotools_stage_all
-}
+inherit autotools pkgconfig
 

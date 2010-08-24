@@ -8,7 +8,7 @@ LICENSE = "GPLv3"
 DEPENDS = "mpfr gmp"
 NATIVEDEPS = "mpfr-native gmp-native"
 
-INC_PR = "r10"
+INC_PR = "r13"
 
 SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://fedora/gcc43-c++-builtin-redecl.patch;striplevel=0 \
@@ -25,7 +25,8 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://fedora/gcc43-libgomp-speedup.patch;striplevel=0 \
 	file://fedora/gcc43-i386-libgomp.patch;striplevel=0 \
 	file://fedora/gcc43-rh251682.patch;striplevel=0 \
-    file://debian/arm-unbreak-eabi-armv4t.dpatch;apply=yes \
+	file://debian/arm-unbreak-eabi-armv4t.dpatch;apply=yes \
+        file://debian/armel-atomic-builtins.dpatch;apply=yes;striplevel=0 \
 	file://debian/libstdc++-pic.dpatch;apply=yes;striplevel=0 \
 	file://debian/gcc-ice-hack.dpatch;apply=yes;striplevel=0 \ 
 	file://debian/pr30961.dpatch;apply=yes;striplevel=0 \
@@ -48,6 +49,7 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://904-flatten-switch-stmt-00.patch \
 	file://arm-nolibfloat.patch \
 	file://arm-softfloat.patch \
+        file://gcc-4.4-20090519-arm-eabi-atomic-builtins-unbreak-v2.patch \
 	file://cache-amnesia.patch \
 	file://gfortran-4.3.x.patch \
 	file://gcc-4.0.2-e300c2c3.patch \
@@ -57,7 +59,9 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://gcc-4.3.2-SYSROOT_CFLAGS_FOR_TARGET.patch \
 	file://gcc-4.3.1-ARCH_FLAGS_FOR_TARGET.patch \
 	file://zecke-xgcc-cpp.patch \
+	file://gcc-4.3.x-fix-EXTRA_BUILD.patch \
 	file://gcc-flags-for-build.patch \
+	file://Makefile.in.patch \
 "
 
 SRC_URI_append_sh3  = " file://sh3-installfix-fixheaders.patch "

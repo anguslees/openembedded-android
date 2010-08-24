@@ -18,8 +18,6 @@ python () {
 #STAGING_DIR_HOST = "${STAGING_DIR}/${HOST_SYS}-nativesdk"
 #STAGING_DIR_TARGET = "${STAGING_DIR}/${BASEPKG_TARGET_SYS}-nativesdk"
 
-CROSS_DIR = "${TMPDIR}/cross/${HOST_ARCH}"
-
 HOST_ARCH = "${SDK_ARCH}"
 HOST_VENDOR = "${SDK_VENDOR}"
 HOST_OS = "${SDK_OS}"
@@ -54,6 +52,8 @@ export PKG_CONFIG_SYSROOT_DIR = "${STAGING_DIR_HOST}"
 ORIG_DEPENDS := "${DEPENDS}"
 DEPENDS_virtclass-nativesdk ?= "${ORIG_DEPENDS}"
 
+OVERRIDES .= ":virtclass-nativesdk"
+
 python __anonymous () {
     pn = bb.data.getVar("PN", d, True)
     depends = bb.data.getVar("DEPENDS_virtclass-nativesdk", d, True)
@@ -76,7 +76,4 @@ python __anonymous () {
         if not prov.endswith("-nativesdk"):
             provides = provides.replace(prov, prov + "-nativesdk")
     bb.data.setVar("PROVIDES", provides, d)
-    bb.data.setVar("OVERRIDES", bb.data.getVar("OVERRIDES", d, False) + ":virtclass-nativesdk", d)
 }
-
-

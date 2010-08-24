@@ -1,5 +1,7 @@
 require glibc.inc
 
+PR = "${INC_PR}.1"
+
 ARM_INSTRUCTION_SET = "arm"
 
 PACKAGES_DYNAMIC = "libc6*"
@@ -8,9 +10,6 @@ RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
 # the -isystem in bitbake.conf screws up glibc do_stage
 BUILD_CPPFLAGS = "-I${STAGING_INCDIR_NATIVE}"
 TARGET_CPPFLAGS = "-I${STAGING_DIR_TARGET}${layout_includedir}"
-
-
-FILESPATHPKG =. "glibc-2.4:"
 
 GLIBC_ADDONS ?= "ports,nptl,libidn"
 
@@ -57,6 +56,7 @@ SRC_URI = "ftp://ftp.gnu.org/pub/gnu/glibc/glibc-${PV}.tar.bz2;name=archive \
            file://arm-lowlevellock-include-tls.patch \
            file://glibc-2.9-enable-binutils-2.2.patch \
 	   file://armv4t-interworking.patch \
+	   file://PTR_MANGLE.patch \
            "
 
 # Build fails on sh3 and sh4 without additional patches
@@ -65,6 +65,11 @@ SRC_URI_append_sh4 = " file://no-z-defs.patch"
 
 #powerpc patches to add support for soft-float
 SRC_URI_append_powerpc= " file://powerpc-sqrt-hack.diff"
+
+SRC_URI_append_nios2 = " \
+  file://sysdeps-nios2.patch \
+  file://nios2-elf.patch \
+"
 
 S = "${WORKDIR}/glibc-${PV}"
 B = "${WORKDIR}/build-${TARGET_SYS}"

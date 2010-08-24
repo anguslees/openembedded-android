@@ -23,17 +23,26 @@ DISTRO_VERSION ?= "${SLUGOS_VERSION}${DISTRO_REVISION}-${DISTRO_TYPE}"
 # DISTRO_FEED ?= "${SLUGOS_VERSION}-${DISTRO_TYPE}"
 DISTRO_FEED ?= "unstable"
 
+THUMB_INTERWORK = "yes"
+# "yes" "no"
+#    Whether to compile with code to allow interworking between the two
+#    instruction sets.  This allows thumb code to be executed on a primarily
+#    arm system and vice versa.  It is strongly recommended that DISTROs not
+#    turn this off - the actual cost is very small.
 # We want images supporting the following features (for task-base)
 DISTRO_FEATURES = "nfs smbfs wifi ppp alsa bluetooth ext2 vfat irda pcmcia usbgadget usbhost pci"
 
-IMAGE_BASENAME = "${@['slugos${SITEINFO_ENDIANESS}', 'ucslugc'][bb.data.getVar('TARGET_OS', d, 1) == 'linux-uclibc']}"
+# Add thumb-interwork to feature list if selected machine supports it.
+DISTRO_FEATURES += ' ${@["", "thumb-interwork"][bb.data.getVar('THUMB_INTERWORK', d, 1) == "yes"]}'
+
+IMAGE_BASENAME = "${@['slugos${SITEINFO_ENDIANNESS}', 'ucslugc'][bb.data.getVar('TARGET_OS', d, 1) == 'linux-uclibc']}"
 
 # The following need not be set, the defaults should be adequate
 #USE_NLS = "no" or "yes"
 USE_NLS ?= "no"
 
 # To make errors easier to identify:
-DISTRO_NAME ?= "INVALID-${SITEINFO_ENDIANESS}-${ARM_INSTRUCTION_SET}-${TARGET_OS}"
+DISTRO_NAME ?= "INVALID-${SITEINFO_ENDIANNESS}-${ARM_INSTRUCTION_SET}-${TARGET_OS}"
 DISTRO_TYPE ?= "INVALID"
 
 # The following must not be changed.
@@ -132,6 +141,7 @@ PREFERRED_PROVIDER_linux-libc-headers			    = "linux-libc-headers"
 # default we will select the standard libraries and permit the use of an
 # override if the user wishes (and has the correct PREFERRED_VERSIONs set).
 PREFERRED_PROVIDER_virtual/libx11		?= "libx11"
+PREFERRED_PROVIDER_virtual/libx11-native        ?= "libx11-native"
 
 # Ensure consistency across all SlugOS builds for the provider of a relational
 # database - use the latest version of the SleepyCat Berkeley database

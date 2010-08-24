@@ -5,7 +5,9 @@ DEPENDS = "alsa-lib ffmpeg \
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/omxil/${PN}-${PV}.tar.gz"
 
-inherit autotools_stage
+PR = "r1"
+
+inherit autotools
 
 AUTOTOOLS_STAGE_PKGCONFIG = "1"
 

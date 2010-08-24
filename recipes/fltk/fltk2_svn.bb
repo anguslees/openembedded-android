@@ -7,7 +7,7 @@ DEPENDS = "zlib jpeg libpng libxext libxft xinput"
 
 SRCREV = "6916"
 PV = "1.9.9+svnr${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "\
   svn://svn.easysw.com/public/fltk/fltk;proto=http;module=trunk \
@@ -15,7 +15,7 @@ SRC_URI = "\
 "
 S = "${WORKDIR}/trunk"
 
-inherit autotools_stage binconfig
+inherit autotools binconfig
 
 EXTRA_OECONF = "\
   --enable-shared \

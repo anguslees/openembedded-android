@@ -66,7 +66,7 @@ do_configure() {
 
   pmo "# Java toolchain binaries"
   pmo JDK_HOME /dev/null
-  pmo CVM_TARGET_TOOLS_PREFIX ${CROSS_DIR}/bin/
+  pmo CVM_TARGET_TOOLS_PREFIX ${TOOLCHAIN_PATH}/bin/
   pmo CVM_JAVA java
   pmo CVM_JAVAC javac
   pmo CVM_JAVADOC true
@@ -85,14 +85,14 @@ do_configure() {
   pmo HOST_RANLIB "${BUILD_RANLIB}"
 
   pmo "# C/C++ toolchain binaries"
-  pmo TARGET_CC "${CC}"
+  pmo TARGET_CC "${CC} "
   pmo TARGET_CC_PATH "${CC}"
   pmo CCFLAGS "${CFLAGS}"
   pmo TARGET_CCC "${CXX}"
   pmo TARGET_PATH "${CXX}"
   pmo CCCFLAGS "${CXXFLAGS}"
   pmo TARGET_AR "${AR}"
-  pmo TARGET_LD "${CC}"
+  pmo TARGET_LD "${CC} ${LDFLAGS}"
   pmo TARGET_RANLIB "${RANLIB}"
 
   pmo USE_GCC2 false

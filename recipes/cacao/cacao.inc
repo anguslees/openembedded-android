@@ -16,6 +16,8 @@ inherit java autotools update-alternatives
 
 ARM_INSTRUCTION_SET = "arm"
 
+PRIVATE_LIBS = "libjvm.so"
+
 # Configure options compatible with Cacao >= 0.99 only!
 EXTRA_OECONF = "\
 	${@['','--enable-softfloat'][bb.data.getVar('TARGET_FPU',d,1) == 'soft']} \
@@ -32,7 +34,7 @@ EXTRA_OECONF = "\
 
 PACKAGES = "${PN} ${PN}-doc ${PN}-dbg"
 
-FILES_${PN} = "${bindir}/${PN} ${libdir}/lib*.so* ${datadir}/${PN}"
+FILES_${PN} = "${bindir}/${PN} ${libdir}/cacao/lib*.so ${libdir}/lib*.so* ${datadir}/${PN}"
 FILES_${PN}-doc = "${datadir}/man"
 FILES_${PN}-dbg += "${bindir}/.debug ${libdir}/.debug/lib*.so*"
 

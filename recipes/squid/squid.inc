@@ -1,17 +1,19 @@
 DESCRIPTION = "Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more"
 LICENSE = "GPLv2"
-INC_PR = "r7"
-DEPENDS = "squid-native-${PV} openssl openldap"
+INC_PR = "r10"
+DEPENDS = "openssl openssl-native openldap"
 
-SRC_URI = "http://www.squid-cache.org/Versions/v2/${SQUID_MAJOR}/squid-${PV}.tar.bz2;name=squid-${PV} \
-           file://fix_epoll_check.patch \
+SQ_MAJ = "${@bb.data.getVar('PV',d,1).split('.')[0]}"
+SQ_MIN = "${@bb.data.getVar('PV',d,1).split('.')[1]}"
+
+SRC_URI = "http://www.squid-cache.org/Versions/v${SQ_MAJ}/${SQ_MAJ}.${SQ_MIN}/squid-${PV}.tar.bz2;name=squid-${PV} \
            file://squid.init \
 	   file://squid-volatiles \
 	   "
 
 inherit autotools update-rc.d
 
-EXTRA_OECONF = "--disable-epoll --disable-nls --enable-ssl --enable-storeio=null,ufs --enable-digest-auth-helpers=ldap --enable-basic-auth-helpers=LDAP"
+EXTRA_OECONF = "--disable-epoll --disable-nls --enable-ssl --enable-digest-auth-helpers=ldap --enable-basic-auth-helpers=LDAP"
 
 logdir = ${localstatedir}/log/squid
 EXTRA_OEMAKE = "\
@@ -26,10 +28,6 @@ EXTRA_OEMAKE = "\
   "
 
 INITSCRIPT_NAME = "squid"
-
-do_configure_append() {
-   sed -i -e 's|./cf_gen |${STAGING_BINDIR_NATIVE}/cf_gen |g' src/Makefile
-}
 
 do_install_prepend() {
 	install -d ${D}${sysconfdir}/squid

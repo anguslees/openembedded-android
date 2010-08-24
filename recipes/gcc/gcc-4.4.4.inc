@@ -8,9 +8,7 @@ LICENSE = "GPLv3"
 DEPENDS = "mpfr gmp"
 NATIVEDEPS = "mpfr-native gmp-native"
 
-INC_PR = "r2"
-
-FILESPATHPKG .= ":gcc-$PV"
+INC_PR = "r4"
 
 SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=gcc444tarbz2 \
         file://gcc-4.3.1-ARCH_FLAGS_FOR_TARGET.patch \
@@ -26,6 +24,8 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=gcc444tarbz2 \
 	file://gcc-pr41175.patch \
 	file://gcc-armv4-pass-fix-v4bx-to-ld.patch \
 	file://gcc-add-t-slibgcc-libgcc.patch \
+	file://gcc-4.3.3-fix-EXTRA_BUILD.patch \
+	file://Makefile.in.patch \
 	file://android-getpagesize.patch \
 	file://0002-Add-support-for-Bionic-C-library.patch \
 	file://0003-Support-compilation-for-Android-platform.patch \

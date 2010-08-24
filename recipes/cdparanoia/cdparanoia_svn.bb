@@ -25,4 +25,3 @@ do_install() {
 	oe_runmake BINDIR="${D}/usr/bin" MANDIR="${D}/usr/share/man/" \
 		   INCLUDEDIR="${D}/usr/include/" LIBDIR="${D}/usr/lib" install
 }
-

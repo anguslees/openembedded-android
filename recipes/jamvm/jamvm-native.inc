@@ -1,9 +1,13 @@
 require jamvm.inc 
 
-DEPENDS = "zlib-native classpath-native ecj-initial"
+DEPENDS = "zlib-native classpath-native ecj-initial libffi-native"
 RDEPENDS_${PN} = ""
 
 PROVIDES = "virtual/java-native"
+
+# Use libffi instead of handcoded JNI calling code. This code seems to have issues which only randomly
+# trigger a segfault.
+EXTRA_OECONF += "--enable-ffi"
 
 RPROVIDES_jamvm = ""
 
@@ -13,12 +17,15 @@ ARM_INSTRUCTION_SET = "arm"
 # Needed for big compilation targets like OpenJDK
 CFLAGS += "-DDEFAULT_MAX_HEAP=2048*MB"
 
+#SRC_URI += "file://java"
+
 inherit native
 
 S = "${WORKDIR}/jamvm-${PV}"
 
 do_install_append() {
-  ln -sf jamvm ${STAGING_BINDIR}/java
+	install -d ${D}${bindir}
+	ln -s ${bindir}/jamvm ${D}${bindir}/java
 }
 
 # Enforce usage of ecj-initial.

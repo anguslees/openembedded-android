@@ -1,6 +1,7 @@
 require python.inc
 DEPENDS = "openssl-native bzip2-full-native zlib-native readline-native"
-PR = "${INC_PR}.3"
+# set to 0 on every increase of INC_PR
+PR = "${INC_PR}.1"
 
 SRC_URI = "\
   http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.bz2;name=archive \
@@ -29,6 +30,6 @@ EXTRA_OEMAKE = '\
   STAGING_INCDIR=${STAGING_INCDIR_NATIVE} \
 '
 
-do_stage_append() {
-	install -m 0755 Parser/pgen ${STAGING_BINDIR_NATIVE}/pgen
+do_install_append() {
+	install -m 0755 Parser/pgen ${D}${bindir}/pgen
 }

@@ -1,5 +1,7 @@
 require glibc.inc
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
+
+COMPATIBLE_TARGET_SYS = "."
 
 ARM_INSTRUCTION_SET = "arm"
 
@@ -9,8 +11,6 @@ RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
 # the -isystem in bitbake.conf screws up glibc do_stage
 BUILD_CPPFLAGS = "-I${STAGING_INCDIR_NATIVE}"
 TARGET_CPPFLAGS = "-I${STAGING_DIR_TARGET}${layout_includedir}"
-
-FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/glibc-2.4"
 
 GLIBC_ADDONS ?= "ports,nptl,libidn"
 
@@ -69,6 +69,13 @@ SRC_URI_append_powerpc = " file://ppc-sfp-machine.patch \
                            file://ppc-ports-ld-nofpu-20070114.patch \
                            file://powerpc-sqrt-hack.diff \
                            file://glibc-2.5-soft-fp-separate-strong-alias.patch"
+
+SRC_URI_append_nios2 = " \
+  file://sysdeps-nios2.patch \
+  file://nios2-elf.patch \
+  file://nios2-iconv.patch \
+  file://nios2-ld-collate.patch \
+"
 
 S = "${WORKDIR}/glibc-${PV}"
 B = "${WORKDIR}/build-${TARGET_SYS}"

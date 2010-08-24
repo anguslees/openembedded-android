@@ -21,7 +21,7 @@ BUILD_DATE=\$(shell date --iso-8601=seconds)
 # has been built. If it bails out with something like: "| arm-linux-ld: 4.3.3: No such file or directory"
 # then you need to remove all previously built toolchain directories out of the cross library path.
 GCCV="`${CC} -dumpversion`"
-COMPILER_LIB_PATH_PRE=${CROSS_DIR}/lib/gcc/${TARGET_SYS}/$(GCCV)
+COMPILER_LIB_PATH_PRE=${TOOLCHAIN_PATH}/lib/gcc/${TARGET_SYS}/$(GCCV)
 COMPILER_LIB_PATH=\$(COMPILER_LIB_PATH_PRE)/\$(shell ls \$(COMPILER_LIB_PATH_PRE))
 
 AS=${AS}
@@ -40,6 +40,13 @@ do_compile() {
 	make CPU=s3c2442 && \
 	make CPU=s3c2410 && \
 	make CPU=s3c6410
+}
+
+do_compile_om-gta01() {
+        make clean && make CPU=s3c2410
+}
+do_compile_om-gta02() {
+        make clean && make CPU=s3c2442
 }
 
 do_deploy () {

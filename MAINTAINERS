@@ -83,10 +83,11 @@ Recipes:    tmut, tea
 
 Person:     Frans Meulenbroeks
 Mail:       fransmeulenbroeks@gmail.com
-Machines:   sheevaplug, openrd-client, eeepc 701
-Distros:    Ångström
+Architectures: nios2
+Machines:   sheevaplug, openrd-client, eeepc 701, neek
 Interests:  content sharing, media center,
-Recipes:    myth*, lirc*, python-coherence, tgt
+Recipes:    myth*, lirc*, python-coherence, tgt, nios2 recipes
+Recipes:    cdparanoia, cdstatus
 
 Person:     Graeme Gregory
 Mail:       dp@xora.org.uk
@@ -226,7 +227,7 @@ Recipes:    altboot, webcam-server
 
 Person:     Michael 'Mickey' Lauer
 Mail:       mlauer@vanille-media.de
-Distros:    Openmoko, Minimal
+Distros:    Minimal
 Machines:   om-gta01, om-gta02, htcdream, htcraphael, palmpre, a780, a1200, a910
 Interests:  Core OE infrastructure, Python, EFL, Vala, Freesmartphone.org
 Recipes:    efl1/*, busybox/*, dbus/*, dropbear/*, freesmartphone/*, gstreamer/*, *python*, vala/

@@ -21,7 +21,7 @@ do_configure (){
 }
 
 do_compile (){
-	oe_runmake bl CC="${CROSS_DIR}/bin/${TARGET_SYS}-gcc -I{STAGING_INCDIR} -L${STAGING_LIBDIR}" AS=${CROSS_DIR}/bin/${TARGET_SYS}-as LD=${CROSS_DIR}/bin/${TARGET_SYS}-ld
+	oe_runmake bl CC="${TOOLCHAIN_PATH}/bin/${TARGET_SYS}-gcc -I{STAGING_INCDIR} -L${STAGING_LIBDIR}" AS=${TOOLCHAIN_PATH}/bin/${TARGET_SYS}-as LD=${TOOLCHAIN_PATH}/bin/${TARGET_SYS}-ld
 }
 
 do_install () {

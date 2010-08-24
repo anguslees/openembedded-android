@@ -2,6 +2,8 @@ DESCRIPTION = "Matlab alternative for numerical computations"
 HOMEPAGE = "http://www.gnu.org/software/octave/"
 SECTION = "console/scientific"
 LICENSE = "GPL"
+INC_PR = "r3"
+
 DEPENDS = "gperf-native readline ncurses fftw"
 RDEPENDS_${PN} = "libfftw3"
 # fftw compiled with --disable-fortran
@@ -28,6 +30,3 @@ PACKAGES =+ "octave-m"
 # octave-m provides matlab routines in .m file format
 FILES_${PN}-m = "${datadir}/${PN}/*"
 
-do_stage() {
-        autotools_stage_all
-}

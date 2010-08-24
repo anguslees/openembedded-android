@@ -1,6 +1,6 @@
 DESCRIPTION = "Target packages for a standalone Arago SDK or external toolchain"
 ALLOW_EMPTY = "1"
-PR = "r2"
+PR = "r3"
 
 PACKAGES = "${PN}"
 
@@ -30,6 +30,6 @@ RDEPENDS_${PN} = "\
     zlib-dev \
     mtd-utils-dev \
     ncurses-dev \
-    opkg-nogpg-dev \
+    opkg-dev \
     sysvinit-dev \
     "

@@ -1,9 +1,7 @@
 require gdb-cross.inc
 LICENSE = "GPLv2"
 
-inherit cross
-
-PR = "r3"
+PR = "r4"
 
 SRC_URI += "file://sim-install-makefile.patch \
 	file://sim-install-makefile-common.patch"

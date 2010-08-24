@@ -9,28 +9,24 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
-python sys_path_eh () {
-    if isinstance(e, bb.event.ConfigParsed):
-        import sys
-        import os
-        import time
+OE_IMPORTS += "oe.path oe.utils sys os time"
 
+python oe_import () {
+    if isinstance(e, bb.event.ConfigParsed):
+        import os, sys
         bbpath = e.data.getVar("BBPATH", True).split(":")
         sys.path[0:0] = [os.path.join(dir, "lib") for dir in bbpath]
 
         def inject(name, value):
-            """Make a python object accessible from everywhere for the metadata"""
+            """Make a python object accessible from the metadata"""
             if hasattr(bb.utils, "_context"):
                 bb.utils._context[name] = value
             else:
                 __builtins__[name] = value
 
-        import oe.path
-        import oe.utils
-        inject("bb", bb)
-        inject("sys", sys)
-        inject("time", time)
-        inject("oe", oe)
+        for toimport in e.data.getVar("OE_IMPORTS", True).split():
+            imported = __import__(toimport)
+            inject(toimport.split(".", 1)[0], imported)
 
 	# Hack - better done inside bitbake itself
 	import sys
@@ -38,7 +34,7 @@ python sys_path_eh () {
 	sys.modules['bb.fetch'].methods.append(repo.Repo())
 }
 
-addhandler sys_path_eh
+addhandler oe_import
 
 die() {
 	oefatal "$*"
@@ -62,7 +58,7 @@ oe_runmake() {
 	${MAKE} ${EXTRA_OEMAKE} "$@" || die "oe_runmake failed"
 }
 
-def base_dep_prepend(d):
+def base_deps(d):
 	#
 	# Ideally this will check a flag so we will operate properly in
 	# the case where host == build == target, for now we don't work in
@@ -88,9 +84,9 @@ def base_dep_prepend(d):
 			deps += " linux-libc-headers-native"
 	return deps
 
-DEPENDS_prepend="${@base_dep_prepend(d)} "
-DEPENDS_virtclass-native_prepend="${@base_dep_prepend(d)} "
-DEPENDS_virtclass-nativesdk_prepend="${@base_dep_prepend(d)} "
+DEPENDS_prepend="${@base_deps(d)} "
+DEPENDS_virtclass-native_prepend="${@base_deps(d)} "
+DEPENDS_virtclass-nativesdk_prepend="${@base_deps(d)} "
 
 
 SCENEFUNCS += "base_scenefunction"
@@ -182,6 +178,7 @@ def oe_unpack_file(file, data, url = None):
 	else:
 		efile = file
 	cmd = None
+	(type, host, path, user, pswd, parm) = bb.decodeurl(url)
 	if file.endswith('.tar'):
 		cmd = 'tar x --no-same-owner -f %s' % file
 	elif file.endswith('.tgz') or file.endswith('.tar.gz') or file.endswith('.tar.Z'):
@@ -198,10 +195,12 @@ def oe_unpack_file(file, data, url = None):
 		cmd = 'xz -dc %s > %s' % (file, efile)
 	elif file.endswith('.zip') or file.endswith('.jar'):
 		cmd = 'unzip -q -o'
-		(type, host, path, user, pswd, parm) = bb.decodeurl(url)
 		if 'dos' in parm:
 			cmd = '%s -a' % cmd
 		cmd = "%s '%s'" % (cmd, file)
+	elif (type == "file" and file.endswith('.patch') or file.endswith('.diff')) and parm.get('apply') != 'no':
+	# patch and diff files are special and need not be copied to workdir
+		cmd = ""
 	elif os.path.isdir(file):
 		destdir = "."
 		filespath = bb.data.getVar("FILESPATH", data, 1).split(":")
@@ -217,28 +216,34 @@ def oe_unpack_file(file, data, url = None):
 
 		cmd = 'cp -pPR %s %s/%s/' % (file, os.getcwd(), destdir)
 	else:
-		(type, host, path, user, pswd, parm) = bb.decodeurl(url)
 		if not 'patch' in parm and parm.get('apply') != 'yes':
 			# The "destdir" handling was specifically done for FILESPATH
 			# items.  So, only do so for file:// entries.
 			if type == "file":
-				destdir = bb.decodeurl(url)[1] or "."
+				if not host:
+					dest = os.path.dirname(path) or "."
+				else:
+				# this case is for backward compatiblity with older version
+				# of bitbake which do not have the fix
+				# http://cgit.openembedded.org/cgit.cgi/bitbake/commit/?id=ca257adc587bb0937ea76d8b32b654fdbf4192b8
+				# this should not be needed once all releases of bitbake has this fix
+				# applied/backported
+					dest = host + os.path.dirname(path) or "."
 			else:
-				destdir = "."
-			bb.mkdirhier("%s/%s" % (os.getcwd(), destdir))
-			cmd = 'cp %s %s/%s/' % (file, os.getcwd(), destdir)
-
+				dest = "."
+			bb.mkdirhier("%s" % os.path.join(os.getcwd(),dest))
+			cmd = 'cp %s %s' % (file, os.path.join(os.getcwd(), dest))
 	if not cmd:
 		return True
-
-	dest = os.path.join(os.getcwd(), os.path.basename(file))
+	if not host:
+		dest = os.path.join(os.getcwd(), path)
+	else:
+		dest = os.path.join(os.getcwd(), os.path.join(host, path))
 	if os.path.exists(dest):
 		if os.path.samefile(file, dest):
 			return True
-
 	# Change to subdir before executing command
 	save_cwd = os.getcwd();
-	parm = bb.decodeurl(url)[5]
 	if 'subdir' in parm:
 		newdir = ("%s/%s" % (os.getcwd(), parm['subdir']))
 		bb.mkdirhier(newdir)
@@ -344,7 +349,7 @@ base_do_configure() {
 addtask compile after do_configure
 do_compile[dirs] = "${S} ${B}"
 base_do_compile() {
-	if [ -e Makefile -o -e makefile ]; then
+	if [ -e Makefile -o -e makefile -o -e GNUmakefile ]; then
 		oe_runmake || die "make failed"
 	else
 		oenote "nothing to compile"
@@ -385,7 +390,16 @@ python () {
             import re
             this_machine = bb.data.getVar('MACHINE', d, 1)
             if this_machine and not re.match(need_machine, this_machine):
-                raise bb.parse.SkipPackage("incompatible with machine %s" % this_machine)
+                this_soc_family = bb.data.getVar('SOC_FAMILY', d, 1)
+                if this_soc_family and not re.match(need_machine, this_soc_family):
+                    raise bb.parse.SkipPackage("incompatible with machine %s" % this_machine)
+
+        need_target = bb.data.getVar('COMPATIBLE_TARGET_SYS', d, 1)
+        if need_target:
+            import re
+            this_target = bb.data.getVar('TARGET_SYS', d, 1)
+            if this_target and not re.match(need_target, this_target):
+                raise bb.parse.SkipPackage("incompatible with target system %s" % this_target)
 
     pn = bb.data.getVar('PN', d, 1)
 
@@ -434,23 +448,10 @@ python () {
     # unless the package sets SRC_URI_OVERRIDES_PACKAGE_ARCH=0
     #
     override = bb.data.getVar('SRC_URI_OVERRIDES_PACKAGE_ARCH', d, 1)
-    if override != '0':
-        paths = []
-        for p in [ "${PF}", "${P}", "${PN}", "files", "" ]:
-            path = bb.data.expand(os.path.join("${FILE_DIRNAME}", p, "${MACHINE}"), d)
-            if os.path.isdir(path):
-                paths.append(path)
-        if len(paths) != 0:
-            for s in srcuri.split():
-                if not s.startswith("file://"):
-                    continue
-                local = bb.data.expand(bb.fetch.localpath(s, d), d)
-                for mp in paths:
-                    if local.startswith(mp):
-                        #bb.note("overriding PACKAGE_ARCH from %s to %s" % (pkg_arch, mach_arch))
-                        bb.data.setVar('PACKAGE_ARCH', "${MACHINE_ARCH}", d)
-                        bb.data.setVar('MULTIMACH_ARCH', mach_arch, d)
-                        return
+    if override != '0' and is_machine_specific(d):
+        bb.data.setVar('PACKAGE_ARCH', "${MACHINE_ARCH}", d)
+        bb.data.setVar('MULTIMACH_ARCH', mach_arch, d)
+        return
 
     multiarch = pkg_arch
 

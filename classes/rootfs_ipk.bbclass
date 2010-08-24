@@ -41,7 +41,7 @@ fakeroot rootfs_ipk_do_rootfs () {
 	for i in ${BAD_RECOMMENDATIONS}; do
 		echo "Package: $i" >> $STATUS
 		echo "Architecture: ${TARGET_ARCH}" >> $STATUS
-		echo "Status: deinstall ok not-installed" >> $STATUS
+		echo "Status: deinstall hold not-installed" >> $STATUS
 		echo >> $STATUS
 	done
 
@@ -58,6 +58,11 @@ fakeroot rootfs_ipk_do_rootfs () {
 	fi
 	if [ ! -z "${PACKAGE_INSTALL}" ]; then
 		opkg-cl ${IPKG_ARGS} install ${PACKAGE_INSTALL}
+	fi
+	if [ ! -z "${PACKAGE_INSTALL_ATTEMPTONLY}" ]; then
+		for i in ${PACKAGE_INSTALL_ATTEMPTONLY}; do
+			opkg-cl ${IPKG_ARGS} install $i 2>&1 || true
+		done > ${T}/log.do_rootfs-attemptonly.${PID}
 	fi
 
 	export D=${IMAGE_ROOTFS}
@@ -93,15 +98,19 @@ fakeroot rootfs_ipk_do_rootfs () {
 		else
 			rm -f ${IMAGE_ROOTFS}${libdir}/opkg/lists/*
 		fi
-	
+
+		# Remove lists, but leave SHR's tmp dir if it exists.
+		rm -f ${IMAGE_ROOTFS}/var/lib/opkg/* || true
+
 		# Keep these lines until package manager selection is implemented
 		ln -s opkg ${IMAGE_ROOTFS}${sysconfdir}/ipkg
 		ln -s opkg ${IMAGE_ROOTFS}${libdir}/ipkg
 	else
 		rm -rf ${IMAGE_ROOTFS}${libdir}/opkg
 		rm -rf ${IMAGE_ROOTFS}/usr/lib/opkg
+		rm -rf ${IMAGE_ROOTFS}/var/lib/opkg
 	fi
-	
+
 	log_check rootfs 	
 	rm -rf ${IPKG_TMP_DIR}
 }

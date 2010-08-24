@@ -14,6 +14,7 @@ DEPENDS_virtclass-native = "glib-2.0-native cairo-native"
 BBCLASSEXTEND = "native"
 
 PACKAGES_DYNAMIC = "pango-module-*"
+PACKAGES_DYNAMIC_virtclass-native = ""
 
 RRECOMMENDS_${PN} = "pango-module-basic-x pango-module-basic-fc" 
 
@@ -35,10 +36,6 @@ LIBV = "1.6.0"
 FILES_${PN} = "/etc ${bindir}/* ${libdir}/libpango*.so.*"
 FILES_${PN}-dbg += "${libdir}/pango/${LIBV}/modules/.debug"
 FILES_${PN}-dev += "${libdir}/pango/${LIBV}/modules/*.la"
-
-do_stage () {
-	autotools_stage_all
-}
 
 postinst_prologue() {
 if [ "x$D" != "x" ]; then

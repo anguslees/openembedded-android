@@ -12,7 +12,7 @@
 # bitbake.conf set PSTAGING_ACTIVE = "0", this class sets to "1" if we're active
 #
 PSTAGE_PKGVERSION = "${PV}-${PR}"
-PSTAGE_PKGARCH    = "${BUILD_SYS}"
+PSTAGE_PKGARCH    = "${PACKAGE_ARCH}-${HOST_OS}"
 PSTAGE_EXTRAPATH  ?= "/${OELAYOUT_ABI}/${DISTRO_PR}/"
 PSTAGE_PKGPATH    = "${DISTRO}${PSTAGE_EXTRAPATH}"
 PSTAGE_PKGPN      = "${@bb.data.expand('staging-${PN}-${MULTIMACH_ARCH}${TARGET_VENDOR}-${TARGET_OS}', d).replace('_', '-')}"
@@ -28,20 +28,21 @@ PSTAGE_NATIVEDEPENDS = "\
 
 BB_STAMP_WHITELIST = "${PSTAGE_NATIVEDEPENDS}"
 
-python () {
+python __anonymous() {
     pstage_allowed = True
 
-    # These classes encode staging paths into the binary data so can only be
-    # reused if the path doesn't change/
-    if bb.data.inherits_class('native', d) or bb.data.inherits_class('cross', d) or bb.data.inherits_class('sdk', d) or bb.data.inherits_class('crosssdk', d):
-        path = bb.data.getVar('PSTAGE_PKGPATH', d, 1)
-        path = path + bb.data.getVar('TMPDIR', d, 1).replace('/', '-')
-        bb.data.setVar('PSTAGE_PKGPATH', path, d)
+    # We need PSTAGE_PKGARCH to contain information about the target.
+    if bb.data.inherits_class('cross', d):
+        bb.data.setVar('PSTAGE_PKGARCH', "${HOST_SYS}-${PACKAGE_ARCH}-${TARGET_OS}", d)
+
+    # These classes encode staging paths data files so we must mangle them
+    # for reuse.
+    if bb.data.inherits_class('native', d) or bb.data.inherits_class('nativesdk', d) or bb.data.inherits_class('cross', d) or bb.data.inherits_class('crosssdk', d) or bb.data.inherits_class('sdk', d):
         scan_cmd = "grep -Irl ${STAGING_DIR} ${PSTAGE_TMPDIR_STAGE}"
         bb.data.setVar('PSTAGE_SCAN_CMD', scan_cmd, d)
 
-    # PSTAGE_NATIVEDEPENDS lists the packages we need before we can use packaged 
-    # staging. There will always be some packages we depend on.
+    # PSTAGE_NATIVEDEPENDS lists the packages we need before we can use
+    # packaged staging. There will always be some packages we depend on.
     if bb.data.inherits_class('native', d):
         pn = bb.data.getVar('PN', d, True)
         nativedeps = bb.data.getVar('PSTAGE_NATIVEDEPENDS', d, True).split()
@@ -52,7 +53,10 @@ python () {
     if bb.data.inherits_class('image', d):
         pstage_allowed = False
 
-    if bb.data.getVar('PSTAGING_DISABLED', d, True) == "1":
+    # We need OVERRIDES to be evaluated and applied.
+    localdata = d.createCopy()
+    bb.data.update_data(localdata)
+    if localdata.getVar('PSTAGING_DISABLED', True) == "1":
         pstage_allowed = False
 
     # Add task dependencies if we're active, otherwise mark packaged staging
@@ -124,7 +128,6 @@ def pstage_cleanpackage(pkgname, d):
 	else:
 		bb.debug(1, "Manually removing any installed files from staging...")
 		pstage_manualclean("sysroots", "STAGING_DIR", d)
-		pstage_manualclean("cross", "CROSS_DIR", d)
 		pstage_manualclean("deploy", "DEPLOY_DIR", d)
 
 	bb.utils.unlockfile(lf)
@@ -148,14 +151,13 @@ staging_helper () {
 	# Assemble appropriate opkg.conf
 	conffile=${PSTAGE_MACHCONFIG}
 	mkdir -p ${PSTAGE_WORKDIR}/pstaging_lists
+	arch="${PSTAGE_PKGARCH}"
 	if [ ! -e $conffile ]; then
-		ipkgarchs="${BUILD_SYS}"
-		priority=1
-		for arch in $ipkgarchs; do
-			echo "arch $arch $priority" >> $conffile
-			priority=$(expr $priority + 5)
-		done
+		echo "arch $arch 1" > $conffile
 		echo "dest root /" >> $conffile
+	elif [ `grep -c " $arch " $conffile` -eq 0 ]; then
+		priority=$(expr `grep -cE "^arch" $conffile` + 1)
+		sed -i -e "/dest/iarch $arch $priority" $conffile
 	fi
 	if [ ! -e ${TMPDIR}${libdir_native}/opkg/info/ ]; then
 		mkdir -p ${TMPDIR}${libdir_native}/opkg/info/
@@ -302,7 +304,6 @@ python packagedstage_stampfixing_eventhandler() {
 populate_sysroot_preamble () {
 	if [ "$PSTAGING_ACTIVE" = "1" ]; then
 		stage-manager -p ${STAGING_DIR} -c ${PSTAGE_WORKDIR}/stamp-cache-staging -u || true
-		stage-manager -p ${CROSS_DIR} -c ${PSTAGE_WORKDIR}/stamp-cache-cross -u || true
 	fi
 }
 
@@ -318,21 +319,13 @@ populate_sysroot_postamble () {
 		if [ "$exitcode" != "5" -a "$exitcode" != "0" ]; then
 			exit $exitcode
 		fi
-		stage-manager -p ${CROSS_DIR} -c ${PSTAGE_WORKDIR}/stamp-cache-cross -u -d ${PSTAGE_TMPDIR_STAGE}/cross/${BASE_PACKAGE_ARCH}
-		if [ "$exitcode" != "5" -a "$exitcode" != "0" ]; then
-			exit $exitcode
-		fi
 		set -e
 	fi
 }
 
 packagedstaging_fastpath () {
-	if [ "$PSTAGING_ACTIVE" = "1" ]; then
-		mkdir -p ${PSTAGE_TMPDIR_STAGE}/sysroots/
-		mkdir -p ${PSTAGE_TMPDIR_STAGE}/cross/${BASE_PACKAGE_ARCH}/
-		cp -fpPR ${SYSROOT_DESTDIR}/${STAGING_DIR}/* ${PSTAGE_TMPDIR_STAGE}/sysroots/ || /bin/true
-		cp -fpPR ${SYSROOT_DESTDIR}/${CROSS_DIR}/* ${PSTAGE_TMPDIR_STAGE}/cross/${BASE_PACKAGE_ARCH}/ || /bin/true
-	fi
+	mkdir -p ${PSTAGE_TMPDIR_STAGE}/sysroots/
+	cp -fpPR ${SYSROOT_DESTDIR}/${STAGING_DIR}/* ${PSTAGE_TMPDIR_STAGE}/sysroots/ || /bin/true
 }
 
 do_populate_sysroot[dirs] =+ "${PSTAGE_DIR}"

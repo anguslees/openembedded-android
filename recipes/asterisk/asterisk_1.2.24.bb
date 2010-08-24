@@ -5,12 +5,11 @@ HOMEPAGE="www.asterisk.org"
 LICENSE="GPL"
 DEPENDS="ncurses zlib openssl curl alsa-lib libogg libvorbis speex"
 SECTION = "console/telephony"
-PR = "r1"
+PR = "r2"
 
 SRC_URI="http://downloads.asterisk.org/pub/telephony/asterisk/releases/${P}.tar.gz \
 	 file://uclibc-compat-getloadavg.patch \
 	 file://uclibc-dns.patch \
-#         file://uclibc-define-glob.patch \
          file://asterisk.patch \
          file://enable-speex.patch"
 

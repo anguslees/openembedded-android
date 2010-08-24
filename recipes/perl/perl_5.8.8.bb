@@ -5,7 +5,7 @@ LICENSE = "Artistic|GPL"
 PRIORITY = "optional"
 # We need gnugrep (for -I)
 DEPENDS = "virtual/db perl-native grep-native"
-PR = "r34"
+PR = "r35"
 
 # Major part of version
 PVM = "5.8"
@@ -62,8 +62,8 @@ do_configure() {
         # Generate configuration
         rm -f config.sh-${TARGET_ARCH}-${TARGET_OS}
         for i in ${WORKDIR}/config.sh \
-                 ${WORKDIR}/config.sh-${@siteinfo_get_bits(d)} \
-                 ${WORKDIR}/config.sh-${@siteinfo_get_bits(d)}-${@siteinfo_get_endianess(d)}; do
+                 ${WORKDIR}/config.sh-${SITEINFO_BITS} \
+                 ${WORKDIR}/config.sh-${SITEINFO_BITS}-${SITEINFO_ENDIANNESS}; do
             cat $i >> config.sh-${TARGET_ARCH}-${TARGET_OS}
         done
 
@@ -104,7 +104,8 @@ do_configure() {
 }
 do_compile() {
         if test "${MACHINE}" != "native"; then
-            sed -i -e 's|/usr/include|${STAGING_INCDIR}|g' ext/Errno/Errno_pm.PL
+            sed -i -e 's|/usr/include|${STAGING_INCDIR}|g' \
+                   -e 's|$Config{cppflags}||' ext/Errno/Errno_pm.PL
         fi
         cd Cross
         oe_runmake perl LD="${TARGET_SYS}-gcc"
@@ -134,7 +135,7 @@ do_install() {
                    -e "s,${STAGING_LIBDIR},${libdir},g" \
                    -e "s,${STAGING_BINDIR},${bindir},g" \
                    -e "s,${STAGING_INCDIR},${includedir},g" \
-                   -e "s,${CROSS_DIR}${base_bindir}/,,g" \
+                   -e "s,${TOOLCHAIN_PATH}${base_bindir}/,,g" \
                 ${D}${bindir}/h2xs \
                 ${D}${bindir}/h2ph \
                 ${D}${datadir}/perl/${PV}/pod/*.pod \
@@ -209,11 +210,13 @@ FILES_${PN}-doc = "${datadir}/perl/${PV}/*/*.txt \
 
 RPROVIDES_perl-lib = "perl-lib"
 
+require perl.inc
+
 # Create a perl-modules package recommending all the other perl
 # packages (actually the non modules packages and not created too)
 ALLOW_EMPTY_perl-modules = "1"
 PACKAGES_append = " perl-modules "
-RRECOMMENDS_perl-modules = "${@bb.data.getVar('PACKAGES', d, 1).replace('perl-modules ', '').replace('perl-dbg ', '').replace('perl-misc ', '').replace('perl-dev ', '').replace('perl-pod ', '').replace('perl-doc ', '')}"
+RRECOMMENDS_perl-modules = "${@' '.join(all_perl_packages(d))}"
 
 python populate_packages_prepend () {
         libdir = bb.data.expand('${libdir}/perl/${PV}', d)

@@ -5,6 +5,8 @@ LICENSE = "GPL"
 
 INC_PR = "r10"
 
+COMPATIBLE_TARGET_SYS ?= "(?!nios2)"
+
 inherit autotools gettext
 
 PACKAGES += "${PN}-symlinks"
@@ -64,8 +66,6 @@ export CXX_FOR_HOST = "${CCACHE}${HOST_PREFIX}gcc ${HOST_CC_ARCH}"
 export CC_FOR_BUILD = "${BUILD_CC}"
 export CPP_FOR_BUILD = "${BUILD_CPP}"
 export CFLAGS_FOR_BUILD = "${BUILD_CFLAGS}"
-
-export CC = "${CCACHE}${HOST_PREFIX}gcc ${HOST_CC_ARCH}"
 
 do_configure () {
 	(cd ${S}; gnu-configize) || die "Failed to run gnu-configize"

@@ -13,13 +13,11 @@ PREFERRED_VERSION_glibc             ?= "2.10.1"
 PREFERRED_VERSION_glibc-initial     ?= "2.10.1"
 PREFERRED_VERSION_eglibc             ?= "2.11"
 PREFERRED_VERSION_eglibc-initial     ?= "2.11"
-PREFERRED_VERSION_uclibc            ?= "0.9.30.1"
-PREFERRED_VERSION_uclibc-initial    ?= "0.9.30.1"
+PREFERRED_UCLIBC_VERSION            ?= "0.9.31"
 
 # Some systems need a special gcc version
 PREFERRED_GCC_VERSION_486sx          ?= "4.3.2"
 PREFERRED_GCC_VERSION_avr32          ?= "4.2.2"
-PREFERRED_GCC_VERSION_armv7a         ?= "4.4.1" 
 PREFERRED_GCC_VERSION_bfin           ?= "4.1.2"
 PREFERRED_GCC_VERSION_xilinx-ml403   ?= "4.1.1"
 PREFERRED_GCC_VERSION_xilinx-ml403   ?= "4.1.1"
@@ -147,7 +145,7 @@ def detect_arm_abi (d):
 			return "oabi"
 		else:
 			return ""
-	if bb.data.getVar('TARGET_ARCH', d, 1) in [ 'arm', 'armeb' ]:          
+	if bb.data.getVar('TARGET_ARCH', d, 1) in [ 'arm', 'armeb' ]:
 		if 'eabi' in bb.data.getVar('DISTRO_FEATURES',d).split():
 			return "eabi"
 		return "oabi"
@@ -155,8 +153,7 @@ def detect_arm_abi (d):
 
 def compute_os_portion_of_target_triplet (d):
 	import bb
-	arm_eabi_supporting_arches = "armv6 armv6-novfp \
-	armv5te iwmmxt armv7a armv7 armv5teb armv4t"
+	arm_eabi_unsupported_arches = "armv1 armv2 armv3"
 	ppc_spe_supporting_arches = "ppce500v2 ppce500"
 	gnu_suffix = ""
   	if bb.data.getVar('LIBC', d, 1) == "uclibc":
@@ -179,7 +176,7 @@ def compute_os_portion_of_target_triplet (d):
 	bparch is not None:
 		if 'eabi' in bb.data.getVar('DISTRO_FEATURES',d,1).split() and \
 		bb.data.getVar('TARGET_ARCH', d, 1) in [ 'arm', 'armeb' ]:
-			if bparch not in arm_eabi_supporting_arches.split():
+			if bparch in arm_eabi_unsupported_arches.split():
 				bb.fatal("DISTRO requested EABI but selected machine does not support EABI")
 				abi_suffix = ""
 			else:

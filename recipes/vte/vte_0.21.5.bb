@@ -1,6 +1,7 @@
 DESCRIPTION = "vte is a virtual terminal emulator"
 LICENSE = "LGPL"
 DEPENDS += "glib-2.0 gtk+ intltool-native ncurses"
+PR = "r1"
 
 inherit gnome
 
@@ -20,10 +21,6 @@ do_install_append() {
 do_configure_prepend() {
 	sed -i -e s:docs::g ${S}/Makefile.am
 	echo "EXTRA_DIST = version.xml" > gtk-doc.make
-}
-
-do_stage() {
-	autotools_stage_all
 }
 
 PACKAGES =+ "libvte vte-termcap gnome-pty-helper"

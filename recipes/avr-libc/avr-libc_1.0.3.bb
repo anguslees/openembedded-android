@@ -18,7 +18,7 @@ B = "${WORKDIR}/build.${BUILD_SYS}.${TARGET_SYS}"
 inherit autotools
 
 export tooldir = "${prefix}"
-prefix = "${CROSS_DIR}"
+prefix = "${TOOLCHAIN_PATH}"
 exec_prefix = "${prefix}"
 
 do_stage () {

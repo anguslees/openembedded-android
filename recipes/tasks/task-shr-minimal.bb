@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Lite Image Feed"
-PR = "r31"
+PR = "r33"
 PV = "2.0"
 LICENSE = "GPL"
 
@@ -11,8 +11,8 @@ def get_rdepends(bb, d):
     enabled = bb.data.getVar("ENABLE_BINARY_LOCALE_GENERATION", d, 1)
 
     # If locale is disabled, bail out
-    if not enabled:
-        return
+    if not enabled or not int(enabled):
+        return ""
 
     locales = bb.data.getVar("GLIBC_GENERATE_LOCALES", d, 1)
     if not locales or locales == "all":
@@ -116,8 +116,6 @@ RDEPENDS_${PN}-x = "\
   libx11-locale \
 # All localedata based on IMAGE_LINGUAS
   ${@get_rdepends(bb, d)} \
-# Make sure it's available for those who want's to play with illume2  
-  e-wm-config-illume2-shr \
 "
 
 RDEPENDS_${PN}-apps = "\

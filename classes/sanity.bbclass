@@ -30,7 +30,9 @@ def check_sanity(e):
 	try:
 		from distutils.version import LooseVersion
 	except ImportError:
-		def LooseVersion(v): print "WARNING: sanity.bbclass can't compare versions without python-distutils"; return 1
+		def LooseVersion(v):
+			bb.msg.warn(None, "sanity.bbclass can't compare versions without python-distutils")
+			return 1
 	import commands
 
 	# Check the bitbake version meets minimum requirements
@@ -38,7 +40,6 @@ def check_sanity(e):
 	if not minversion:
 		# Hack: BB_MIN_VERSION hasn't been parsed yet so return 
 		# and wait for the next call
-		print "Foo %s" % minversion
 		return
 
 	if 0 == os.getuid():
@@ -149,6 +150,8 @@ def check_sanity(e):
 			os.system(bb.data.expand("cd ${TMPDIR}/stamps; for i in */*do_populate_staging; do new=`echo $i | sed -e 's/do_populate_staging/do_populate_sysroot/'`; mv $i $new; done", e.data))
 			f = file(abifile, "w")
 			f.write(current_abi)
+		elif abi == "5" and current_abi != "5":
+			messages = messages + "Staging layout has changed. The cross directory has been deprecated and cross packages are now built under the native sysroot.\nThis requires a rebuild.\n"
 		elif (abi != current_abi):
 			# Code to convert from one ABI to another could go here if possible.
 			messages = messages + "Error, TMPDIR has changed ABI (%s to %s) and you need to either rebuild, revert or adjust it at your own risk.\n" % (abi, current_abi)
@@ -186,8 +189,8 @@ def check_sanity(e):
 	if messages != "":
 		raise_sanity_error(messages)
 
-addhandler check_sanity_eventhandler
 python check_sanity_eventhandler() {
-    if bb.event.getName(e) == "ConfigParsed":
+    if isinstance(e, bb.event.BuildStarted):
         check_sanity(e)
 }
+addhandler check_sanity_eventhandler

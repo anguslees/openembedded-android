@@ -21,7 +21,7 @@ SRC_URI = "http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc2.tar.bz2 \
            file://Makefile-codec-cfg.patch \
            file://w100-configure-svn.patch \
            file://w100-video_out.patch \
-           file://w100-mplayer.patch;patch= \
+           file://w100-mplayer.patch \
            file://pld-onlyarm5.patch \
            file://makefile-nostrip-rc2.patch \
            file://mplayer-imageon-svn.patch \
@@ -46,7 +46,7 @@ ARM_INSTRUCTION_SET = "ARM"
 RCONFLICTS_${PN} = "mplayer-atty"
 RREPLACES_${PN} = "mplayer-atty"
 
-PR = "r15"
+PR = "r16"
 
 PARALLEL_MAKE = ""
 

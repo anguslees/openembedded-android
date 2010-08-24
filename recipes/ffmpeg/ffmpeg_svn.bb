@@ -1,11 +1,15 @@
 require ffmpeg.inc
 
-DEPENDS += "schroedinger libgsm"
+# The license depends on the configure option selected in this recipe 'non-free' is disabled and 'gpl' is enabled
+LICENSE = "GPLv2+"
 
-SRCREV = "22521"
+DEPENDS += "virtual/libsdl schroedinger libgsm libvpx"
 
-PV = "0.5.0+${PR}+svnr${SRCPV}"
-PR = "${INC_PR}.0"
+# When bumping SRCREV make sure you bump PR here and in dependant recipes (gst-ffmpeg, gnash, omxil, etc) to account for SOVERSION changes
+SRCREV = "24596"
+
+PV = "0.6+${PR}+svnr${SRCPV}"
+PR = "${INC_PR}.3"
 
 DEFAULT_PREFERENCE = "-1"
 DEFAULT_PREFERENCE_angstrom = "1"
@@ -27,23 +31,22 @@ EXTRA_OECONF = " \
         --enable-pthreads \
         --disable-stripping \
         --enable-gpl \
-        --enable-nonfree \
         --enable-postproc \
         \
         --cross-prefix=${TARGET_PREFIX} \
         --prefix=${prefix} \
         \
+        --enable-ffserver \
+        --enable-ffplay \
         --enable-x11grab \
-        --enable-libfaac \
-        --enable-libfaad \
-        --enable-libfaadbin \
         --enable-libgsm \
         --enable-libmp3lame \
         --enable-libschroedinger \
         --enable-libtheora  \
         --enable-libvorbis \
+        --enable-libvpx \
         --arch=${TARGET_ARCH} \
-	--target-os="linux" \
+        --target-os="linux" \
         --enable-cross-compile \
         --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS}" \
         --extra-ldflags="${TARGET_LDFLAGS}" \

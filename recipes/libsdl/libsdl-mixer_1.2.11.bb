@@ -4,7 +4,7 @@ PRIORITY = "optional"
 DEPENDS = "virtual/libsdl flac libmikmod libvorbis libmad"
 LICENSE = "LGPL"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-${PV}.tar.gz \
            file://fix-flac-madness.diff"
@@ -13,7 +13,7 @@ S = "${WORKDIR}/SDL_mixer-${PV}"
 
 export SDL_CONFIG = "${STAGING_BINDIR_CROSS}/sdl-config"
 
-inherit autotools_stage
+inherit autotools
 
 # Although we build SMPEG lets not use it as it is pointless in the embedded space.
 

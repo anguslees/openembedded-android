@@ -4,17 +4,23 @@ LICENSE = "BSD"
 DEPENDS = "freetype libpng jpeg virtual/libx11 libxext"
 PROVIDES = "virtual/imlib2"
 PV = "1.4.2.001+svnr${SRCPV}"
-PR = "r0"
+PR = "r2"
 SRCREV = "${EFL_SRCREV}"
 
 inherit efl
 
-EXTRA_OECONF = "--with-x"
+EXTRA_OECONF = "--with-x \
+		--x-includes=${STAGING_INCDIR} \
+		--x-libraries=${STAGING_LIBDIR} "
 
 # TODO: Use more fine granular version
 #OE_LT_RPATH_ALLOW=":${libdir}/imlib2/loaders:${libdir}/imlib2/filters:"
 OE_LT_RPATH_ALLOW = "any"
 OE_LT_RPATH_ALLOW[export]="1"
+
+do_install_append() {
+    install -m 0755 imlib2-config ${STAGING_BINDIR_CROSS}
+}
 
 PACKAGES =+ "imlib2-loaders-dbg imlib2-filters-dbg imlib2-loaders imlib2-filters"
 FILES_${PN} = "${libdir}/lib*.so.* ${libdir}/imlib2/*/*.so"

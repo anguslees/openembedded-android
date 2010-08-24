@@ -1,10 +1,12 @@
+SRCDATE = "20100721"
+
 # This override is required since this has not yet been released
 SRC_URI  = "cvs://anonymous@squashfs.cvs.sourceforge.net/cvsroot/squashfs;module=squashfs;date=${SRCDATE} \
             http://downloads.sourceforge.net/sevenzip/lzma465.tar.bz2"
 SRC_URI += " file://Makefile.patch"
 
 require squashfs-tools.inc
-PR = "${INC_PR}.3"
+PR = "${INC_PR}.0"
 
 S = "${WORKDIR}/squashfs/squashfs-tools"
 

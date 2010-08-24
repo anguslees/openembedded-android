@@ -2,7 +2,7 @@ DESCRIPTION = "OCF resource agents for use by compatible cluster managers"
 LICENSE = "GPL"
 DEPENDS = "cluster-glue"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = " \
 	http://hg.linux-ha.org/agents/archive/agents-${PV}.tar.bz2;name=tar \
@@ -13,7 +13,7 @@ SRC_URI_append_libc-uclibc = " file://kill-stack-protector.patch"
 SRC_URI[tar.md5sum] = "fcaa2cfd83a28d1965200e11db2ddd41"
 SRC_URI[tar.sha256sum] = "09b58332e34cf128c8d53d5bb4b3f61e402c2e0c0c809f5abae53ca144ad101e"
 
-inherit autotools_stage
+inherit autotools
 
 S = "${WORKDIR}/Cluster-Resource-Agents-agents-${PV}"
 
@@ -79,4 +79,4 @@ FILES_ocft += " \
 	${sbindir}/ocft \
 	"
 
-FILES_${PN}-dbg += "/usr/lib/heartbeat/.debug/"
+FILES_${PN}-dbg += "${libdir}/heartbeat/.debug/ ${libdir}/ocf/resource.d/heartbeat/.debug/"

@@ -1,7 +1,7 @@
 # use autotools_stage_all for native packages
 AUTOTOOLS_NATIVE_STAGE_INSTALL = "1"
 
-def autotools_dep_prepend(d):
+def autotools_deps(d):
 	if bb.data.getVar('INHIBIT_AUTOTOOLS_DEPS', d, 1):
 		return ''
 
@@ -24,15 +24,30 @@ def autotools_dep_prepend(d):
 
 EXTRA_OEMAKE = ""
 
-DEPENDS_prepend = "${@autotools_dep_prepend(d)}"
-DEPENDS_virtclass-native_prepend = "${@autotools_dep_prepend(d)}"
-DEPENDS_virtclass-nativesdk_prepend = "${@autotools_dep_prepend(d)}"
+DEPENDS_prepend = "${@autotools_deps(d)}"
+DEPENDS_virtclass-native_prepend = "${@autotools_deps(d)}"
+DEPENDS_virtclass-nativesdk_prepend = "${@autotools_deps(d)}"
 
 inherit siteinfo
 
+def _autotools_get_sitefiles(d):
+    def inherits(d, *classes):
+        if any(bb.data.inherits_class(cls, d) for cls in classes):
+            return True
+
+    if inherits(d, "native", "nativesdk"):
+        return
+
+    sitedata = siteinfo_data(d)
+    for path in d.getVar("BBPATH", True).split(":"):
+        for element in sitedata:
+            filename = os.path.join(path, "site", element)
+            if os.path.exists(filename):
+                yield filename
+
 # Space separated list of shell scripts with variables defined to supply test
 # results for autoconf tests we cannot run at build time.
-export CONFIG_SITE = "${@siteinfo_get_files(d)}"
+export CONFIG_SITE = "${@' '.join(_autotools_get_sitefiles(d))}"
 
 acpaths = "default"
 EXTRA_AUTORECONF = "--exclude=autopoint"

@@ -3,7 +3,7 @@ DESCRIPTION = "udev is a daemon which dynamically creates and removes device nod
 the hotplug package and requires a kernel not older than 2.6.12."
 LICENSE = "GPLv2+"
 
-PR = "r0"
+PR = "r2"
 
 # Untested
 DEFAULT_PREFERENCE = "-1"
@@ -30,6 +30,7 @@ SRC_URI += " \
        file://default \
        file://init \
        file://cache \
+       file://udev-compat-wrapper-patch \
 "
 
 SRC_URI_append_h2200 = " file://50-hostap_cs.rules "
@@ -74,6 +75,35 @@ FILES_${PN}-dbg += "${usrbindir}/.debug ${usrsbindir}/.debug"
 # is ${prefix}/lib64
 FILES_${PN} += "/lib/udev* ${libdir}/ConsoleKit"
 FILES_${PN}-dbg += "/lib/udev/.debug"
+
+RPROVIDES_udev_append_spitz += "udev-compat-wrapper"
+RDEPENDS_udev_append_spitz += "udev-compat"
+do_unpack_append_spitz() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_append_akita += "udev-compat-wrapper"
+RDEPENDS_udev_append_akita += "udev-compat"
+do_unpack_append_akita() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_append_c7x0 += "udev-compat-wrapper"
+RDEPENDS_udev_append_c7x0 += "udev-compat"
+do_unpack_append_c7x0() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+RPROVIDES_udev_append_poodle += "udev-compat-wrapper"
+RDEPENDS_udev_append_poodle += "udev-compat"
+do_unpack_append_poodle() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
+
+# Modify init script on platforms that need to boot old kernels:
+do_apply_compat_wrapper() {
+	cd ${WORKDIR}
+	sed -i "s:/sbin/udevd:\$UDEVD:g;s:/sbin/udevadm:\$UDEVADM:g" init
+	patch <udev-compat-wrapper-patch
+	cd -
+}
 
 do_install () {
 	install -d ${D}${usrsbindir} \
@@ -120,6 +150,6 @@ do_install_append_bug() {
 }
 
 # Create the cache after checkroot has run
-pkg_postinst_${PN}_append() {
+pkg_postinst_udev_append() {
 	update-rc.d $OPT udev-cache start 12 S .
 }
