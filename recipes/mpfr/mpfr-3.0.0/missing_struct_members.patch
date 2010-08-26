@@ -1,27 +1,27 @@
---- mpfr-2.3.1/configure.in~	Tue Jan 29 19:48:51 2008
-+++ mpfr-2.3.1/configure.in	Tue May 11 12:44:00 2010
-@@ -249,6 +249,8 @@
+--- mpfr-3.0.0/configure.in~	Thu Jun 10 21:00:14 2010
++++ mpfr-3.0.0/configure.in	Thu Aug 26 17:40:12 2010
+@@ -310,6 +310,8 @@
  AC_C_VOLATILE
  MPFR_CONFIGS
  
 +AC_CHECK_MEMBERS([struct lconv.decimal_point])
 +
  dnl
- dnl Setup LIBTOOL
+ dnl Setup GMP detection
  dnl
 
---- mpfr-2.3.1/mpfr-impl.h~	Wed Jan 23 23:14:35 2008
-+++ mpfr-2.3.1/mpfr-impl.h	Tue May 11 12:45:29 2010
-@@ -966,7 +966,11 @@
-   } while (0)
- 
- /* Needs <locale.h> */
+--- mpfr-3.0.0/mpfr-impl.h~	Thu Jun 10 21:00:14 2010
++++ mpfr-3.0.0/mpfr-impl.h	Thu Aug 26 17:41:58 2010
+@@ -1060,7 +1060,11 @@
+ #include <locale.h>
+ /* Warning! In case of signed char, the value of MPFR_DECIMAL_POINT may
+    be negative (the ISO C99 does not seem to forbid negative values). */
 +#ifdef HAVE_STRUCT_LCONV_DECIMAL_POINT
- #define MPFR_DECIMAL_POINT ((unsigned char) localeconv()->decimal_point[0])
+ #define MPFR_DECIMAL_POINT (localeconv()->decimal_point[0])
 +#else
-+#define MPFR_DECIMAL_POINT "."
++#define MPFR_DECIMAL_POINT ((char) '.')
 +#endif
- 
- /* Set y to s*significand(x)*2^e, for example MPFR_ALIAS(y,x,1,MPFR_EXP(x))
-    sets y to |x|, and MPFR_ALIAS(y,x,MPFR_SIGN(x),0) sets y to x*2^f such
+ #define MPFR_THOUSANDS_SEPARATOR (localeconv()->thousands_sep[0])
+ #else
+ #define MPFR_DECIMAL_POINT ((char) '.')
 
