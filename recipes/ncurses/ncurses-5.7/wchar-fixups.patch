@@ -1,0 +1,27 @@
+--- ncurses-5.7/include/curses.h.in~	Fri Aug 27 19:11:30 2010
++++ ncurses-5.7/include/curses.h.in	Sat Aug 28 21:10:38 2010
+@@ -153,8 +153,8 @@
+  * With XPG4, you must define _XOPEN_SOURCE_EXTENDED, it is redundant (or
+  * conflicting) when _XOPEN_SOURCE is 500 or greater.
+  */
+ #undef NCURSES_WIDECHAR
+-#if defined(_XOPEN_SOURCE_EXTENDED) || defined(_XPG5)
++#if defined(USE_WIDEC_SUPPORT) || defined(_XOPEN_SOURCE_EXTENDED) || defined(_XPG5)
+ #define NCURSES_WIDECHAR
+ #endif
+ 
+
+--- ncurses-5.7/ncurses/curses.priv.h~	Thu Aug 26 18:26:18 2010
++++ ncurses-5.7/ncurses/curses.priv.h	Sat Aug 28 07:24:56 2010
+@@ -66,6 +66,10 @@
+ #include <string.h>
+ #include <sys/types.h>
+ 
++#if NEED_WCHAR_H
++#include <wchar.h>
++#endif
++
+ #if HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
+

@@ -16,6 +16,8 @@ SRC_URI = "${GNU_MIRROR}/ncurses/ncurses-${PV}.tar.gz;name=tarball \
 \
         ftp://invisible-island.net/ncurses/5.7/ncurses-5.7-${PATCHDATE}.patch.gz;name=p20100501 \
         file://tic-hang.patch \
+	file://android-autoconf.patch \
+	file://wchar-fixups.patch \
 "
 
 SRC_URI[tarball.md5sum] = "cce05daf61a64501ef6cd8da1f727ec6"
