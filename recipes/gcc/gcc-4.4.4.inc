@@ -51,3 +51,11 @@ EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-li
 EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibcspe = " --disable-decimal-float "
+
+do_compile_prepend() {
+	# Need to clean the environment slightly, otherwise the target
+	# configure scripts use values from the build environment
+	# rather than the newly-built tools.
+	# TODO: zecke-xgcc-cpp.patch claims to fix this.
+	unset CPP CPPFLAGS
+}
