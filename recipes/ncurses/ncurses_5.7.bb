@@ -35,6 +35,8 @@ ENABLE_WIDEC = "true"
 # Build breaks on Ubuntu else :(
 ENABLE_WIDEC_virtclass-native = "false"
 
+# Bionic stdc++ headers aren't sufficient for compiling the C++ bindings
+EXTRA_OECONF_android += "--without-cxx-binding"
 
 # Override the function from the autotools class; ncurses requires a
 # patched autoconf213 to generate the configure script. This autoconf
