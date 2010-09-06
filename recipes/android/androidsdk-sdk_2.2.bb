@@ -10,10 +10,10 @@ inherit sdk
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PV = 2.2_r01
+PV = 2.2_r02
 SRC_URI = "http://dl.google.com/android/repository/android-${PV}-${BUILD_OS}.zip;name=sdk"
-SRC_URI[sdk.md5sum] = "af20dae8dd47a682f959e1ba62178609"
-SRC_URI[sdk.sha256sum] = "cbe19ac1ccc4d22eaaaf90e6d7bc614c5d4347fa87d2dbd738b1783b79813eb0"
+SRC_URI[sdk.md5sum] = "d11d4b3be48648ff68db05a75f26155d"
+SRC_URI[sdk.sha256sum] = "682142096e6df1d626dce05b37df561e536067f465a870041cad770c219649ff"
 
 S = "${WORKDIR}/android-${PV}-${BUILD_OS}"
 
