@@ -1,0 +1,71 @@
+--- gdb-6.6/bfd/elf32-arm.c~	Tue Nov 14 07:39:21 2006
++++ gdb-6.6/bfd/elf32-arm.c	Tue Sep  7 07:32:45 2010
+@@ -2448,9 +2448,11 @@
+   hash = elf_link_hash_lookup
+     (&(hash_table)->root, tmp_name, FALSE, FALSE, TRUE);
+ 
+-  if (hash == NULL)
+-    asprintf (error_message, _("unable to find THUMB glue '%s' for '%s'"),
+-	      tmp_name, name);
++  if (hash == NULL) {
++    int ret = asprintf (error_message, _("unable to find THUMB glue '%s' for '%s'"),
++			tmp_name, name);
++    BFD_ASSERT (ret != -1);
++  }
+ 
+   free (tmp_name);
+ 
+@@ -2481,9 +2483,11 @@
+   myh = elf_link_hash_lookup
+     (&(hash_table)->root, tmp_name, FALSE, FALSE, TRUE);
+ 
+-  if (myh == NULL)
+-    asprintf (error_message, _("unable to find ARM glue '%s' for '%s'"),
+-	      tmp_name, name);
++  if (myh == NULL) {
++    int ret = asprintf (error_message, _("unable to find ARM glue '%s' for '%s'"),
++			tmp_name, name);
++    BFD_ASSERT (ret != -1);
++  }
+ 
+   free (tmp_name);
+ 
+
+--- gdb-6.6/opcodes/arm-dis.c~	Wed Nov  1 07:21:57 2006
++++ gdb-6.6/opcodes/arm-dis.c	Tue Sep  7 07:40:20 2010
+@@ -3098,14 +3098,14 @@
+ 		      if (started)
+ 			func (stream, ", ");
+ 		      started = 1;
+-		      func (stream, arm_regnames[14] /* "lr" */);
++		      func (stream, "%s", arm_regnames[14] /* "lr" */);
+ 		    }
+ 
+ 		  if (domaskpc)
+ 		    {
+ 		      if (started)
+ 			func (stream, ", ");
+-		      func (stream, arm_regnames[15] /* "pc" */);
++		      func (stream, "%s", arm_regnames[15] /* "pc" */);
+ 		    }
+ 
+ 		  func (stream, "}");
+@@ -3648,7 +3648,7 @@
+ 		  }
+ 		else
+ 		  {
+-		    func (stream, psr_name (given & 0xff));
++		    func (stream, "%s", psr_name (given & 0xff));
+ 		  }
+ 		break;
+ 
+@@ -3656,7 +3656,7 @@
+ 		if ((given & 0xff) == 0)
+ 		  func (stream, "%cPSR", (given & 0x100000) ? 'S' : 'C');
+ 		else
+-		  func (stream, psr_name (given & 0xff));
++		  func (stream, "%s", psr_name (given & 0xff));
+ 		break;
+ 
+ 	      case '0': case '1': case '2': case '3': case '4':
+
