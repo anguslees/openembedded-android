@@ -4,7 +4,7 @@ LICENSE = "GPL QPL"
 PRIORITY = "optional"
 HOMEPAGE = "http://www.trolltech.com"
 DEPENDS += "directfb tslib"
-INC_PR = "r20"
+INC_PR = "r21"
 
 QT_BASE_NAME ?= "qt4-embedded"
 QT_BASE_LIB  ?= "libqt-embedded"
@@ -45,7 +45,7 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/qte.sh ${D}${sysconfdir}/profile.d/
 }
 
-FILES_qt4-embedded += " ${sysconfdir}/profile.d/qte.sh"
+FILES_${PN} += " ${sysconfdir}/profile.d/qte.sh"
 
 inherit qt4e
 

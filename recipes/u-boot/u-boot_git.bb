@@ -13,6 +13,7 @@ SRCREV_afeb9260-180 = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_palmpre = "668a6b45915d10d75357f5b93f569bbf49ea2b06"
 SRCREV_cm-t35 = "3c014f1586d5bfe30dca7549396915c83f31cd30"
 SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
+SRCREV_p1020rdb = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_bug20 = "169a4c804dbaf11facb041b1333d394c6ceb8d68"
 SRC_URI_append_afeb9260 = " file://AFEB9260-network-fix.patch"
@@ -77,7 +78,7 @@ SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
 SRCREV_beagleboard = "ca6e1c136ddb720c3bb2cc043b99f7f06bc46c55"
 PV_beagleboard = "2010.03+${PR}+gitr${SRCREV}"
 
-SRCREV_calamari = "1f932d68bf8c3bb5fec34dc5c5d654fc8614dd31"
+SRCREV_calamari = "b80d30546e88c70985094d81297d449b2bc59033"
 
 PV_calamari = "2010.06+${PR}+gitr${SRCREV}"
 SRC_URI_calamari = " \

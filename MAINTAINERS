@@ -84,10 +84,10 @@ Recipes:    tmut, tea
 Person:     Frans Meulenbroeks
 Mail:       fransmeulenbroeks@gmail.com
 Architectures: nios2
-Machines:   sheevaplug, openrd-client, eeepc 701, neek
+Machines:   sheevaplug, openrd-client, eeepc 701, neek, calamari
 Interests:  content sharing, media center,
 Recipes:    myth*, lirc*, python-coherence, tgt, nios2 recipes
-Recipes:    cdparanoia, cdstatus
+Recipes:    cdparanoia, cdstatus, iscsi-target urjtag
 
 Person:     Graeme Gregory
 Mail:       dp@xora.org.uk
@@ -329,6 +329,14 @@ Recipes:    anthy, nunome, uim*, granule, qpobox*, qte-font-unifont*
 Recipes:    qpf-unismall, qpobox, poboxserver, imkit*, scim, zten
 Recipes:    eb*, tomoe, offline-wikipedia
 
+Person:     Roman I Khimov
+Mail:       khimov@altell.ru
+Mail:       roman@khimov.ru
+Website:    http://roman.khimov.ru
+Recipes:    clamav, cluster-glue, cluster-resource-agents, conntrack-tools
+Recipes:    ethtool, libhtp, openais, pacemaker, ragel-native, squid
+Recipes:    squidguard, suricata
+
 Person:     Sergey Lapin
 Mail:       slapin@ossfans.org
 Machines:   palm*, afeb9260
@@ -345,10 +353,17 @@ Website:    http://www.datenfreihafen.org/
 Machines:   om-gta02, a1200, a780, rokre2, sgh-i900, palmpre, imote2, bug20
 Interest:   Linux mobile phones
 
+Person:     Simon Busch
+Mail:       morphis@gravedo.de
+Website:    http://mm.gravedo.de/
+Machines:   om-gta02, palmpre
+Interest:   Linux mobile phones
+Recipes:    msmcomm*
+
 Person:     Steffen Sledz
 Mail:       sledz@dresearch.de
-Machines:   oxnas, hipox
-Recipes:    forte
+Machines:   hipox
+Recipes:    forte, rsyslog
 
 Person:     Stelios Koroneos
 Mail:       skoroneos@digital-opsis.com
