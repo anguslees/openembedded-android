@@ -7,6 +7,8 @@ DEPENDS = "glib-2.0"
 
 SRC_URI = "http://liboil.freedesktop.org/download/${P}.tar.gz"
 
+SRC_URI += "file://missing-swab.patch"
+
 inherit autotools pkgconfig
 
 SRC_URI[md5sum] = "47dc734f82faeb2964d97771cfd2e701"
