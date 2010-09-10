@@ -4,7 +4,7 @@ LICENSE = "MIT"
 SECTION = "libs"
 PATCHDATE = "20100501"
 PKGV = "${PV}+${PATCHDATE}"
-PR = "r13"
+PR = "r14"
 
 DEPENDS = "ncurses-native unifdef-native"
 DEPENDS_virtclass-native = "unifdef-native"
@@ -19,7 +19,6 @@ SRC_URI = "${GNU_MIRROR}/ncurses/ncurses-${PV}.tar.gz;name=tarball \
 	file://android-autoconf.patch \
 	file://wchar-fixups.patch \
         file://config.cache \
-        file://libtermcap.so \
 "
 
 SRC_URI[tarball.md5sum] = "cce05daf61a64501ef6cd8da1f727ec6"
@@ -168,7 +167,23 @@ do_install() {
                 mv ${D}${bindir}/reset ${D}${bindir}/reset.${PN}
         fi
 
-        install -p -m 0644 ${WORKDIR}/libtermcap.so ${D}${libdir}/
+
+        # create linker scripts for libcurses.so and libncurses to
+        # link against -ltinfo when needed. Some builds might break
+        # else when '-Wl,--no-copy-dt-needed-entries' has been set in
+        # linker flags.
+        for i in libncurses libncursesw; do
+		f=${D}${libdir}/$i.so
+                test -h $f || continue
+                rm -f $f
+                echo '/* GNU ld script */'  >$f
+                echo "INPUT($i.so.5 AS_NEEDED(-ltinfo))" >>$f
+        done
+
+        # create libtermcap.so linker script for backward compatibility
+        f=${D}${libdir}/libtermcap.so
+        echo '/* GNU ld script */' >$f
+        echo 'INPUT(AS_NEEDED(-ltinfo))' >>$f
 }
 
 python populate_packages_prepend () {
