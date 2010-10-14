@@ -1,0 +1,34 @@
+--- git/CMakeLists.txt~	Thu Oct 14 09:10:37 2010
++++ git/CMakeLists.txt	Thu Oct 14 18:20:36 2010
+@@ -32,6 +32,7 @@
+ OPTION(WINMM   "Check for Windows Multimedia backend"  ON)
+ OPTION(PORTAUDIO  "Check for PortAudio backend"        ON)
+ OPTION(PULSEAUDIO "Check for PulseAudio backend"       ON)
++OPTION(ANDROID "Check for Android backend"             ON)
+ OPTION(WAVE    "Enable Wave Writer backend"            ON)
+ 
+ OPTION(DLOPEN  "Check for the dlopen API for loading optional libs"  ON)
+@@ -424,6 +425,22 @@
+     ENDIF()
+ ENDIF()
+ 
++# Check Android backend
++IF(ANDROID)
++    CHECK_INCLUDE_FILE(android/log.h HAVE_ANDROID_LOG_H)
++    IF(HAVE_ANDROID_LOG_H)
++        SET(HAVE_ANDROID 1)
++        SET(ALC_OBJS  ${ALC_OBJS} Alc/android.c)
++        IF(HAVE_DLFCN_H OR WIN32)
++            SET(BACKENDS  "${BACKENDS} Android,")
++        ELSE()
++            SET(BACKENDS  "${BACKENDS} Android \(linked\),")
++        ENDIF()
++	# Only examples need this
++	#SET(EXTRA_LIBS log ${EXTRA_LIBS})
++    ENDIF()
++ENDIF()
++
+ # Optionally enable the Wave Writer backend
+ IF(WAVE)
+     SET(HAVE_WAVE 1)
+
