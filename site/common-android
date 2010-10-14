@@ -1,3 +1,5 @@
+bash_cv_have_mbstate_t=${bash_cv_have_mbstate_t=yes}
+
 glib_cv_stack_grows=${glib_cv_stack_grows=no}
 glib_cv_uscore=${glib_cv_uscore=no}
 
@@ -7,6 +9,7 @@ ac_cv_func_posix_getgrgid_r=${ac_cv_func_posix_getgrgid_r=no}
 
 # bionic's locale.h is simply a stub
 ac_cv_header_locale_h=${ac_cv_header_locale_h=no}
+ac_cv_func_setlocale=${ac_cv_func_setlocale=no}
 
 # gcc's libstdc++ wants to know this
 ac_cv_func_shl_load=${ac_cv_func_shl_load=no}
